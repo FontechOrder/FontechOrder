@@ -5,7 +5,7 @@ const Home: NextPage = () => {
   return (
     <div className="p-4">
       <div className="text-white">
-        Fontech Order Home 
+        Fontech Order Home
       </div>
     </div>
   )

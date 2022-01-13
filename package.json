@@ -1,14 +1,20 @@
 {
   "name": "fontech-order",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
+    "check-types": "tsc",
     "dev": "next dev",
     "build": "next build",
+    "export": "next export",
     "start": "next start",
-    "lint": "next lint"
+    "eslint": "eslint",
+    "lint": "(yarn run eslint src --ext .ts,.tsx) && (yarn run check-types)",
+    "lint-fix": "eslint --fix --ext .ts,.tsx"
   },
   "dependencies": {
     "classnames": "^2.3.1",
+    "firebase": "^9.6.2",
     "next": "12.0.8",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -20,10 +26,15 @@
   "devDependencies": {
     "@types/node": "17.0.8",
     "@types/react": "17.0.38",
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
     "autoprefixer": "^10.4.2",
     "eslint": "8.6.0",
     "eslint-config-next": "12.0.8",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^6.0.0",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
     "tailwindcss": "^3.0.13",
