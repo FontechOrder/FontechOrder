@@ -1,6 +1,7 @@
-import type { StringKeyObject } from '@other-support/Types'
-
-import type { Int } from '../../Types'
+import type {
+  StringKeyObject,
+  Int,
+} from '@other-support/Types'
 
 export const emptyStringKeyObject: StringKeyObject =
   {}

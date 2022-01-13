@@ -1,7 +1,7 @@
-import type { NextPage } from 'next'
+import React from 'react'
 import 'tailwindcss/tailwind.css'
 
-const Home: NextPage = () => {
+const Home: React.FC = () => {
   return (
     <div className="p-4">
       <div className="text-white">

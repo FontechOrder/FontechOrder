@@ -1,7 +1,3 @@
-import React from 'react'
-
-import type { Dispatch } from 'redux'
-
 import {
   useSelector,
   shallowEqual,

@@ -1,3 +1,4 @@
+import React from 'react'
 import type { AppProps } from 'next/app'
 import 'tailwindcss/tailwind.css'
 
@@ -9,10 +10,10 @@ import configureStore from '@redux-folder/configureStore'
 
 const { store, persistor } = configureStore()
 
-function MyApp({
+const MyApp: React.FC<AppProps> = ({
   Component,
   pageProps,
-}: AppProps) {
+}) => {
   return (
     <Provider store={store}>
       <PersistGate

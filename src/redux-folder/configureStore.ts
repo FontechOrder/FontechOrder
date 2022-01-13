@@ -25,9 +25,7 @@ const configureStore = (): StringKeyObject => {
   const persistConfig = {
     key: 'fontech-game-reducer',
     storage: storage,
-    blacklist: [
-      'localDataManagerState',
-    ],
+    blacklist: ['localDataManagerState'],
   }
 
   const presistedReducer = persistReducer(
@@ -39,7 +37,7 @@ const configureStore = (): StringKeyObject => {
     presistedReducer,
     applyMiddleware(thunk)
   )
-  let persistor = persistStore(store)
+  const persistor = persistStore(store)
   return {
     persistor,
     store,

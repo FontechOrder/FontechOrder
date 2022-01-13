@@ -38,6 +38,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-interface": 0,
     "react/display-name": "off",
+    'import/export': 0,
 
     "@typescript-eslint/ban-ts-comment": "off", // open @ts-ignore
   }

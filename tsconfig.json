@@ -21,8 +21,9 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@containers/*": ["src/containers/*"],
+      "@firebase-folder/*": ["src/firebase-folder/*"],
       "@other-support/*": ["src/other-support/*"],
-      "@redux-folder/*": ["src/redux-folder/*"],
+      "@redux-folder/*": ["src/redux-folder/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
