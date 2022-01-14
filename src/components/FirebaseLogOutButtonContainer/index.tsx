@@ -20,7 +20,7 @@ const FirebaseLogOutButtonContainer: React.FC<
     <div>
       <div> email: {user.email} </div>
       <CustomButton onClick={() => buttonClick()}>
-        清除資料
+        登出
       </CustomButton>
     </div>
   )

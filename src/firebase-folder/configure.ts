@@ -6,14 +6,21 @@ import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey:
-    'AIzaSyCdnAcqwQBVXssUOTPsc5qHBsE28nidNow',
-  authDomain: 'fontech-order.firebaseapp.com',
-  projectId: 'fontech-order',
-  storageBucket: 'fontech-order.appspot.com',
-  messagingSenderId: '228673200251',
-  appId:
-    '1:228673200251:web:d8bb5226459e2ba71f02de',
-  measurementId: 'G-Q46CSEZLTR',
+    process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain:
+    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId:
+    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket:
+    process.env
+      .NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId:
+    process.env
+      .NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId:
+    process.env
+      .NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 }
 
 // Initialize Firebase

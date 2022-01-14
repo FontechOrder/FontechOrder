@@ -2,6 +2,7 @@ import React from 'react'
 import useFirebaseAuth from '@firebase-folder/hooks/useFirebaseAuth'
 import FirebaseLoginForm from '@components/FirebaseLoginForm'
 import FirebaseLogOutButtonContainer from '@components/FirebaseLogOutButtonContainer'
+import CreateOrder from '@components/CreateOrder'
 
 const AuthTest: React.FC = () => {
   const { isFirst, user } = useFirebaseAuth()
@@ -20,6 +21,7 @@ const AuthTest: React.FC = () => {
         <FirebaseLogOutButtonContainer
           user={user}
         />
+        <CreateOrder />
       </div>
     )
   }

@@ -39,3 +39,9 @@ yarn-error.log*
 # sublime--project
 *.sublime-project
 *.sublime-workspace
+
+# .env
+.env
+
+# .next
+.next

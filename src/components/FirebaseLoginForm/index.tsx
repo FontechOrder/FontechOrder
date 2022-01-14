@@ -44,8 +44,6 @@ const validationSchema = Yup.object().shape({
 })
 
 const FirebaseLoginForm: React.FC = () => {
-  // const dispatch = useDispatch()
-
   const [isSubmitting, setIsSubmitting] =
     React.useState(false)
 
