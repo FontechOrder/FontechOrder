@@ -1,6 +1,7 @@
 import React from 'react'
 import type { AppProps } from 'next/app'
 import 'tailwindcss/tailwind.css'
+import 'react-datepicker/dist/react-datepicker.css'
 
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'

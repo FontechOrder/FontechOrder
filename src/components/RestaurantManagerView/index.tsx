@@ -1,10 +1,9 @@
 import React from 'react'
 
 import RestaurantList from '@components/RestaurantList'
-// import CustomButton from '@components/CustomButton'
 import NewRestaurantForm from '@components/NewRestaurantForm'
 
-const CreateOrder: React.FC = () => {
+const RestaurantManagerView: React.FC = () => {
   return (
     <div>
       <RestaurantList />
@@ -13,4 +12,4 @@ const CreateOrder: React.FC = () => {
   )
 }
 
-export default CreateOrder
+export default RestaurantManagerView
