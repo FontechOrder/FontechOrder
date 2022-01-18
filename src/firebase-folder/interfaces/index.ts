@@ -1,4 +1,7 @@
-import { FirebaseAuthFormItemKeyType } from '@firebase-folder/enums'
+import {
+  FirebaseAuthFormItemKeyType,
+  FirebaseNewRestaurantFormItemKeyType,
+} from '@firebase-folder/enums'
 
 interface FormItem {
   label: string
@@ -9,4 +12,9 @@ interface FormItem {
 export interface FirebaseAuthFormItem
   extends FormItem {
   id: FirebaseAuthFormItemKeyType
+}
+
+export interface FirebaseNewRestaurantFormItem
+  extends FormItem {
+  id: FirebaseNewRestaurantFormItemKeyType
 }

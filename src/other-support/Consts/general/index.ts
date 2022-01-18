@@ -114,3 +114,14 @@ export const fakeRandomImage = ({
   height: number
 }): string =>
   `https://picsum.photos/${width}/${height}?random=${id}`
+
+export const shuffledWithArrayAndLength = <T>({
+  array,
+  length = 0,
+}: {
+  array: T[]
+  length: number
+}) =>
+  [...array]
+    .sort(() => 0.5 - Math.random())
+    .slice(0, length)

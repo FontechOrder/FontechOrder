@@ -3,33 +3,36 @@ import useFirebaseAuth from '@firebase-folder/hooks/useFirebaseAuth'
 import FirebaseLoginForm from '@components/FirebaseLoginForm'
 import FirebaseLogOutButtonContainer from '@components/FirebaseLogOutButtonContainer'
 import CreateOrder from '@components/CreateOrder'
+import PageContent from '@containers/PageContent'
 
 const AuthTest: React.FC = () => {
   const { isFirst, user } = useFirebaseAuth()
 
   if (isFirst) {
     return (
-      <div className="text-white">
-        isLoading...
-      </div>
+      <PageContent>
+        <div className="text-white">
+          isLoading...
+        </div>
+      </PageContent>
     )
   }
 
   if (user) {
     return (
-      <div className="p-4">
+      <PageContent>
         <FirebaseLogOutButtonContainer
           user={user}
         />
         <CreateOrder />
-      </div>
+      </PageContent>
     )
   }
 
   return (
-    <div className="p-4">
+    <PageContent>
       <FirebaseLoginForm />
-    </div>
+    </PageContent>
   )
 }
 

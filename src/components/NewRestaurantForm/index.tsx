@@ -5,42 +5,57 @@ import { useFormik } from 'formik'
 import FormikFormInput from '@components/FormikFormInput'
 import CustomButton from '@components/CustomButton'
 
-import logInThenGetUserPromise from '@firebase-folder/functions/logInThenGetUserPromise'
+import { FirebaseNewRestaurantFormItem } from '@firebase-folder/interfaces'
+import { FirebaseNewRestaurantFormItemType } from '@firebase-folder/types'
+import { FirebaseNewRestaurantFormItemKeyType } from '@firebase-folder/enums'
 
-import { FirebaseAuthFormItem } from '@firebase-folder/interfaces'
-import { FirebaseAuthFormItemType } from '@firebase-folder/types'
-import { FirebaseAuthFormItemKeyType } from '@firebase-folder/enums'
+import useRestaurantsFirestore from '@firebase-folder/hooks/useRestaurantsFirestore'
 
 import { sleep } from '@other-support/Consts'
 
-const inputs: Array<FirebaseAuthFormItem> = [
-  {
-    id: FirebaseAuthFormItemKeyType.email,
-    label: 'Email*',
-    type: 'text',
-    placeholder: 'name@example.com',
-  },
-  {
-    id: FirebaseAuthFormItemKeyType.password,
-    label: '密碼*',
-    type: 'password',
-    placeholder: '請輸入您的密碼',
-  },
-]
+const inputs: Array<FirebaseNewRestaurantFormItem> =
+  [
+    {
+      id: FirebaseNewRestaurantFormItemKeyType.name,
+      label: '名稱*',
+      type: 'text',
+      placeholder: '請輸入餐廳名稱',
+    },
+    {
+      id: FirebaseNewRestaurantFormItemKeyType.slackImage,
+      label: 'Slack Image',
+      type: 'text',
+      placeholder: '請輸入在slack上的圖片路徑',
+    },
+    {
+      id: FirebaseNewRestaurantFormItemKeyType.storagePath,
+      label: 'Storage Path',
+      type: 'text',
+      placeholder:
+        '請輸入在Firebase Storage上的圖片路徑',
+    },
+  ]
 
-const initialValues: FirebaseAuthFormItemType = {
-  [FirebaseAuthFormItemKeyType.email]: '',
-  [FirebaseAuthFormItemKeyType.password]: '',
-}
+const initialValues: FirebaseNewRestaurantFormItemType =
+  {
+    [FirebaseNewRestaurantFormItemKeyType.name]:
+      '',
+    [FirebaseNewRestaurantFormItemKeyType.slackImage]:
+      '',
+    [FirebaseNewRestaurantFormItemKeyType.storagePath]:
+      '',
+  }
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('無效的電子郵件')
-    .required('本欄位為必填'),
-  password: Yup.string().required('本欄位為必填'),
+  name: Yup.string().required('本欄位為必填'),
+  slackImage: Yup.string(),
+  storagePath: Yup.string(),
 })
 
-const FirebaseLoginForm: React.FC = () => {
+const NewRestaurantForm: React.FC = () => {
+  const { newRestaurant } =
+    useRestaurantsFirestore()
+
   const [isSubmitting, setIsSubmitting] =
     React.useState(false)
 
@@ -58,22 +73,24 @@ const FirebaseLoginForm: React.FC = () => {
       setIsSubmitting(true)
 
       try {
-        const user =
-          await logInThenGetUserPromise({
-            email:
-              values[
-                FirebaseAuthFormItemKeyType.email
-              ],
-            password:
-              values[
-                FirebaseAuthFormItemKeyType
-                  .password
-              ],
-          })
+        await newRestaurant({
+          name: values[
+            FirebaseNewRestaurantFormItemKeyType
+              .name
+          ],
+          'slack-image':
+            values[
+              FirebaseNewRestaurantFormItemKeyType
+                .slackImage
+            ],
+          'storage-path':
+            values[
+              FirebaseNewRestaurantFormItemKeyType
+                .storagePath
+            ],
+        })
 
-        if (!user) {
-          throw new Error('user not found')
-        }
+        formik.setValues(initialValues)
       } catch (error) {
         setErrorString('Login failed')
         await sleep(2000)
@@ -89,8 +106,6 @@ const FirebaseLoginForm: React.FC = () => {
 
   return (
     <div>
-      <div>Update: 2021/12/20 18:08</div>
-      <p>請先登入</p>
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         onSubmit={formik.handleSubmit}
@@ -126,7 +141,7 @@ const FirebaseLoginForm: React.FC = () => {
           </div>
         </div>
         <CustomButton type="submit">
-          確認送出
+          新增餐廳
         </CustomButton>
         {errorString && <p>{errorString}</p>}
       </form>
@@ -134,4 +149,4 @@ const FirebaseLoginForm: React.FC = () => {
   )
 }
 
-export default FirebaseLoginForm
+export default NewRestaurantForm

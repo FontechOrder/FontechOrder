@@ -4,7 +4,7 @@ import { firebaseAuth } from '@firebase-folder/configure'
 
 import type { StringKeyObject } from '@other-support/Types'
 
-const logInThenGetUser = async ({
+const logInThenGetUserPromise = async ({
   email,
   password,
 }: {
@@ -23,4 +23,4 @@ const logInThenGetUser = async ({
   return user
 }
 
-export default logInThenGetUser
+export default logInThenGetUserPromise

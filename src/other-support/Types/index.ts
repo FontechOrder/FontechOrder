@@ -38,3 +38,14 @@ export type FixedSizeArray<
 > = {
   readonly [k in M]: any
 } & { length: N } & ReadonlyArray<T>
+
+export type NoIdRestaurantItem = {
+  name: string
+  ['slack-image']?: string
+  ['storage-path']?: string
+}
+
+export interface RestaurantItem
+  extends NoIdRestaurantItem {
+  id: string
+}

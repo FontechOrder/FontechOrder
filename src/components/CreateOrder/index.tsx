@@ -1,14 +1,14 @@
 import React from 'react'
-import useRestaurantsFirestore from '@firebase-folder/hooks/useRestaurantsFirestore'
+
+import RestaurantList from '@components/RestaurantList'
+// import CustomButton from '@components/CustomButton'
+import NewRestaurantForm from '@components/NewRestaurantForm'
 
 const CreateOrder: React.FC = () => {
-  const { list } = useRestaurantsFirestore()
-
   return (
     <div>
-      {JSON.stringify(
-        list.map(item => item.name)
-      )}
+      <RestaurantList />
+      <NewRestaurantForm />
     </div>
   )
 }
