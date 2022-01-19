@@ -33,11 +33,14 @@ const RandomMenu: React.FC = () => {
   }
 
   return (
-    <div>
+    <div
+      id="random-menu"
+      className="flex flex-col md:flex-row md:items-center"
+    >
       <div>RandomMenu</div>
-      <div className="py-4">
+      <div className="flex justify-center py-4 w-[200px] md:mx-4">
         <DatePicker
-          className="w-[200px] p-2"
+          className="w-full text-center py-2"
           selected={startDate}
           onChange={onChange}
           startDate={startDate}
@@ -47,7 +50,6 @@ const RandomMenu: React.FC = () => {
           locale="zh-TW"
         />
       </div>
-
       {startDate && endDate && (
         <CustomButton
           onClick={() => {
