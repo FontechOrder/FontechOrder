@@ -6,21 +6,22 @@ import CustomButton from '@components/CustomButton'
 import AsyncStoragePathImage from '@components/AsyncStoragePathImage'
 
 const RestaurantList: React.FC = () => {
-  const { list, deleteRestaurantId } =
+  const { list, deleteRestaurantWithId } =
     useRestaurantsFirestore()
 
   // console.log('list: ', JSON.stringify(list))
-  React.useEffect(() => {
-    list.forEach(each =>
-      console.log(
-        `each=>id: ${each.id}, name: ${each.name} `
-      )
-    )
 
-    console.log(
-      '-----------------------------------------'
-    )
-  }, [list])
+  // React.useEffect(() => {
+  //   list.forEach(each =>
+  //     console.log(
+  //       `each=>id: ${each.id}, name: ${each.name} `
+  //     )
+  //   )
+
+  //   console.log(
+  //     '-----------------------------------------'
+  //   )
+  // }, [list])
 
   return (
     <div id="restaurant-list">
@@ -60,7 +61,7 @@ const RestaurantList: React.FC = () => {
             ].map((titleText, ind) => (
               <div
                 key={`titleText_${ind}`}
-                className="relative flex flex-col lg:flex-row items-center w-full"
+                className="relative flex flex-col lg:flex-row items-center w-full text-white"
               >
                 <div className="hidden lg:flex lg:w-[130px] lg:min-w-[130px]">
                   {titleText.title}
@@ -74,8 +75,8 @@ const RestaurantList: React.FC = () => {
           <CustomButton
             className="absolute top-4 left-2"
             onClick={() =>
-              deleteRestaurantId({
-                restaurantId: item.id,
+              deleteRestaurantWithId({
+                id: item.id,
               })
             }
           >

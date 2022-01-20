@@ -125,3 +125,20 @@ export const shuffledWithArrayAndLength = <T>({
   [...array]
     .sort(() => 0.5 - Math.random())
     .slice(0, length)
+
+export const forceStringForNextRouterQueryFirst =
+  (
+    check: string | string[] | undefined
+  ): string => {
+    if (!check) {
+      return ''
+    }
+
+    if (Array.isArray(check)) {
+      return forceStringForNextRouterQueryFirst(
+        check[0]
+      )
+    }
+
+    return check
+  }

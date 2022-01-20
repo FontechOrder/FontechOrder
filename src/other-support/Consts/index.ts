@@ -4,5 +4,5 @@ export * from './general/'
 // reduxSupport
 export * from './reduxSupport'
 
-// reduxSupport
+// custom
 export * from './custom'

@@ -14,7 +14,13 @@ const getStorageImagePromise = async ({
     ref(firebaseStorage, path)
   )
 
-  return downloadURL
+  const reg = /&token=.*$/
+  const updatedDownloadURL = downloadURL.replace(
+    reg,
+    ''
+  )
+
+  return updatedDownloadURL
 }
 
 export default getStorageImagePromise

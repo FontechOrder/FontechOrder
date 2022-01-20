@@ -49,3 +49,13 @@ export interface RestaurantItem
   extends NoIdRestaurantItem {
   id: string
 }
+
+export interface NoIdMenuItem {
+  name: string
+  cost: number
+  type: string
+}
+
+export interface MenuItem extends NoIdMenuItem {
+  id: string
+}

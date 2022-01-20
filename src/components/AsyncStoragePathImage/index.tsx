@@ -22,7 +22,6 @@ const AsyncStoragePathImage: React.FC<
   >(undefined)
 
   React.useEffect(() => {
-    console.log('slackImage: ', slackImage)
     if (!slackImage) {
       return
     }

@@ -20,18 +20,14 @@ const useRestaurantsFirestore = () => {
     Array<RestaurantItem>()
   )
 
-  const deleteRestaurantId = async ({
-    restaurantId,
+  const deleteRestaurantWithId = async ({
+    id,
   }: {
-    restaurantId: string
+    id: string
   }): Promise<boolean> => {
     try {
       await deleteDoc(
-        doc(
-          firebaseFirestore,
-          'restaurants',
-          restaurantId
-        )
+        doc(firebaseFirestore, 'restaurants', id)
       )
     } catch {
       return false
@@ -97,7 +93,7 @@ const useRestaurantsFirestore = () => {
   return {
     list,
     newRestaurant,
-    deleteRestaurantId,
+    deleteRestaurantWithId,
   }
 }
 
