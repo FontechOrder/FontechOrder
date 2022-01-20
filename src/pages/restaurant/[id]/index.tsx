@@ -26,7 +26,6 @@ const RestaurantDetail: React.FC = () => {
   if (!restaurant) {
     return (
       <div className="text-white">
-        {' '}
         Restaurant not found.
       </div>
     )

@@ -30,6 +30,7 @@ const AsyncStoragePathImageLink: React.FC<
       rel="noreferrer"
     >
       <Image
+        priority
         layout="fill"
         objectFit="contain"
         src={src}

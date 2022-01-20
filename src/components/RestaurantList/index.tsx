@@ -32,11 +32,11 @@ const RestaurantList: React.FC = () => {
           item['storage-path']
 
         return (
-          <a
+          <div
             key={`restaurant_${index}`}
-            href={`/restaurant/4gCw7KvAg628PQK0JkF0`}
-            target="_blank"
-            rel="noreferrer"
+            // href={`/restaurant/4gCw7KvAg628PQK0JkF0`}
+            // target="_blank"
+            // rel="noreferrer"
           >
             <div className="relative flex flex-col lg:flex-row items-center py-2">
               <div
@@ -93,7 +93,7 @@ const RestaurantList: React.FC = () => {
                 Delete
               </CustomButton>
             </div>
-          </a>
+          </div>
         )
       })}
     </div>

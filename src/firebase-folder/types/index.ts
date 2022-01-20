@@ -1,3 +1,11 @@
+import type {
+  // DocumentSnapshot,
+  DocumentReference,
+  DocumentData,
+  // QueryDocumentSnapshot,
+  // SnapshotOptions,
+} from 'firebase/firestore'
+
 import {
   FirebaseAuthFormItemKeyType,
   FirebaseNewRestaurantFormItemKeyType,
@@ -16,4 +24,27 @@ export type FirebaseNewRestaurantFormItemType = {
   [FirebaseNewRestaurantFormItemKeyType.storagePath]:
     | string
     | undefined
+}
+
+export interface NoIdOrderItem {
+  finished: boolean
+  ['restaurant-name']?: string
+  ['storage-path']?: string
+  ['restaurant-reference']?: DocumentReference<DocumentData>
+}
+
+export interface OrderItem extends NoIdOrderItem {
+  id: string
+}
+
+export interface NoIdOrderItemItem {
+  cost: number
+  'item-name': string
+  ['user-name']?: string
+  ['user-reference']?: DocumentReference<DocumentData>
+}
+
+export interface OrderItemItem
+  extends NoIdOrderItemItem {
+  id: string
 }

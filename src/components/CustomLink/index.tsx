@@ -2,17 +2,28 @@ import React from 'react'
 import classnames from 'classnames'
 import Link from 'next/link'
 
+// target="_blank"
+//       rel="noreferrer"
 interface CustomLinkProps {
+  isBlank?: boolean
   className?: string | string[]
   title: string
   path: string
 }
 
 const CustomLink: React.FC<CustomLinkProps> = ({
+  isBlank = false,
   className,
   title,
   path,
 }) => {
+  const isBlankObj = isBlank
+    ? {
+        target: '_blank',
+        rel: 'noreferrer',
+      }
+    : {}
+
   return (
     <div
       className={classnames(
@@ -23,7 +34,7 @@ const CustomLink: React.FC<CustomLinkProps> = ({
       )}
     >
       <Link href={path}>
-        <a>{title}</a>
+        <a {...isBlankObj}>{title}</a>
       </Link>
     </div>
   )

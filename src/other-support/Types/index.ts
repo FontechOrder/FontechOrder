@@ -59,3 +59,13 @@ export interface NoIdMenuItem {
 export interface MenuItem extends NoIdMenuItem {
   id: string
 }
+
+// export interface NoIdOrderItem {
+//   finished: boolean
+//   'restaurant-name': string
+//   ['storage-path']?: string
+// }
+
+// export interface OrderItem extends NoIdOrderItem {
+//   id: string
+// }
