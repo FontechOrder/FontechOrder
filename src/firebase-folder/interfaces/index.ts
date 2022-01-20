@@ -18,3 +18,8 @@ export interface FirebaseNewRestaurantFormItem
   extends FormItem {
   id: FirebaseNewRestaurantFormItemKeyType
 }
+
+export interface AsyncStoragePathImageProps {
+  slackImage?: string
+  alt?: string
+}

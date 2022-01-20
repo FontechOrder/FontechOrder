@@ -23,14 +23,23 @@ const RestaurantDetail: React.FC = () => {
   //   console.log('menus: ', menus)
   // }, [menus])
 
+  if (!restaurant) {
+    return (
+      <div className="text-white">
+        {' '}
+        Restaurant not found.
+      </div>
+    )
+  }
+
   return (
     <div className="text-white">
       <div>RestaurantDetail id: {id}</div>
-      {restaurant && (
-        <div className="break-all whitespace-pre-wrap py-4">
-          {`restaurant name: ${restaurant.name}\nslack-image: ${restaurant['slack-image']}\nstorage-path: ${restaurant['storage-path']}`}
-        </div>
-      )}
+
+      <div className="break-all whitespace-pre-wrap py-4">
+        {`restaurant name: ${restaurant.name}\nslack-image: ${restaurant['slack-image']}\nstorage-path: ${restaurant['storage-path']}`}
+      </div>
+
       {menus.map(menu => (
         <div
           className="break-all whitespace-pre-wrap"

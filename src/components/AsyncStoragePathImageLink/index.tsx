@@ -5,7 +5,7 @@ import useGetStorageImagePromise from '@firebase-folder/hooks/useGetStorageImage
 
 import { AsyncStoragePathImageProps } from '@firebase-folder/interfaces'
 
-const AsyncStoragePathImage: React.FC<
+const AsyncStoragePathImageLink: React.FC<
   AsyncStoragePathImageProps
 > = ({
   slackImage,
@@ -23,15 +23,20 @@ const AsyncStoragePathImage: React.FC<
   }
 
   return (
-    <Image
-      layout="fill"
-      objectFit="contain"
-      src={src}
-      alt={alt}
-    />
+    <a
+      className="relative w-full h-full hover-none"
+      href={src}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <Image
+        layout="fill"
+        objectFit="contain"
+        src={src}
+        alt={alt}
+      />
+    </a>
   )
-
-  return null
 }
 
-export default AsyncStoragePathImage
+export default AsyncStoragePathImageLink
