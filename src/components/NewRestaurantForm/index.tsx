@@ -74,6 +74,7 @@ const NewRestaurantForm: React.FC = () => {
 
       try {
         await newRestaurant({
+          hidden: false,
           name: values[
             FirebaseNewRestaurantFormItemKeyType
               .name

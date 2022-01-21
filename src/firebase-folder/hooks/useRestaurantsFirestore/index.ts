@@ -2,10 +2,14 @@ import React from 'react'
 
 import {
   doc,
-  deleteDoc,
-  addDoc,
+  // deleteDoc,
+  updateDoc,
+  // addDoc,
+  setDoc,
   collection,
   onSnapshot,
+  query,
+  where,
 } from 'firebase/firestore'
 
 import { firebaseFirestore } from '@firebase-folder/configure'
@@ -20,14 +24,33 @@ const useRestaurantsFirestore = () => {
     Array<RestaurantItem>()
   )
 
-  const deleteRestaurantWithId = async ({
+  // const deleteRestaurantWithId = async ({
+  //   id,
+  // }: {
+  //   id: string
+  // }): Promise<boolean> => {
+  //   try {
+  //     await deleteDoc(
+  //       doc(firebaseFirestore, 'restaurants', id)
+  //     )
+  //   } catch {
+  //     return false
+  //   }
+
+  //   return true
+  // }
+
+  const hiddenRestaurantWithId = async ({
     id,
   }: {
     id: string
   }): Promise<boolean> => {
     try {
-      await deleteDoc(
-        doc(firebaseFirestore, 'restaurants', id)
+      await updateDoc(
+        doc(firebaseFirestore, 'restaurants', id),
+        {
+          hidden: true,
+        }
       )
     } catch {
       return false
@@ -40,26 +63,44 @@ const useRestaurantsFirestore = () => {
     restaurantItem: NoIdRestaurantItem
   ): Promise<boolean> => {
     try {
-      await addDoc(
-        collection(
+      // await addDoc(
+      //   collection(
+      //     firebaseFirestore,
+      //     'restaurants'
+      //   ),
+      //   restaurantItem
+      // )
+
+      await setDoc(
+        doc(
           firebaseFirestore,
-          'restaurants'
+          'restaurants',
+          restaurantItem.name
         ),
-        restaurantItem
+        restaurantItem,
+        { merge: true }
       )
     } catch {
+      console.log(' setDoc error')
       return false
     }
 
+    console.log('setDoc success')
     return true
   }
 
   React.useEffect(() => {
+    const restaurantsRef = collection(
+      firebaseFirestore,
+      'restaurants'
+    )
+    const q = query(
+      restaurantsRef,
+      where('hidden', '==', false)
+    )
+
     const unsubscribe = onSnapshot(
-      collection(
-        firebaseFirestore,
-        'restaurants'
-      ),
+      q,
       snapshot => {
         const dataList = snapshot.docs
           .map(doc => {
@@ -67,6 +108,7 @@ const useRestaurantsFirestore = () => {
 
             return {
               id: doc.id,
+              hidden: data.hidden,
               name: data.name,
               'slack-image': data['slack-image'],
               'storage-path':
@@ -93,7 +135,7 @@ const useRestaurantsFirestore = () => {
   return {
     list,
     newRestaurant,
-    deleteRestaurantWithId,
+    hiddenRestaurantWithId,
   }
 }
 

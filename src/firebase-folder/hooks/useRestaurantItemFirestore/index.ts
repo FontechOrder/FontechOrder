@@ -20,6 +20,8 @@ const useRestaurantItemFirestore = ({
 }: {
   restaurantId?: string
 }) => {
+  const [isFirst, setIsFirst] =
+    React.useState<boolean>(true)
   const [restaurant, setRestaurant] =
     React.useState<RestaurantItem | undefined>(
       undefined
@@ -51,6 +53,7 @@ const useRestaurantItemFirestore = ({
 
   React.useEffect(() => {
     if (!restaurantId) {
+      setIsFirst(false)
       return
     }
 
@@ -66,15 +69,18 @@ const useRestaurantItemFirestore = ({
         const docData = doc.data()
 
         if (!docData) {
+          setIsFirst(false)
           return
         }
 
         setRestaurant({
           id: doc.id,
+          hidden: docData.hidden,
           name: docData.name,
           'slack-image': docData['slack-image'],
           'storage-path': docData['storage-path'],
         })
+        setIsFirst(false)
 
         const menusSnapshot = await getDocs(
           collection(restaurantDoc, 'menus')
@@ -108,6 +114,7 @@ const useRestaurantItemFirestore = ({
   }, [restaurantId])
 
   return {
+    isFirst,
     restaurant,
     menus,
     deleteRestaurant,

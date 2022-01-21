@@ -40,6 +40,7 @@ export type FixedSizeArray<
 } & { length: N } & ReadonlyArray<T>
 
 export type NoIdRestaurantItem = {
+  hidden: boolean
   name: string
   ['slack-image']?: string
   ['storage-path']?: string

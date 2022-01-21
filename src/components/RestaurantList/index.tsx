@@ -7,7 +7,7 @@ import CustomButton from '@components/CustomButton'
 import AsyncStoragePathImageLink from '@components/AsyncStoragePathImageLink'
 
 const RestaurantList: React.FC = () => {
-  const { list, deleteRestaurantWithId } =
+  const { list, hiddenRestaurantWithId } =
     useRestaurantsFirestore()
 
   // console.log('list: ', JSON.stringify(list))
@@ -25,15 +25,20 @@ const RestaurantList: React.FC = () => {
   // }, [list])
 
   return (
-    <div id="restaurant-list">
-      <div>Restaurant List</div>
+    <div
+      id="restaurant-list"
+      className="h-[500px] overflow-y-scroll my-[10px]"
+    >
+      <div className="text-white">
+        Restaurant List
+      </div>
       {list.map((item, index) => {
         const itemStoragePath =
           item['storage-path']
 
         return (
           <div
-            key={`restaurant_${index}`}
+            key={`restaurant-${index}-${item.name}`}
             // href={`/restaurant/4gCw7KvAg628PQK0JkF0`}
             // target="_blank"
             // rel="noreferrer"
@@ -57,7 +62,7 @@ const RestaurantList: React.FC = () => {
               <div className="flex flex-1 flex-col w-[calc(100%-160px-16px)] m-2">
                 {[
                   {
-                    title: 'name ' + index,
+                    title: 'name ' + (index + 1),
                     text: item.name,
                   },
                   {
@@ -68,9 +73,9 @@ const RestaurantList: React.FC = () => {
                     title: 'storage-path',
                     text: itemStoragePath,
                   },
-                ].map((titleText, ind) => (
+                ].map((titleText, i) => (
                   <div
-                    key={`titleText_${ind}`}
+                    key={`titleText-${i}-${titleText.title}`}
                     className="relative flex flex-col lg:flex-row items-center w-full text-white"
                   >
                     <div className="hidden lg:flex lg:w-[130px] lg:min-w-[130px]">
@@ -85,7 +90,7 @@ const RestaurantList: React.FC = () => {
               <CustomButton
                 className="absolute top-4 left-2"
                 onClick={() =>
-                  deleteRestaurantWithId({
+                  hiddenRestaurantWithId({
                     id: item.id,
                   })
                 }

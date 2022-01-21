@@ -34,6 +34,8 @@ const useOrderItemFirestore = ({
 }: {
   orderId?: string
 }) => {
+  const [isFirst, setIsFirst] =
+    React.useState(true)
   const [order, setOrder] = React.useState<
     OrderItem | undefined
   >(undefined)
@@ -63,6 +65,7 @@ const useOrderItemFirestore = ({
 
   React.useEffect(() => {
     if (!orderId) {
+      setIsFirst(false)
       return
     }
 
@@ -140,6 +143,7 @@ const useOrderItemFirestore = ({
 
         if (!eachOrderItemData) {
           console.log('no data')
+          setIsFirst(false)
           return
         }
 
@@ -148,6 +152,8 @@ const useOrderItemFirestore = ({
             doc: eachOrderItem,
             docData: eachOrderItemData,
           })
+
+        setIsFirst(false)
 
         if (!orderWithDocDataResult) {
           return
@@ -201,6 +207,11 @@ const useOrderItemFirestore = ({
           //     }
           //   },
           // })
+        )
+
+        console.log(
+          'itemsSnapshot.docs: ',
+          itemsSnapshot.docs
         )
 
         const itemsSnapshotResults =
@@ -266,6 +277,11 @@ const useOrderItemFirestore = ({
             each => each
           ) as OrderItemItem[]
 
+        console.log(
+          'filteredItemsSnapshotResults: ',
+          filteredItemsSnapshotResults
+        )
+
         setOrderItemItems(
           filteredItemsSnapshotResults
         )
@@ -278,6 +294,7 @@ const useOrderItemFirestore = ({
   }, [orderId])
 
   return {
+    isFirst,
     order,
     orderItemItems,
     deleteOrder,
