@@ -4,6 +4,8 @@ import classnames from 'classnames'
 import useRestaurantsFirestore from '@firebase-folder/hooks/useRestaurantsFirestore'
 
 import CustomButton from '@components/CustomButton'
+import CustomLink from '@components/CustomLink'
+
 import AsyncStoragePathImageLink from '@components/AsyncStoragePathImageLink'
 
 const RestaurantList: React.FC = () => {
@@ -13,7 +15,7 @@ const RestaurantList: React.FC = () => {
   return (
     <div
       id="restaurant-list"
-      className="h-[500px] overflow-y-scroll my-[10px]"
+      className="h-[500px] overflow-y-scroll lg:h-auto lg:overflow-y-auto my-[10px]"
     >
       <div className="text-white">
         Restaurant List
@@ -26,10 +28,10 @@ const RestaurantList: React.FC = () => {
           <div
             key={`restaurant-${index}-${item.name}`}
           >
-            <div className="relative flex flex-col lg:flex-row items-center py-2">
+            <div className="flex flex-col lg:flex-row items-center py-2">
               <div
                 className={classnames(
-                  'flex flex-0 flex-col min-w-[60vw] sm:min-w-[50vw] lg:min-w-[160px] lg:w-[160px] aspect-square ',
+                  'relative flex flex-0 flex-col w-[60vw] sm:w-[50vw] lg:w-[160px] lg:w-[160px] aspect-square ',
                   !itemStoragePath &&
                     'bg-yellow-100'
                 )}
@@ -40,6 +42,16 @@ const RestaurantList: React.FC = () => {
                     alt="storage-path-image"
                   />
                 )}
+                <CustomButton
+                  className="absolute top-2 left-2 bg-red-800"
+                  onClick={() =>
+                    hiddenRestaurantWithId({
+                      id: item.id,
+                    })
+                  }
+                >
+                  Delete
+                </CustomButton>
               </div>
 
               <div className="flex flex-1 flex-col w-[calc(100%-160px-16px)] m-2">
@@ -69,17 +81,13 @@ const RestaurantList: React.FC = () => {
                     </div>
                   </div>
                 ))}
+                <CustomLink
+                  className="self-end mt-2"
+                  path={`/restaurant/${item.name}`}
+                  isBlank
+                  title="Detail ..."
+                />
               </div>
-              <CustomButton
-                className="absolute top-4 left-2"
-                onClick={() =>
-                  hiddenRestaurantWithId({
-                    id: item.id,
-                  })
-                }
-              >
-                Delete
-              </CustomButton>
             </div>
           </div>
         )

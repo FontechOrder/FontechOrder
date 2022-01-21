@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import Image from 'next/image'
 
 import useGetStorageImagePromise from '@firebase-folder/hooks/useGetStorageImagePromise'
@@ -8,6 +9,7 @@ import { AsyncStoragePathImageProps } from '@firebase-folder/interfaces'
 const AsyncStoragePathImageLink: React.FC<
   AsyncStoragePathImageProps
 > = ({
+  className,
   slackImage,
   alt = 'async-fill-image',
 }) => {
@@ -24,7 +26,10 @@ const AsyncStoragePathImageLink: React.FC<
 
   return (
     <a
-      className="relative w-full h-full hover-none"
+      className={classnames(
+        'relative w-full h-full hover-none',
+        className
+      )}
       href={src}
       target="_blank"
       rel="noreferrer"

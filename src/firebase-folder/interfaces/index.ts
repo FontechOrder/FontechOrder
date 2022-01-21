@@ -21,6 +21,7 @@ export interface FirebaseNewRestaurantFormItem
 }
 
 export interface AsyncStoragePathImageProps {
+  className?: string | string[]
   slackImage?: string
   alt?: string
 }
