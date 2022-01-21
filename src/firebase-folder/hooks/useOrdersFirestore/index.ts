@@ -7,7 +7,6 @@ import {
 
 import { firebaseFirestore } from '@firebase-folder/configure'
 
-// import type { NoIdOrderItem } from '@other-support/Types'
 import type { NoIdOrderItem } from '@firebase-folder/types'
 
 import useOrdersListFirestore from '@firebase-folder/hooks/useOrdersListFirestore'

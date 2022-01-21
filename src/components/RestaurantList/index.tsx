@@ -10,20 +10,6 @@ const RestaurantList: React.FC = () => {
   const { list, hiddenRestaurantWithId } =
     useRestaurantsFirestore()
 
-  // console.log('list: ', JSON.stringify(list))
-
-  // React.useEffect(() => {
-  //   list.forEach(each =>
-  //     console.log(
-  //       `each=>id: ${each.id}, name: ${each.name} `
-  //     )
-  //   )
-
-  //   console.log(
-  //     '-----------------------------------------'
-  //   )
-  // }, [list])
-
   return (
     <div
       id="restaurant-list"
@@ -39,9 +25,6 @@ const RestaurantList: React.FC = () => {
         return (
           <div
             key={`restaurant-${index}-${item.name}`}
-            // href={`/restaurant/4gCw7KvAg628PQK0JkF0`}
-            // target="_blank"
-            // rel="noreferrer"
           >
             <div className="relative flex flex-col lg:flex-row items-center py-2">
               <div

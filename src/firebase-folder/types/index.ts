@@ -1,14 +1,12 @@
 import type {
-  // DocumentSnapshot,
   DocumentReference,
   DocumentData,
-  // QueryDocumentSnapshot,
-  // SnapshotOptions,
 } from 'firebase/firestore'
 
 import {
   FirebaseAuthFormItemKeyType,
   FirebaseNewRestaurantFormItemKeyType,
+  FirebaseNewOrderFormItemKeyType,
 } from '@firebase-folder/enums'
 
 export type FirebaseAuthFormItemType = {
@@ -24,6 +22,12 @@ export type FirebaseNewRestaurantFormItemType = {
   [FirebaseNewRestaurantFormItemKeyType.storagePath]:
     | string
     | undefined
+}
+
+export type FirebaseNewOrderFormItemType = {
+  [FirebaseNewOrderFormItemKeyType.itemName]: string
+  [FirebaseNewOrderFormItemKeyType.cost]: number
+  [FirebaseNewOrderFormItemKeyType.userReference]: DocumentReference<DocumentData>
 }
 
 export interface NoIdOrderItem {

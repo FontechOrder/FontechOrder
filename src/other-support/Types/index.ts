@@ -61,12 +61,12 @@ export interface MenuItem extends NoIdMenuItem {
   id: string
 }
 
-// export interface NoIdOrderItem {
-//   finished: boolean
-//   'restaurant-name': string
-//   ['storage-path']?: string
-// }
+export interface NoIdUserItem {
+  name: string
+  email: string
+  hidden: boolean
+}
 
-// export interface OrderItem extends NoIdOrderItem {
-//   id: string
-// }
+export interface UserItem extends NoIdUserItem {
+  id: string
+}

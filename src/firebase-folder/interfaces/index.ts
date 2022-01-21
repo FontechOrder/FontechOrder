@@ -1,6 +1,7 @@
 import {
   FirebaseAuthFormItemKeyType,
   FirebaseNewRestaurantFormItemKeyType,
+  FirebaseNewOrderFormItemKeyType,
 } from '@firebase-folder/enums'
 
 interface FormItem {
@@ -22,4 +23,9 @@ export interface FirebaseNewRestaurantFormItem
 export interface AsyncStoragePathImageProps {
   slackImage?: string
   alt?: string
+}
+
+export interface FirebaseNewOrderFormItem
+  extends FormItem {
+  id: FirebaseNewOrderFormItemKeyType
 }

@@ -14,9 +14,6 @@ const NewRestautantFormDataButton: React.FC =
     return (
       <CustomButton
         onClick={() => {
-          console.log(
-            'NewRestautantFormDataButton press'
-          )
           noIdRestaurants.forEach(
             noIdRestaurant =>
               newRestaurant(noIdRestaurant)

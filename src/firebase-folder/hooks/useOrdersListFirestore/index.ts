@@ -7,7 +7,6 @@ import {
 
 import { firebaseFirestore } from '@firebase-folder/configure'
 
-// import type { OrderItem } from '@other-support/Types'
 import type { OrderItem } from '@firebase-folder/types'
 
 const useOrdersListFirestore = () => {

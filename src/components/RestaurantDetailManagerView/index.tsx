@@ -16,14 +16,6 @@ const RestaurantDetailManagerView: React.FC =
           forceStringForNextRouterQueryFirst(id),
       })
 
-    // React.useEffect(() => {
-    //   console.log('restaurant: ', restaurant)
-    // }, [restaurant])
-
-    // React.useEffect(() => {
-    //   console.log('menus: ', menus)
-    // }, [menus])
-
     if (isFirst) {
       return (
         <div className="text-white">

@@ -2,9 +2,7 @@ import React from 'react'
 
 import {
   doc,
-  // deleteDoc,
   updateDoc,
-  // addDoc,
   setDoc,
   collection,
   onSnapshot,
@@ -23,22 +21,6 @@ const useRestaurantsFirestore = () => {
   const [list, setList] = React.useState(
     Array<RestaurantItem>()
   )
-
-  // const deleteRestaurantWithId = async ({
-  //   id,
-  // }: {
-  //   id: string
-  // }): Promise<boolean> => {
-  //   try {
-  //     await deleteDoc(
-  //       doc(firebaseFirestore, 'restaurants', id)
-  //     )
-  //   } catch {
-  //     return false
-  //   }
-
-  //   return true
-  // }
 
   const hiddenRestaurantWithId = async ({
     id,
@@ -63,14 +45,6 @@ const useRestaurantsFirestore = () => {
     restaurantItem: NoIdRestaurantItem
   ): Promise<boolean> => {
     try {
-      // await addDoc(
-      //   collection(
-      //     firebaseFirestore,
-      //     'restaurants'
-      //   ),
-      //   restaurantItem
-      // )
-
       await setDoc(
         doc(
           firebaseFirestore,
@@ -81,11 +55,9 @@ const useRestaurantsFirestore = () => {
         { merge: true }
       )
     } catch {
-      console.log(' setDoc error')
       return false
     }
 
-    console.log('setDoc success')
     return true
   }
 

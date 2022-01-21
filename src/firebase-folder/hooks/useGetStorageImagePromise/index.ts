@@ -24,8 +24,7 @@ const useGetStorageImagePromise = (
         setSrc(downloadURL)
         setResult('success')
       })
-      .catch((error: Error) => {
-        console.log('error: ', error.message)
+      .catch(() => {
         setResult('fail')
       })
   }, [slackImage])

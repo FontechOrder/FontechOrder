@@ -19,14 +19,6 @@ const OrderDetailManagerView: React.FC = () => {
         forceStringForNextRouterQueryFirst(id),
     })
 
-  // React.useEffect(() => {
-  //   console.log('order: ', order)
-  // }, [order])
-
-  // React.useEffect(() => {
-  //   console.log('menus: ', menus)
-  // }, [menus])
-
   if (isFirst) {
     return (
       <div className="text-white">
@@ -59,12 +51,22 @@ const OrderDetailManagerView: React.FC = () => {
       return obj
     }, {} as { [k: string]: OrderItemItem[] })
 
+  const orderStateString = () => {
+    const defaultString = `order isFinish: ${order.finished}\nrestaurantName: ${order['restaurant-name']}`
+
+    if (order.finished) {
+      return defaultString
+    }
+
+    return `${defaultString}\nstorage-path: ${order['storage-path']}`
+  }
+
   return (
     <div className="text-white">
       <div>OrderDetail id: {id}</div>
 
       <div className="break-all whitespace-pre-wrap py-4">
-        {`order isFinish: ${order.finished}\nrestaurantName: ${order['restaurant-name']}\nstorage-path: ${order['storage-path']}`}
+        {orderStateString()}
       </div>
 
       {Object.entries(orderItemItemsObject).map(

@@ -13,16 +13,9 @@ import type {
   DocumentSnapshot,
   DocumentReference,
   DocumentData,
-  // QueryDocumentSnapshot,
-  // SnapshotOptions,
 } from 'firebase/firestore'
 
 import { firebaseFirestore } from '@firebase-folder/configure'
-
-// import type {
-//   OrderItem,
-//   // OrderItemItem,
-// } from '@other-support/Types'
 
 import type {
   OrderItem,
@@ -92,6 +85,7 @@ const useOrderItemFirestore = ({
           finished: docData.finished,
           'restaurant-name':
             docData['restaurant-name'],
+          'storage-path': docData['storage-path'],
         })
         return true
       }
@@ -115,7 +109,6 @@ const useOrderItemFirestore = ({
       const restaurantData = restaurantSnap.data()
 
       if (!restaurantData.name) {
-        console.log('no restaurant name')
         return false
       }
 
@@ -142,7 +135,6 @@ const useOrderItemFirestore = ({
           eachOrderItem.data()
 
         if (!eachOrderItemData) {
-          console.log('no data')
           setIsFirst(false)
           return
         }
@@ -161,57 +153,6 @@ const useOrderItemFirestore = ({
 
         const itemsSnapshot = await getDocs(
           collection(orderDoc, 'items')
-          // ).withConverter({
-          //   toFirestore: (
-          //     orderItemItem: OrderItemItem
-          //   ) => ({
-          //     cost: orderItemItem.cost,
-          //     'item-name':
-          //       orderItemItem['item-name'],
-          //     'user-reference':
-          //       orderItemItem['user-reference'],
-          //   }),
-          //   fromFirestore: (
-          //     snapshot: QueryDocumentSnapshot,
-          //     options: SnapshotOptions
-          //   ): OrderItemItem | undefined => {
-          //     const data = snapshot.data(options)
-
-          //     if (!data) {
-          //       return undefined
-          //     }
-
-          //     console.log(
-          //       'fromFirestore data: ',
-          //       data
-          //     )
-
-          //     if (isNaN(data.cost)) {
-          //       return undefined
-          //     }
-
-          //     if (!data['item-name']) {
-          //       return undefined
-          //     }
-
-          //     if (!data['user-reference']) {
-          //       return undefined
-          //     }
-
-          //     return {
-          //       id: snapshot.id,
-          //       cost: data.cost,
-          //       'item-name': data['item-name'],
-          //       'user-reference':
-          //         data['user-reference'],
-          //     }
-          //   },
-          // })
-        )
-
-        console.log(
-          'itemsSnapshot.docs: ',
-          itemsSnapshot.docs
         )
 
         const itemsSnapshotResults =
@@ -228,11 +169,31 @@ const useOrderItemFirestore = ({
                   return undefined
                 }
 
-                if (isNaN(orderItemData.cost)) {
+                const menuItemReference =
+                  orderItemData[
+                    'menu-item-reference'
+                  ] as DocumentReference<DocumentData>
+
+                if (!menuItemReference) {
                   return undefined
                 }
 
-                if (!orderItemData['item-name']) {
+                const menuItemSnap = await getDoc(
+                  menuItemReference
+                )
+
+                if (!menuItemSnap.exists()) {
+                  return undefined
+                }
+
+                const menuItemData =
+                  menuItemSnap.data()
+
+                if (!menuItemData['item-name']) {
+                  return undefined
+                }
+
+                if (isNaN(menuItemData.cost)) {
                   return undefined
                 }
 
@@ -256,15 +217,14 @@ const useOrderItemFirestore = ({
                 const userData = userSnap.data()
 
                 if (!userData.name) {
-                  console.log('no user name')
                   return undefined
                 }
 
                 return {
                   id: each.id,
-                  cost: orderItemData.cost,
+                  cost: menuItemData.cost,
                   'item-name':
-                    orderItemData['item-name'],
+                    menuItemData['item-name'],
                   'user-reference': userReference,
                   'user-name': userData.name,
                 }
@@ -276,11 +236,6 @@ const useOrderItemFirestore = ({
           itemsSnapshotResults.filter(
             each => each
           ) as OrderItemItem[]
-
-        console.log(
-          'filteredItemsSnapshotResults: ',
-          filteredItemsSnapshotResults
-        )
 
         setOrderItemItems(
           filteredItemsSnapshotResults

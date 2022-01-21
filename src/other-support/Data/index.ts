@@ -1,6 +1,3 @@
-// const defaultObject = {}
-
-// export default defaultObject
 import type { NoIdRestaurantItem } from '@other-support/Types'
 
 export const restaurants = [
