@@ -1,13 +1,56 @@
 import type {
+  Firestore as FirebaseFirestore,
+  DocumentData as FirebaseDocumentData,
+  DocumentSnapshot,
   DocumentReference,
-  DocumentData,
+  QueryConstraint,
+  FirestoreError as FirebaseFirebaseDocumentData,
 } from 'firebase/firestore'
 
 import {
   FirebaseAuthFormItemKeyType,
   FirebaseNewRestaurantFormItemKeyType,
   FirebaseNewOrderFormItemKeyType,
+  FirebaseNewMenuImageFormItemKeyType,
+  FirebaseNewRestaurantMenuItemFormItemKeyType,
 } from '@firebase-folder/enums'
+
+export type Firestore = FirebaseFirestore
+export type DocumentData = FirebaseDocumentData
+export type FirestoreError =
+  FirebaseFirebaseDocumentData
+
+export type DocumentDataSnapshot =
+  DocumentSnapshot<DocumentData>
+
+export type DocumentDataSnapshotArray =
+  Array<DocumentDataSnapshot>
+
+export type DocumentDataSnapshotReference =
+  DocumentReference<DocumentDataSnapshot>
+
+export type DocumentDataReference =
+  DocumentReference<DocumentData>
+
+export type QueryConstraintArray =
+  Array<QueryConstraint>
+
+export type DocumentSnapshotWithDataObject = {
+  doc: DocumentSnapshot
+  data: DocumentData
+}
+
+export type DocumentSnapshotWithDataObjectList =
+  Array<DocumentSnapshotWithDataObject>
+
+export type OrderItemDocumentSnapshotWithDataObject =
+  {
+    user: DocumentSnapshotWithDataObject
+    menuItem: DocumentSnapshotWithDataObject
+  }
+
+export type OrderItemDocumentSnapshotWithDataObjectList =
+  Array<OrderItemDocumentSnapshotWithDataObject>
 
 export type FirebaseAuthFormItemType = {
   [FirebaseAuthFormItemKeyType.email]: string
@@ -15,26 +58,40 @@ export type FirebaseAuthFormItemType = {
 }
 
 export type FirebaseNewRestaurantFormItemType = {
+  [FirebaseNewRestaurantFormItemKeyType.hidden]: boolean
   [FirebaseNewRestaurantFormItemKeyType.name]: string
-  [FirebaseNewRestaurantFormItemKeyType.slackImage]:
+  [FirebaseNewRestaurantFormItemKeyType.imageUrl]:
     | string
-    | undefined
-  [FirebaseNewRestaurantFormItemKeyType.storagePath]:
-    | string
+}
+
+export type FirebaseNewMenuImageFormItemType = {
+  [FirebaseNewMenuImageFormItemKeyType.name]: string
+  [FirebaseNewMenuImageFormItemKeyType.file]:
+    | File
     | undefined
 }
 
 export type FirebaseNewOrderFormItemType = {
   [FirebaseNewOrderFormItemKeyType.itemName]: string
   [FirebaseNewOrderFormItemKeyType.cost]: number
-  [FirebaseNewOrderFormItemKeyType.userReference]: DocumentReference<DocumentData>
+  [FirebaseNewOrderFormItemKeyType.userReference]: DocumentDataReference
 }
+
+export type FirebaseNewRestaurantMenuItemFormItemType =
+  {
+    [FirebaseNewRestaurantMenuItemFormItemKeyType.name]: string
+    [FirebaseNewRestaurantMenuItemFormItemKeyType.cost]: number
+    [FirebaseNewRestaurantMenuItemFormItemKeyType.type]: string
+    [FirebaseNewRestaurantMenuItemFormItemKeyType.hidden]:
+      | 'true'
+      | 'false'
+  }
 
 export interface NoIdOrderItem {
   finished: boolean
   ['restaurant-name']?: string
   ['storage-path']?: string
-  ['restaurant-reference']?: DocumentReference<DocumentData>
+  ['restaurant-reference']?: DocumentDataReference
 }
 
 export interface OrderItem extends NoIdOrderItem {
@@ -45,7 +102,7 @@ export interface NoIdOrderItemItem {
   cost: number
   'item-name': string
   ['user-name']?: string
-  ['user-reference']?: DocumentReference<DocumentData>
+  ['user-reference']?: DocumentDataReference
 }
 
 export interface OrderItemItem

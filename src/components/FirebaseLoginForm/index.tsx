@@ -13,6 +13,8 @@ import { FirebaseAuthFormItemKeyType } from '@firebase-folder/enums'
 
 import { sleep } from '@other-support/Consts'
 
+import useUserManager from '@redux-folder/hooks/useUserManager'
+
 const inputs: Array<FirebaseAuthFormItem> = [
   {
     id: FirebaseAuthFormItemKeyType.email,
@@ -40,59 +42,83 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required('本欄位為必填'),
 })
 
-const FirebaseLoginForm: React.FC = () => {
+const FirebaseLoginForm = () => {
+  const { doInitUserManager } = useUserManager()
+
   const [isSubmitting, setIsSubmitting] =
     React.useState(false)
 
   const [errorString, setErrorString] =
     React.useState('')
 
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: async values => {
+  const formikOnSubmitWithCallback =
+    React.useCallback(
+      (
+        values: FirebaseAuthFormItemType,
+        callback: () => void
+      ) => {
+        const asyncFormikOnSubmit = async () => {
+          try {
+            const user =
+              await logInThenGetUserPromise({
+                email:
+                  values[
+                    FirebaseAuthFormItemKeyType
+                      .email
+                  ],
+                password:
+                  values[
+                    FirebaseAuthFormItemKeyType
+                      .password
+                  ],
+              })
+
+            if (!user) {
+              throw new Error('user not found')
+            }
+
+            doInitUserManager()
+          } catch (error) {
+            setErrorString('Login failed')
+            await sleep(2000)
+
+            setErrorString('')
+            setIsSubmitting(false)
+            return
+          }
+          callback()
+        }
+
+        asyncFormikOnSubmit()
+      },
+      [doInitUserManager]
+    )
+
+  const formikOnSubmit = React.useCallback(
+    (values: FirebaseAuthFormItemType) => {
       if (isSubmitting) {
         return
       }
 
       setIsSubmitting(true)
 
-      try {
-        const user =
-          await logInThenGetUserPromise({
-            email:
-              values[
-                FirebaseAuthFormItemKeyType.email
-              ],
-            password:
-              values[
-                FirebaseAuthFormItemKeyType
-                  .password
-              ],
-          })
-
-        if (!user) {
-          throw new Error('user not found')
-        }
-      } catch (error) {
-        setErrorString('Login failed')
-        await sleep(2000)
-
-        setErrorString('')
+      formikOnSubmitWithCallback(values, () => {
         setIsSubmitting(false)
-        return
-      }
-
-      setIsSubmitting(false)
+      })
     },
+    [isSubmitting, formikOnSubmitWithCallback]
+  )
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: formikOnSubmit,
   })
 
   return (
     <div>
-      <div>Update: 2021/12/20 18:08</div>
-      <p>請先登入</p>
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md"
         onSubmit={formik.handleSubmit}
       >
         <div
@@ -101,7 +127,7 @@ const FirebaseLoginForm: React.FC = () => {
           <div className="flex-1 md:pr-3">
             {inputs.map(each => (
               <FormikFormInput
-                key={`contact-us-form-input-${each.id}`}
+                key={`firebase-login-input-${each.id}`}
                 // className="flex flex-row my-1 md:my-2"
                 inputProps={{
                   id: each.id,

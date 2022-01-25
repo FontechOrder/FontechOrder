@@ -84,6 +84,8 @@ export const noIdRestaurants: NoIdRestaurantItem[] =
         'https://fontech.slack.com/files/U013RJR90U9/F014D99AYCE/____________.jpg',
       'storage-path':
         'menus/chao-fan-da-wang.jpeg',
+      'image-url':
+        'https://firebasestorage.googleapis.com/v0/b/fontech-order-54121918.appspot.com/o/menus/炒飯大王.jpeg?alt=media',
     },
     {
       name: '粥公',
@@ -152,3 +154,25 @@ export const noIdRestaurants: NoIdRestaurantItem[] =
         'menus/tie-lu-bian-dang.jpeg',
     },
   ]
+
+type NavItemType = {
+  path: string
+  title: string
+}
+
+export const navs: NavItemType[] = [
+  {
+    path: '/order',
+    title: 'Orders',
+  },
+  {
+    path: '/restaurant',
+    title: 'Restaurants',
+  },
+]
+
+export const canWriteFireStoreEmails = [
+  'jason@fontech.com.tw',
+  'service@fontech.com.tw',
+  'livia@fontech.com.tw',
+]

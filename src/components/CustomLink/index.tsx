@@ -2,8 +2,6 @@ import React from 'react'
 import classnames from 'classnames'
 import Link from 'next/link'
 
-// target="_blank"
-//       rel="noreferrer"
 interface CustomLinkProps {
   isBlank?: boolean
   className?: string | string[]
@@ -11,12 +9,12 @@ interface CustomLinkProps {
   path: string
 }
 
-const CustomLink: React.FC<CustomLinkProps> = ({
+const CustomLink = ({
   isBlank = false,
   className,
   title,
   path,
-}) => {
+}: CustomLinkProps) => {
   const isBlankObj = isBlank
     ? {
         target: '_blank',
@@ -27,10 +25,8 @@ const CustomLink: React.FC<CustomLinkProps> = ({
   return (
     <div
       className={classnames(
-        className,
-        'text-blue-800',
-        'hover:underline',
-        'p-2'
+        'p-2 text-blue-800 hover:underline',
+        className
       )}
     >
       <Link href={path}>

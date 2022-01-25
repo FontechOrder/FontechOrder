@@ -1,97 +1,112 @@
 import React from 'react'
-import classnames from 'classnames'
 
-import useRestaurantsFirestore from '@firebase-folder/hooks/useRestaurantsFirestore'
+import RestaurantItem from '@components/RestaurantItem'
+import PaginationComponent from '@components/PaginationComponent'
 
-import CustomButton from '@components/CustomButton'
-import CustomLink from '@components/CustomLink'
+import useFireStoreCollection from '@firebase-folder/hooks/useFireStoreCollection'
 
-import AsyncStoragePathImageLink from '@components/AsyncStoragePathImageLink'
+import usePagination from '@other-support/Hooks/usePagination'
 
-const RestaurantList: React.FC = () => {
-  const { list, hiddenRestaurantWithId } =
-    useRestaurantsFirestore()
+const RestaurantList = () => {
+  const [paginationText, setPaginationText] =
+    React.useState('')
+
+  const {
+    currentPage,
+    setCurrentPage,
+    paginationCount,
+    totalCount,
+    setTotalCount,
+    maxCurrentPage,
+    disabledPrev,
+    disabledNext,
+    prevPaginationButtonPress,
+    nextPaginationButtonPress,
+  } = usePagination()
+
+  const { isInit, documents: restaurantDocs } =
+    useFireStoreCollection({
+      path: 'restaurants',
+      orderByKey: 'name',
+    })
+
+  React.useEffect(() => {
+    const totalCount = restaurantDocs.length || 0
+
+    setTotalCount(totalCount)
+  }, [setTotalCount, restaurantDocs])
+
+  const filteredRestaurantDocs =
+    React.useMemo(() => {
+      if (!restaurantDocs) {
+        return []
+      }
+
+      const sliceNumberStart =
+        (currentPage - 1) * paginationCount
+
+      const sliceNumberEnd =
+        sliceNumberStart + paginationCount <
+        totalCount
+          ? sliceNumberStart + paginationCount
+          : totalCount
+
+      return restaurantDocs.slice(
+        sliceNumberStart,
+        sliceNumberEnd
+      )
+    }, [
+      currentPage,
+      paginationCount,
+      totalCount,
+      restaurantDocs,
+    ])
+
+  const updatePaginationText = (
+    paginationText: string
+  ) => {
+    setPaginationText(paginationText)
+  }
+
+  const updateCurrentPage = (
+    newCurrentPage: number
+  ) => {
+    setCurrentPage(newCurrentPage)
+  }
+
+  if (isInit) {
+    return <div>restaurant list loading...</div>
+  }
 
   return (
-    <div
-      id="restaurant-list"
-      className="h-[500px] overflow-y-scroll lg:h-auto lg:overflow-y-auto my-[10px]"
-    >
-      <div className="text-white">
-        Restaurant List
+    <div className="p-4 text-white">
+      <div className="flex flex-row flex-wrap">
+        {filteredRestaurantDocs.map(
+          (restaurantDoc, index) => (
+            <RestaurantItem
+              key={'restaurant-item-' + index}
+              restaurantDoc={restaurantDoc}
+            />
+          )
+        )}
       </div>
-      {list.map((item, index) => {
-        const itemStoragePath =
-          item['storage-path']
-
-        return (
-          <div
-            key={`restaurant-${index}-${item.name}`}
-          >
-            <div className="flex flex-col lg:flex-row items-center py-2">
-              <div
-                className={classnames(
-                  'relative flex flex-0 flex-col w-[60vw] sm:w-[50vw] lg:w-[160px] lg:w-[160px] aspect-square ',
-                  !itemStoragePath &&
-                    'bg-yellow-100'
-                )}
-              >
-                {itemStoragePath && (
-                  <AsyncStoragePathImageLink
-                    slackImage={itemStoragePath}
-                    alt="storage-path-image"
-                  />
-                )}
-                <CustomButton
-                  className="absolute top-2 left-2 bg-red-800"
-                  onClick={() =>
-                    hiddenRestaurantWithId({
-                      id: item.id,
-                    })
-                  }
-                >
-                  Delete
-                </CustomButton>
-              </div>
-
-              <div className="flex flex-1 flex-col w-[calc(100%-160px-16px)] m-2">
-                {[
-                  {
-                    title: 'name ' + (index + 1),
-                    text: item.name,
-                  },
-                  {
-                    title: 'slack-image',
-                    text: item['slack-image'],
-                  },
-                  {
-                    title: 'storage-path',
-                    text: itemStoragePath,
-                  },
-                ].map((titleText, i) => (
-                  <div
-                    key={`titleText-${i}-${titleText.title}`}
-                    className="relative flex flex-col lg:flex-row items-center w-full text-white"
-                  >
-                    <div className="hidden lg:flex lg:w-[130px] lg:min-w-[130px]">
-                      {titleText.title}
-                    </div>
-                    <div className="flex flex-1 lg:w-[calc(100%-130px)] break-all">
-                      {titleText.text}
-                    </div>
-                  </div>
-                ))}
-                <CustomLink
-                  className="self-end mt-2"
-                  path={`/restaurant/${item.name}`}
-                  isBlank
-                  title="Detail ..."
-                />
-              </div>
-            </div>
-          </div>
-        )
-      })}
+      <PaginationComponent
+        currentPage={currentPage}
+        paginationText={paginationText}
+        updatePaginationText={
+          updatePaginationText
+        }
+        updateCurrentPage={updateCurrentPage}
+        maxCurrentPage={maxCurrentPage}
+        disabledPrev={disabledPrev}
+        prevPaginationButtonPress={
+          prevPaginationButtonPress
+        }
+        disabledNext={disabledNext}
+        nextPaginationButtonPress={
+          nextPaginationButtonPress
+        }
+      />
     </div>
   )
 }

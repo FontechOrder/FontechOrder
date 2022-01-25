@@ -15,23 +15,21 @@ interface FormikFormInputProps {
     | undefined
 }
 
-const FormikFormInput: React.FC<
-  FormikFormInputProps
-> = ({
+const FormikFormInput = ({
   className,
   inputProps = {},
   label,
   showError = false,
   errorString = '',
-}) => {
+}: FormikFormInputProps) => {
   return (
-    <div className="pb-8">
+    <div className="pb-4">
       <div className={className}>
-        <label className="flex-0 block text-gray-700 text-sm font-bold mb-2">
+        <label className="flex-0 mb-2 block text-sm font-bold text-gray-700">
           {label}
         </label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
           type="text"
           {...inputProps}
         />
@@ -39,7 +37,7 @@ const FormikFormInput: React.FC<
 
       <div
         className={classNames(
-          'text-red-500 text-body-sm h-4 my-1',
+          'text-body-sm my-1 h-4 text-red-500',
           showError && errorString
             ? 'opacity-100'
             : 'opacity-0'

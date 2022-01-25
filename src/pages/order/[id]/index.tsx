@@ -1,15 +1,18 @@
 import React from 'react'
+import { useRouter } from 'next/router'
+import PageContentDefault from '@containers/PageContent/default'
 
-import FirebaseAuthControlView from '@containers/FirebaseAuthControlView'
+import OrderDetail from '@components/OrderDetail'
 
-import OrderDetailManagerView from '@components/OrderDetailManagerView'
+const RestaurantId = () => {
+  const router = useRouter()
+  const { id } = router.query
 
-const RestaurantDetail: React.FC = () => {
   return (
-    <FirebaseAuthControlView
-      authorizedView={<OrderDetailManagerView />}
-    />
+    <PageContentDefault>
+      <OrderDetail id={id} />
+    </PageContentDefault>
   )
 }
 
-export default RestaurantDetail
+export default RestaurantId

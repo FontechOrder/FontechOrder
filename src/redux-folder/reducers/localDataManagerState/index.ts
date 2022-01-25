@@ -2,7 +2,7 @@ import {
   LocalDataManagerStateType,
   LOCALDATA_STRING,
   LocalDataManagerActionTypes,
-} from '@redux-folder/types/localDataManagerType'
+} from '@redux-folder/reducers/localDataManagerState/type'
 
 import { switchCaseTState } from '@other-support/Consts'
 

@@ -16,14 +16,16 @@ import {
 import storage from 'redux-persist/lib/storage'
 
 import localDataManagerState from '@redux-folder/reducers/localDataManagerState'
+import userManagerState from '@redux-folder/reducers/userManagerState'
 
 const rootReducer = combineReducers({
   localDataManagerState,
+  userManagerState,
 })
 
 const configureStore = (): StringKeyObject => {
   const persistConfig = {
-    key: 'fontech-game-reducer',
+    key: 'root',
     storage: storage,
     blacklist: ['localDataManagerState'],
   }

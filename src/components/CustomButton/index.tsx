@@ -24,7 +24,9 @@ const CustomButton: React.FC<
         'px-4',
         'rounded',
         'focus:outline-none',
-        'focus:shadow-outline'
+        'focus:shadow-outline',
+        'disabled:bg-slate-500',
+        'disabled:text-slate-400'
       )}
       {...props}
     >

@@ -1,14 +1,15 @@
 import React from 'react'
-import RestaurantManagerView from '@components/RestaurantManagerView'
+import PageContentDefault from '@containers/PageContent/default'
+import RestaurantList from '@components/RestaurantList'
 
-import FirebaseAuthControlView from '@containers/FirebaseAuthControlView'
-
-const RestaurantTest: React.FC = () => {
+const Restaurant = () => {
   return (
-    <FirebaseAuthControlView
-      authorizedView={<RestaurantManagerView />}
-    />
+    <PageContentDefault>
+      <div className="bg-yellow-800">
+        <RestaurantList />
+      </div>
+    </PageContentDefault>
   )
 }
 
-export default RestaurantTest
+export default Restaurant

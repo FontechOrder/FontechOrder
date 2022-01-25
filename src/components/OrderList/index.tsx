@@ -1,71 +1,64 @@
 import React from 'react'
 
-import useOrdersFirestore from '@firebase-folder/hooks/useOrdersFirestore'
-import CustomLink from '@components/CustomLink'
+import OrderLi from '@components/OrderLi'
+import OrderLiHistory from '@components/OrderLi/history'
 
-enum RadioValue {
-  All = 'All',
-  Finished = 'Finished',
-  NoFinish = 'No Finish',
-}
+import useAllOrder from '@other-support/Hooks/useAllOrder'
 
-const OrderList: React.FC = () => {
-  const { list } = useOrdersFirestore()
-  const [radioValue, setRadioValue] =
-    React.useState<RadioValue>(
-      RadioValue.NoFinish
-    )
+const OrderList = () => {
+  const {
+    isInit,
+    isLoading,
 
-  const results = React.useMemo(() => {
-    if (radioValue === RadioValue.NoFinish) {
-      return list.filter(each => !each.finished)
-    }
+    finishedOrderDocs,
+    unfinishedOrderDocs,
+    historyOrderDocs,
+  } = useAllOrder()
 
-    if (radioValue === RadioValue.Finished) {
-      return list.filter(each => each.finished)
-    }
+  if (isInit) {
+    return <div>isInit...</div>
+  }
 
-    return list
-  }, [list, radioValue])
+  if (isLoading) {
+    return <div>isLoading...</div>
+  }
 
   return (
     <div>
-      <div className="flex flex-row flex-wrap py-4">
-        {[
-          RadioValue.All,
-          RadioValue.Finished,
-          RadioValue.NoFinish,
-        ].map((each, index) => (
-          <div
-            key={`order-radio-value-${index}`}
-            className="mr-4"
-          >
-            <label className="flex items-center">
-              <input
-                type="radio"
-                checked={radioValue === each}
-                onChange={() =>
-                  setRadioValue(each)
-                }
-              />
-              <div className="ml-2 text-white">
-                {each}
-              </div>
-            </label>
-          </div>
-        ))}
-      </div>
-      <div>
-        OrderList:
-        {results.map(each => (
-          <CustomLink
-            key={`order-item-${each.id}`}
-            path={`/order/${each.id}`}
-            title={each.id}
-            isBlank
-          />
-        ))}
-      </div>
+      <p>Active:</p>
+      <ul className="list-decimal pl-8">
+        {unfinishedOrderDocs.map(
+          (orderDoc, index) => (
+            <OrderLi
+              key={`orderDoc_${index}`}
+              orderDoc={orderDoc}
+            />
+          )
+        )}
+      </ul>
+
+      <p>Finish:</p>
+      <ol className="list-disc pl-8">
+        {finishedOrderDocs.map(
+          (orderDoc, index) => (
+            <OrderLi
+              key={`orderDoc_${index}`}
+              orderDoc={orderDoc}
+            />
+          )
+        )}
+      </ol>
+      <p>History:</p>
+      <ol className="list-disc pl-8">
+        {historyOrderDocs.map(
+          (orderDoc, index) => (
+            <OrderLiHistory
+              key={`orderDoc_${index}`}
+              orderDoc={orderDoc}
+            />
+          )
+        )}
+      </ol>
     </div>
   )
 }

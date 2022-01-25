@@ -1,13 +1,11 @@
 import React from 'react'
-import 'tailwindcss/tailwind.css'
+import PageContentDefault from '@containers/PageContent/default'
 
-const Home: React.FC = () => {
+const Home = () => {
   return (
-    <div className="p-4">
-      <div className="text-white">
-        Fontech Order Home
-      </div>
-    </div>
+    <PageContentDefault>
+      Fontech Order Home
+    </PageContentDefault>
   )
 }
 

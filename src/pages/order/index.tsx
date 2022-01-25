@@ -1,14 +1,16 @@
 import React from 'react'
-import OrderManagerView from '@components/OrderManagerView'
 
-import FirebaseAuthControlView from '@containers/FirebaseAuthControlView'
+import PageContentDefault from '@containers/PageContent/default'
+import OrderList from '@components/OrderList'
+import NewOrdersLink from '@components/NewOrdersLink'
 
-const MenuTest: React.FC = () => {
+const Order = () => {
   return (
-    <FirebaseAuthControlView
-      authorizedView={<OrderManagerView />}
-    />
+    <PageContentDefault>
+      <NewOrdersLink />
+      <OrderList />
+    </PageContentDefault>
   )
 }
 
-export default MenuTest
+export default Order

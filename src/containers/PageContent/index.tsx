@@ -1,14 +1,25 @@
 import React from 'react'
 
-const PageContent: React.FC = props => {
+interface PageContentProps {
+  header?: JSX.Element | React.ReactNode
+  footer?: React.ReactNode
+}
+
+const PageContent: React.FC<PageContentProps> = ({
+  header,
+  children,
+  footer,
+}) => {
   return (
     <div
       id="page-content"
-      className="flex justify-center p-4"
+      className="flex min-w-[20rem] flex-col "
     >
-      <div className="lg:w-[1024px] lg:max-w-[1024px]">
-        {props.children}
+      {header}
+      <div className="w-full self-center lg:w-[64rem] lg:max-w-[64rem]">
+        {children}
       </div>
+      {footer}
     </div>
   )
 }

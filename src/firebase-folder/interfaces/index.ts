@@ -2,6 +2,7 @@ import {
   FirebaseAuthFormItemKeyType,
   FirebaseNewRestaurantFormItemKeyType,
   FirebaseNewOrderFormItemKeyType,
+  FirebaseNewRestaurantMenuItemFormItemKeyType,
 } from '@firebase-folder/enums'
 
 interface FormItem {
@@ -29,4 +30,9 @@ export interface AsyncStoragePathImageProps {
 export interface FirebaseNewOrderFormItem
   extends FormItem {
   id: FirebaseNewOrderFormItemKeyType
+}
+
+export interface FirebaseNewMenuImageFormItem
+  extends FormItem {
+  id: FirebaseNewRestaurantMenuItemFormItemKeyType
 }

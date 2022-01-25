@@ -1,5 +1,8 @@
 import { ReactNode } from 'react'
 
+export type BooleanString = 'true' | 'false'
+export type BooleanResult = 'success' | 'failed'
+
 export type Nullable<T> = T | null
 
 export type Int = number & { __int__: void }
@@ -44,11 +47,17 @@ export type NoIdRestaurantItem = {
   name: string
   ['slack-image']?: string
   ['storage-path']?: string
+  ['image-url']?: string
 }
 
 export interface RestaurantItem
   extends NoIdRestaurantItem {
   id: string
+}
+
+export interface StorageImageType {
+  name: string
+  downloadURL: string
 }
 
 export interface NoIdMenuItem {

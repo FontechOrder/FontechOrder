@@ -90,19 +90,14 @@ export const returnIntId = (
   return parseInt(id[0])
 }
 
-export const unionArray = <T>({
-  currentArray,
-  targetArray,
-}: {
-  currentArray: T[]
-  targetArray: T[]
-}): T[] =>
-  Array.from(
-    new Set<T>([
-      ...currentArray,
-      ...targetArray,
-    ]).values()
-  )
+export const unionArrayFromArrays = <T>(
+  arrayList: T[][] = []
+): T[] => unionArray(arrayList.flat(1))
+
+export const unionArray = <T>(
+  arrayList: T[] = []
+): T[] =>
+  Array.from(new Set<T>(arrayList).values())
 
 export const fakeRandomImage = ({
   id = 1,
@@ -142,3 +137,84 @@ export const forceStringForNextRouterQueryFirst =
 
     return check
   }
+
+export const isArrayInArray = ({
+  target,
+  compare,
+}: {
+  target: any[]
+  compare: any[]
+}): boolean => {
+  const targetString = JSON.stringify(target)
+
+  const contains = compare.some((ele: any) => {
+    return JSON.stringify(ele) === targetString
+  })
+  return contains
+}
+
+export const isObjectEqualToAnother = ({
+  target,
+  compare,
+}: {
+  target: StringKeyObject
+  compare: StringKeyObject
+}): boolean => {
+  const targetKeys = Object.keys(target)
+  const compareKeys = Object.keys(compare)
+
+  if (
+    isArrayInArray({
+      target: targetKeys,
+      compare: compareKeys,
+    })
+  ) {
+    return false
+  }
+
+  const targetValues = Object.values(target)
+  const compareValues = Object.values(compare)
+
+  if (
+    isArrayInArray({
+      target: targetValues,
+      compare: compareValues,
+    })
+  ) {
+    return false
+  }
+
+  return true
+}
+
+export const shuffle = <T>(array: T[]) =>
+  array.slice().reduce((result, _, i) => {
+    const index = array.length - 1 - i
+    const newIndex = Math.floor(
+      Math.random() * (index + 1)
+    )
+
+    ;[array[newIndex], array[index]] = [
+      array[index],
+      array[newIndex],
+    ]
+    return array
+  }, array)
+
+export const sortByTwoString = (
+  a: string | undefined,
+  b: string | undefined
+) => {
+  if (!a) {
+    return 0
+  }
+
+  if (!b) {
+    return 0
+  }
+
+  if (a < b) return -1
+  if (a > b) return 1
+
+  return 0
+}

@@ -8,14 +8,14 @@ const useFirebaseAuth = () => {
   const [isFirst, setIsFirst] =
     React.useState<boolean>(true)
 
-  const [user, setUser] =
+  const [firebaseAuthUser, setFirebaseAuthUser] =
     React.useState<User | null>(null)
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(
       firebaseAuth,
       user => {
-        setUser(user)
+        setFirebaseAuthUser(user)
         setIsFirst(false)
       }
     )
@@ -27,7 +27,7 @@ const useFirebaseAuth = () => {
 
   return {
     isFirst,
-    user,
+    firebaseAuthUser,
   }
 }
 

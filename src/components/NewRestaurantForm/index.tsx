@@ -2,65 +2,70 @@ import React from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 
+import PaginationComponent from '@components/PaginationComponent'
+
 import FormikFormInput from '@components/FormikFormInput'
 import CustomButton from '@components/CustomButton'
+import CustomLink from '@components/CustomLink'
+// import ZoomImageWithSize from '@components/ZoomImageWithSize'
+import MenuImageRectangleView from '@components/MenuImageRectangleView'
 
-import { FirebaseNewRestaurantFormItem } from '@firebase-folder/interfaces'
 import { FirebaseNewRestaurantFormItemType } from '@firebase-folder/types'
 import { FirebaseNewRestaurantFormItemKeyType } from '@firebase-folder/enums'
 
-import useRestaurantsFirestore from '@firebase-folder/hooks/useRestaurantsFirestore'
+import { StorageImageType } from '@other-support/Types'
 
-import { sleep } from '@other-support/Consts'
+// import { sleep } from '@other-support/Consts'
 
-const inputs: Array<FirebaseNewRestaurantFormItem> =
-  [
-    {
-      id: FirebaseNewRestaurantFormItemKeyType.name,
-      label: '名稱*',
-      type: 'text',
-      placeholder: '請輸入餐廳名稱',
-    },
-    {
-      id: FirebaseNewRestaurantFormItemKeyType.slackImage,
-      label: 'Slack Image',
-      type: 'text',
-      placeholder: '請輸入在slack上的圖片路徑',
-    },
-    {
-      id: FirebaseNewRestaurantFormItemKeyType.storagePath,
-      label: 'Storage Path',
-      type: 'text',
-      placeholder:
-        '請輸入在Firebase Storage上的圖片路徑',
-    },
-  ]
+import getStorageImagesMaxHundredPromise from '@firebase-folder/functions/getStorageImagesMaxHundredPromise'
+import setFireStoreDocPromise from '@firebase-folder/functions/setFireStoreDocPromise'
+
+import usePagination from '@other-support/Hooks/usePagination'
 
 const initialValues: FirebaseNewRestaurantFormItemType =
   {
+    [FirebaseNewRestaurantFormItemKeyType.hidden]:
+      false,
     [FirebaseNewRestaurantFormItemKeyType.name]:
       '',
-    [FirebaseNewRestaurantFormItemKeyType.slackImage]:
-      '',
-    [FirebaseNewRestaurantFormItemKeyType.storagePath]:
+    [FirebaseNewRestaurantFormItemKeyType.imageUrl]:
       '',
   }
 
 const validationSchema = Yup.object().shape({
+  hidden: Yup.boolean(),
   name: Yup.string().required('本欄位為必填'),
-  slackImage: Yup.string(),
-  storagePath: Yup.string(),
+  imageUrl: Yup.string(),
 })
 
-const NewRestaurantForm: React.FC = () => {
-  const { newRestaurant } =
-    useRestaurantsFirestore()
-
+const NewRestaurantForm = () => {
   const [isSubmitting, setIsSubmitting] =
     React.useState(false)
+  const [menuImages, setMenuImages] =
+    React.useState<StorageImageType[]>([])
 
-  const [errorString, setErrorString] =
+  const [paginationText, setPaginationText] =
     React.useState('')
+
+  const [selectedMenuName, setSelectedMenuName] =
+    React.useState('')
+
+  const {
+    currentPage,
+    setCurrentPage,
+    paginationCount,
+    totalCount,
+    setTotalCount,
+    maxCurrentPage,
+    disabledPrev,
+    disabledNext,
+    prevPaginationButtonPress,
+    nextPaginationButtonPress,
+  } = usePagination({
+    getPaginationCount: 6,
+  })
+
+  const [errorString] = React.useState('')
 
   const formik = useFormik({
     initialValues,
@@ -72,80 +77,229 @@ const NewRestaurantForm: React.FC = () => {
 
       setIsSubmitting(true)
 
+      // console.log('NewRestaurantForm values: ', values)
       try {
-        await newRestaurant({
-          hidden: false,
-          name: values[
-            FirebaseNewRestaurantFormItemKeyType
-              .name
-          ],
-          'slack-image':
-            values[
-              FirebaseNewRestaurantFormItemKeyType
-                .slackImage
-            ],
-          'storage-path':
-            values[
-              FirebaseNewRestaurantFormItemKeyType
-                .storagePath
-            ],
+        await setFireStoreDocPromise({
+          path: '/restaurants/' + values.name,
+          data: values,
         })
-
-        formik.setValues(initialValues)
       } catch (error) {
-        setErrorString('Login failed')
-        await sleep(2000)
-
-        setErrorString('')
-        setIsSubmitting(false)
-        return
+        if (error instanceof Error) {
+          console.log('error: ', error.message)
+          return
+        }
       }
 
       setIsSubmitting(false)
     },
   })
 
+  const getDownloadURLs =
+    React.useCallback(() => {
+      const asyncGetDownloadURLs = async () => {
+        try {
+          const downloadURLs =
+            await getStorageImagesMaxHundredPromise(
+              {
+                path: '/menus',
+              }
+            )
+          setMenuImages(downloadURLs)
+          setTotalCount(downloadURLs.length)
+        } catch {}
+      }
+
+      asyncGetDownloadURLs()
+    }, [setTotalCount])
+
+  React.useEffect(() => {
+    getDownloadURLs()
+  }, [getDownloadURLs])
+
+  const updatePaginationText = (
+    paginationText: string
+  ) => {
+    setPaginationText(paginationText)
+  }
+
+  const updateCurrentPage = (
+    newCurrentPage: number
+  ) => {
+    setCurrentPage(newCurrentPage)
+  }
+
+  const filteredMenuImages = React.useMemo(() => {
+    if (!menuImages) {
+      return []
+    }
+
+    const sliceNumberStart =
+      (currentPage - 1) * paginationCount
+
+    const sliceNumberEnd =
+      sliceNumberStart + paginationCount <
+      totalCount
+        ? sliceNumberStart + paginationCount
+        : totalCount
+
+    return menuImages.slice(
+      sliceNumberStart,
+      sliceNumberEnd
+    )
+  }, [
+    currentPage,
+    paginationCount,
+    totalCount,
+    menuImages,
+  ])
+
   return (
     <div>
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md"
         onSubmit={formik.handleSubmit}
       >
-        <div
-        // className="flex flex-col md:flex-row"
-        >
+        <div className="flex flex-col">
+          <div className="flex flex-row items-center justify-end">
+            <div
+              className="mr-4 text-gray-800"
+              onClick={() => {
+                setSelectedMenuName('')
+                formik.setFieldValue(
+                  FirebaseNewRestaurantFormItemKeyType.imageUrl,
+                  '',
+                  false
+                )
+              }}
+            >
+              已選菜單：{selectedMenuName}
+            </div>
+            <CustomButton type="submit">
+              新增餐廳
+            </CustomButton>
+          </div>
           <div className="flex-1 md:pr-3">
-            {inputs.map(each => (
-              <FormikFormInput
-                key={`contact-us-form-input-${each.id}`}
-                // className="flex flex-row my-1 md:my-2"
-                inputProps={{
-                  id: each.id,
-                  name: each.id,
-                  placeholder: each.placeholder,
-                  type: each.type,
-                  onChange: formik.handleChange,
-                  value: formik.values[each.id],
-                }}
-                label={each.label}
-                showError={
-                  !!(
-                    formik.touched[each.id] &&
-                    formik.errors[each.id]
-                  )
+            <label className="flex flex-row items-center">
+              <input
+                name={
+                  FirebaseNewRestaurantFormItemKeyType.hidden
                 }
-                errorString={
-                  formik.errors[each.id]
+                type="checkbox"
+                onChange={formik.handleChange}
+                checked={
+                  formik.values[
+                    FirebaseNewRestaurantFormItemKeyType
+                      .hidden
+                  ]
                 }
               />
-            ))}
+              <div className="pl-2 text-gray-600">
+                是否隱藏
+              </div>
+            </label>
+            <FormikFormInput
+              inputProps={{
+                id: FirebaseNewRestaurantFormItemKeyType.name,
+                name: FirebaseNewRestaurantFormItemKeyType.name,
+                placeholder: 'Restaurant Name',
+                type: 'text',
+                onChange: formik.handleChange,
+                value:
+                  formik.values[
+                    FirebaseNewRestaurantFormItemKeyType
+                      .name
+                  ],
+              }}
+              label="name*"
+              showError={
+                !!(
+                  formik.touched[
+                    FirebaseNewRestaurantFormItemKeyType
+                      .name
+                  ] &&
+                  formik.errors[
+                    FirebaseNewRestaurantFormItemKeyType
+                      .name
+                  ]
+                )
+              }
+              errorString={
+                formik.errors[
+                  FirebaseNewRestaurantFormItemKeyType
+                    .name
+                ]
+              }
+            />
           </div>
         </div>
-        <CustomButton type="submit">
-          新增餐廳
-        </CustomButton>
         {errorString && <p>{errorString}</p>}
       </form>
+      <div className="bg-white">
+        <CustomLink
+          title="新增菜單圖"
+          path="/menu-image/new"
+        />
+        <div className="flex flex-row flex-wrap justify-center text-gray-400">
+          {filteredMenuImages.map(
+            (menuImage, index) => (
+              <MenuImageRectangleView
+                key={`menu-image-container-${currentPage}-${index}`}
+                storageImage={menuImage}
+              >
+                <label className="flex flex-row items-center p-4">
+                  <input
+                    name={
+                      FirebaseNewRestaurantFormItemKeyType.imageUrl
+                    }
+                    type="radio"
+                    onChange={() => {
+                      formik.setFieldValue(
+                        FirebaseNewRestaurantFormItemKeyType.imageUrl,
+                        menuImage.downloadURL,
+                        false
+                      )
+
+                      setSelectedMenuName(
+                        menuImage.name
+                      )
+                    }}
+                    value={menuImage.downloadURL}
+                    checked={
+                      formik.values[
+                        FirebaseNewRestaurantFormItemKeyType
+                          .imageUrl
+                      ] === menuImage.downloadURL
+                    }
+                  />
+                  <div className="pl-2 text-gray-600">
+                    {menuImage.name}
+                  </div>
+                </label>
+              </MenuImageRectangleView>
+            )
+          )}
+        </div>
+        {totalCount ? (
+          <PaginationComponent
+            className="bg-gray-300 text-gray-800"
+            currentPage={currentPage}
+            paginationText={paginationText}
+            updatePaginationText={
+              updatePaginationText
+            }
+            updateCurrentPage={updateCurrentPage}
+            maxCurrentPage={maxCurrentPage}
+            disabledPrev={disabledPrev}
+            prevPaginationButtonPress={
+              prevPaginationButtonPress
+            }
+            disabledNext={disabledNext}
+            nextPaginationButtonPress={
+              nextPaginationButtonPress
+            }
+          />
+        ) : null}
+      </div>
     </div>
   )
 }
