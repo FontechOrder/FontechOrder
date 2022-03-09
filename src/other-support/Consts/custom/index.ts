@@ -1,5 +1,7 @@
 import setFireStoreDocPromise from '@firebase-folder/functions/setFireStoreDocPromise'
 
+import type { BooleanString } from '@other-support/Types'
+
 export const initStringArray = Array<string>()
 
 const FONTECH_EMAIL_TAIL = '@fontech.com.tw'
@@ -57,4 +59,14 @@ export const setUserFireStore = async (
   }
 
   return true
+}
+
+export const convertBooleanString = (
+  bString: BooleanString
+): BooleanString => {
+  if (bString === 'true') {
+    return 'false'
+  }
+
+  return 'true'
 }

@@ -86,11 +86,6 @@ export const getOrderItemsFromOrderDoc = async (
         path: 'items',
       })
 
-    // console.log(
-    //   'getOrderItemsFromOrderDoc orderItemDocs: ',
-    //   orderItemDocs
-    // )
-
     const orderItems = await orderItemDocs.reduce(
       async (resultPromise, orderItemDoc) => {
         const result = await resultPromise

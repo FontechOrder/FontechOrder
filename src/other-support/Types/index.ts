@@ -60,10 +60,25 @@ export interface StorageImageType {
   downloadURL: string
 }
 
+export enum NoIdMenuItemStringKeys {
+  HIDDEN = 'hidden',
+  NAME = 'name',
+  COST = 'cost',
+  TYPE = 'type',
+}
+
 export interface NoIdMenuItem {
-  name: string
-  cost: number
-  type: string
+  [NoIdMenuItemStringKeys.HIDDEN]: boolean
+  [NoIdMenuItemStringKeys.NAME]: string
+  [NoIdMenuItemStringKeys.COST]: number
+  [NoIdMenuItemStringKeys.TYPE]: string
+}
+
+export interface NoIdMenuItemForInput {
+  [NoIdMenuItemStringKeys.HIDDEN]: BooleanString
+  [NoIdMenuItemStringKeys.NAME]: string
+  [NoIdMenuItemStringKeys.COST]: number
+  [NoIdMenuItemStringKeys.TYPE]: string
 }
 
 export interface MenuItem extends NoIdMenuItem {

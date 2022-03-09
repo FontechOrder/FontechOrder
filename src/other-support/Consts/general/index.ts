@@ -218,3 +218,14 @@ export const sortByTwoString = (
 
   return 0
 }
+
+export const isArrayOfStrings = (
+  value: any
+): boolean =>
+  Array.isArray(value) &&
+  value.every(item => typeof item === 'string')
+
+export const isNonEmptyArrayOfStrings = (
+  value: any
+): boolean =>
+  isArrayOfStrings(value) && value.length > 0

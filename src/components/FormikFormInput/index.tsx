@@ -1,5 +1,5 @@
 import React from 'react'
-import classNames from 'classnames'
+import classnames from 'classnames'
 import { FormikErrors } from 'formik'
 
 interface FormikFormInputProps {
@@ -36,7 +36,7 @@ const FormikFormInput = ({
       </div>
 
       <div
-        className={classNames(
+        className={classnames(
           'text-body-sm my-1 h-4 text-red-500',
           showError && errorString
             ? 'opacity-100'

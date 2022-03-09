@@ -5,6 +5,8 @@ import { useFormik } from 'formik'
 
 import type { DocumentData } from '@firebase-folder/types'
 
+import useUserManager from '@redux-folder/hooks/useUserManager'
+
 import FormikFormInput from '@components/FormikFormInput'
 import CustomButton from '@components/CustomButton'
 
@@ -92,11 +94,16 @@ const NewRestaurantMenuItemForm = ({
       //   restaurantDoc
       // )
       // console.log('NewRestaurantMenuItemForm values: ', values)
+      const newValues = {
+        ...values,
+        hidden: values.hidden === 'true',
+      }
+
       try {
         await setFireStoreDocPromise({
           documentReference: restaurantDoc.ref,
           path: 'menuItems/' + values.name,
-          data: values,
+          data: newValues,
         })
 
         // console.log(
@@ -118,6 +125,14 @@ const NewRestaurantMenuItemForm = ({
       setIsSubmitting(false)
     },
   })
+
+  const {
+    isCanWriteFireStoreEmailUser: canShow,
+  } = useUserManager()
+
+  if (!canShow) {
+    return null
+  }
 
   if (result) {
     return (
