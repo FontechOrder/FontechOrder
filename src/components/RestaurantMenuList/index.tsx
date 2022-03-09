@@ -7,6 +7,7 @@ import PaginationComponent from '@components/PaginationComponent'
 import useFireStoreCollection from '@firebase-folder/hooks/useFireStoreCollection'
 
 import usePagination from '@other-support/Hooks/usePagination'
+import { getDocumentData } from '@other-support/Consts'
 
 interface RestaurantMenuListProps {
   restaurantDoc: DocumentDataSnapshot
@@ -118,7 +119,11 @@ const RestaurantMenuList = ({
                       {each}
                     </div> */}
                       <div className="pr-2">
-                        {menuItem.get(each)}
+                        {
+                          getDocumentData(
+                            menuItem
+                          )?.[each]
+                        }
                       </div>
                     </div>
                   )
