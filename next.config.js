@@ -25,6 +25,22 @@ const nextConfig = {
       pathPrefix,
   },
 
+  exportPathMap: async function (
+    defaultPathMap,
+    { dev, dir, outDir, distDir, buildId }
+  ) {
+    return {
+      '/': { page: '/' },
+      '/order': { page: '/order' },
+      '/order/[id]': { page: '/order/[id]' },
+      '/order/create': { page: '/order/create' },
+      '/order/history': { page: '/order/history' },
+      '/restaurant': { page: '/restaurant' },
+      '/restaurant/[id]': { page: '/restaurant/[id]' },
+      '/restaurant/[id]/create': { page: '/restaurant/[id]/create' },
+    }
+  },
+
   reactStrictMode: true,
 }
 
