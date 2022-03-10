@@ -28,7 +28,7 @@ const OrderLiHistory = ({
     <li>
       <CustomLink
         title={title}
-        path={`order/history/${orderDoc.id}`}
+        path={`/order/history/${orderDoc.id}`}
       />
     </li>
   )

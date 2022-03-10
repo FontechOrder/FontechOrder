@@ -3,7 +3,7 @@ import classnames from 'classnames'
 
 import type { DocumentDataSnapshot } from '@firebase-folder/types'
 
-import CustomButton from '@components/CustomButton'
+import CustomLink from '@components/CustomLink'
 
 import MenuImageRectangleView from '@components/MenuImageRectangleView'
 
@@ -40,16 +40,11 @@ const RestaurantItem = ({
         <div className="px-2">
           name: {restaurant?.name}
         </div>
-        <CustomButton
-          onClick={() => {
-            window.open(
-              '/restaurant/' + restaurantDoc.id,
-              '_self'
-            )
-          }}
-        >
-          Detail
-        </CustomButton>
+        <CustomLink
+          className="focus:!shadow-outline disabled:!text-slate-40 rounded bg-blue-500 !py-2 !px-4 font-bold !text-white hover:bg-blue-700 focus:!outline-none disabled:bg-slate-500"
+          title="Detail"
+          path={'/restaurant/' + restaurantDoc.id}
+        />
       </MenuImageRectangleView>
     </div>
   )
