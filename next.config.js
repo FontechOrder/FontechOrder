@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const debug = process.env.NODE_ENV !== "production";
+
 const nextConfig = {
   experimental: {
     eslint: true,
@@ -12,7 +15,8 @@ const nextConfig = {
     loader: "imgix",
     path: "",
   },
-  assetPrefix: "./",
+  // assetPrefix: "./",
+  assetPrefix: !debug ? 'https://fontechorder.github.io/FontechOrder/' : '',
 
   reactStrictMode: true,
 }
