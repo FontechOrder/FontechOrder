@@ -20,11 +20,11 @@ const nextConfig = {
   // assetPrefix: "./",
 
   assetPrefix: pathPrefix,
-  basePath: "/FontechOrder",
   env: {
       pathPrefix,
   },
 
+  trailingSlash: true,
   exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
@@ -34,7 +34,7 @@ const nextConfig = {
       '/order': { page: '/order' },
       '/order/[id]': { page: '/order/[id]' },
       '/order/create': { page: '/order/create' },
-      '/order/history': { page: '/order/history' },
+      '/order/history/[id]': { page: '/order/history/[id]' },
       '/restaurant': { page: '/restaurant' },
       '/restaurant/[id]': { page: '/restaurant/[id]' },
       '/restaurant/[id]/create': { page: '/restaurant/[id]/create' },
