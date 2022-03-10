@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 
-const debug = process.env.NODE_ENV !== "production";
+const pathPrefix = process.env.NODE_ENV === 'production'
+? '/FontechOrder'
+: '';
 
 const nextConfig = {
   experimental: {
@@ -16,7 +18,12 @@ const nextConfig = {
     path: "",
   },
   // assetPrefix: "./",
-  assetPrefix: !debug ? 'https://fontechorder.github.io/FontechOrder/' : '',
+
+  assetPrefix: pathPrefix,
+  basePath: "/FontechOrder",
+  env: {
+      pathPrefix,
+  },
 
   reactStrictMode: true,
 }

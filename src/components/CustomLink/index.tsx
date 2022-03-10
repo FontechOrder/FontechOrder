@@ -29,7 +29,10 @@ const CustomLink = ({
         className
       )}
     >
-      <Link href={path}>
+      <Link
+        href={path}
+        as={`${process.env.pathPrefix}${path}`}
+      >
         <a {...isBlankObj}>{title}</a>
       </Link>
     </div>
