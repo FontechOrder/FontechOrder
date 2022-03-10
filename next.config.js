@@ -32,12 +32,12 @@ const nextConfig = {
     return {
       '/': { page: '/' },
       '/order': { page: '/order' },
-      '/order/:id': { page: '/order/[id]' },
+      '/order/[id]': { page: '/order/[id]' },
       '/order/create': { page: '/order/create' },
-      '/order/history/:id': { page: '/order/history/[id]' },
+      '/order/history/[id]': { page: '/order/history/[id]' },
       '/restaurant': { page: '/restaurant' },
-      '/restaurant/:id': { page: '/restaurant/[id]' },
-      '/restaurant/:id/create': { page: '/restaurant/[id]/create' },
+      '/restaurant/[id]': { page: '/restaurant/[id]' },
+      '/restaurant/[id]/create': { page: '/restaurant/[id]/create' },
     }
   },
 
