@@ -77,12 +77,18 @@ const useOrderDetail = ({
         orderItemsSetIsLoading(true)
         setOrderItems([])
 
-        const newOrderItems =
-          await getOrderItemsFromOrderDoc(
-            newOrderDoc
+        try {
+          const newOrderItems =
+            await getOrderItemsFromOrderDoc(
+              newOrderDoc
+            )
+          setOrderItems(newOrderItems)
+        } catch {
+          console.log(
+            'do getOrderItemsFromOrderDoc error'
           )
+        }
 
-        setOrderItems(newOrderItems)
         orderItemsSetIsLoading(false)
       }
 
@@ -102,13 +108,18 @@ const useOrderDetail = ({
           )
 
         setRestaurantDoc(newRestaurantDoc)
+        try {
+          const newMenuItems =
+            await getMenuItemListFromRestaurantDoc(
+              newRestaurantDoc
+            )
 
-        const newMenuItems =
-          await getMenuItemListFromRestaurantDoc(
-            newRestaurantDoc
+          setMenuItems(newMenuItems)
+        } catch {
+          console.log(
+            'do getMenuItemListFromRestaurantDoc error'
           )
-
-        setMenuItems(newMenuItems)
+        }
         restaurantSetIsLoading(false)
       }
 
