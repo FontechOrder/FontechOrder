@@ -4,6 +4,7 @@ import { useFormik } from 'formik'
 
 import FormikFormInput from '@components/FormikFormInput'
 import CustomButton from '@components/CustomButton'
+import GoogleLoginButton from '@components/FirebaseLoginForm/GoogleLoginButton'
 
 import logInThenGetUserPromise from '@firebase-folder/functions/logInThenGetUserPromise'
 
@@ -116,7 +117,10 @@ const FirebaseLoginForm = () => {
   })
 
   return (
-    <div>
+    <div className="flex flex-col">
+      <div className="p-4">
+        <GoogleLoginButton />
+      </div>
       <form
         className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md"
         onSubmit={formik.handleSubmit}

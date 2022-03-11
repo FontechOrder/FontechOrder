@@ -8,6 +8,8 @@ import useUserFireStoreWithRedux from '@other-support/Hooks/useUserFireStoreWith
 import FirebaseLoginForm from '@components/FirebaseLoginForm'
 import CustomButton from '@components/CustomButton'
 
+import { getFontechEmail } from '@other-support/Consts'
+
 const PageContentDefault: React.FC = ({
   children,
 }) => {
@@ -36,6 +38,14 @@ const PageContentDefault: React.FC = ({
 
     if (!firebaseAuthUser) {
       return <FirebaseLoginForm />
+    }
+
+    const userFontechEmail = getFontechEmail(
+      firebaseAuthUser?.email
+    )
+
+    if (!userFontechEmail) {
+      return <div>Please use Fontech email</div>
     }
 
     if (!userDoc) {
