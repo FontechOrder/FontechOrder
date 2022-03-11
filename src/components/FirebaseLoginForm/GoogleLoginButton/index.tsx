@@ -42,7 +42,7 @@ const GoogleLoginButton = () => {
         }
         asyncButtonClick()
       },
-      []
+      [doInitUserManager]
     )
 
   const buttonClick = React.useCallback(() => {
@@ -57,7 +57,7 @@ const GoogleLoginButton = () => {
       setIsSubmitting(false)
       setErrorString('')
     })
-  }, [asyncButtonWithCallbackClick])
+  }, [isSubmitting, asyncButtonWithCallbackClick])
 
   const buttonText = React.useMemo(() => {
     if (errorString) {
