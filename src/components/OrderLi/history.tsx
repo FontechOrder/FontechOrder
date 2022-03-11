@@ -28,7 +28,10 @@ const OrderLiHistory = ({
     <li>
       <CustomLink
         title={title}
-        path={`/order/history/[id]?id=${orderDoc.id}`}
+        linkProps={{
+          href: `/order/history/[id]?id=${orderDoc.id}`,
+          as: `${process.env.pathPrefix}/order/history/${orderDoc.id}`,
+        }}
       />
     </li>
   )

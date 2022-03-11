@@ -2,18 +2,20 @@ import React from 'react'
 import classnames from 'classnames'
 import Link from 'next/link'
 
+import type { LinkProps } from 'next/link'
+
 interface CustomLinkProps {
   isBlank?: boolean
   className?: string | string[]
   title: string
-  path: string
+  linkProps: LinkProps
 }
 
 const CustomLink = ({
   isBlank = false,
   className,
   title,
-  path,
+  linkProps,
 }: CustomLinkProps) => {
   const isBlankObj = isBlank
     ? {
@@ -29,10 +31,7 @@ const CustomLink = ({
         className
       )}
     >
-      <Link
-        href={path}
-        as={`${process.env.pathPrefix}${path}`}
-      >
+      <Link {...linkProps}>
         <a {...isBlankObj}>{title}</a>
       </Link>
     </div>

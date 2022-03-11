@@ -31,7 +31,10 @@ const NewRestaurantMenuItemsLink = ({
     <CustomLink
       className="flex justify-end"
       title="新增菜單項目"
-      path={`/restaurant/[id]/create?id=${idText}`}
+      linkProps={{
+        href: `/restaurant/[id]/create?id=${idText}`,
+        as: `${process.env.pathPrefix}/restaurant/${idText}/create`,
+      }}
     />
   )
 }

@@ -43,10 +43,10 @@ const RestaurantItem = ({
         <CustomLink
           className="focus:!shadow-outline disabled:!text-slate-40 rounded bg-blue-500 !py-2 !px-4 font-bold !text-white hover:bg-blue-700 focus:!outline-none disabled:bg-slate-500"
           title="Detail"
-          path={
-            '/restaurant/[id]?id=' +
-            restaurantDoc.id
-          }
+          linkProps={{
+            href: `/restaurant/[id]?id=${restaurantDoc.id}`,
+            as: `${process.env.pathPrefix}/restaurant/${restaurantDoc.id}`,
+          }}
         />
       </MenuImageRectangleView>
     </div>

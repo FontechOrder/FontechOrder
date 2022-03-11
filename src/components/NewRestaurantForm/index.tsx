@@ -237,7 +237,10 @@ const NewRestaurantForm = () => {
       <div className="bg-white">
         <CustomLink
           title="新增菜單圖"
-          path="/menu-image/new"
+          linkProps={{
+            href: `/menu-image/new`,
+            as: `${process.env.pathPrefix}/menu-image/new`,
+          }}
         />
         <div className="flex flex-row flex-wrap justify-center text-gray-400">
           {filteredMenuImages.map(

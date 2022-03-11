@@ -24,7 +24,10 @@ const Header = ({
               <NavItem
                 key={`header_nav_${index}`}
                 title={nav.title}
-                path={nav.path}
+                linkProps={{
+                  href: nav.path,
+                  as: `${process.env.pathPrefix}${nav.path}`,
+                }}
               />
             ))}
           </div>

@@ -17,7 +17,10 @@ const NewOrdersLink = () => {
     <CustomLink
       className="flex justify-end"
       title="新增點菜"
-      path="/order/create"
+      linkProps={{
+        href: `/order/create`,
+        as: `${process.env.pathPrefix}/order/create`,
+      }}
     />
   )
 }
