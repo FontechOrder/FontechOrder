@@ -41,6 +41,9 @@ const validationSchema = Yup.object().shape({
 const NewRestaurantForm = () => {
   const [isSubmitting, setIsSubmitting] =
     React.useState(false)
+
+  const [resultText, setResultText] =
+    React.useState('')
   const [menuImages, setMenuImages] =
     React.useState<StorageImageType[]>([])
 
@@ -83,11 +86,15 @@ const NewRestaurantForm = () => {
           path: '/restaurants/' + values.name,
           data: values,
         })
+
+        setResultText('success')
       } catch (error) {
         if (error instanceof Error) {
           console.log('error: ', error.message)
           return
         }
+
+        setResultText('Error')
       }
 
       setIsSubmitting(false)
@@ -153,6 +160,10 @@ const NewRestaurantForm = () => {
     menuImages,
   ])
 
+  if (resultText) {
+    return <div>{resultText}</div>
+  }
+
   return (
     <div>
       <form
@@ -174,8 +185,13 @@ const NewRestaurantForm = () => {
             >
               已選菜單：{selectedMenuName}
             </div>
-            <CustomButton type="submit">
-              新增餐廳
+            <CustomButton
+              disabled={isSubmitting}
+              type="submit"
+            >
+              {isSubmitting
+                ? 'isSubmitting...'
+                : '新增餐廳'}
             </CustomButton>
           </div>
           <div className="flex-1 md:pr-3">
@@ -238,8 +254,8 @@ const NewRestaurantForm = () => {
         <CustomLink
           title="新增菜單圖"
           linkProps={{
-            href: `/menu-image/new`,
-            as: `${process.env.pathPrefix}/menu-image/new`,
+            href: `/restaurant/create/menu-image`,
+            as: `${process.env.pathPrefix}/restaurant/create/menu-image`,
           }}
         />
         <div className="flex flex-row flex-wrap justify-center text-gray-400">
