@@ -24,7 +24,7 @@ const nextConfig = {
       pathPrefix,
   },
 
-  trailingSlash: true,
+  // trailingSlash: true,
   exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
@@ -32,7 +32,7 @@ const nextConfig = {
     return {
       '/': { page: '/' },
       '/order': { page: '/order' },
-      '/order/[id]': { page: '/order/[id]' },
+      '/order/[id]': { page: '/order/[id]', query: { id: 'id'}},
       '/order/create': { page: '/order/create' },
       '/order/history/[id]': { page: '/order/history/[id]' },
       '/restaurant': { page: '/restaurant' },
