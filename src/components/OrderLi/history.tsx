@@ -30,7 +30,8 @@ const OrderLiHistory = ({
         title={title}
         linkProps={{
           href: `/order/history/[id]?id=${orderDoc.id}`,
-          as: `${process.env.pathPrefix}/order/history/${orderDoc.id}`,
+          as: `${process.env.pathPrefix}/order/history/[id]?id=${orderDoc.id}`,
+          // as: `${process.env.pathPrefix}/order/history/${orderDoc.id}`,
         }}
       />
     </li>

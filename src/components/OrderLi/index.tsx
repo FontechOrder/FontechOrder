@@ -32,7 +32,8 @@ const OrderLi = ({ orderDoc }: OrderLiProps) => {
         title={title}
         linkProps={{
           href: `/order/[id]?id=${orderDoc.id}`,
-          as: `${process.env.pathPrefix}/order/${orderDoc.id}`,
+          as: `${process.env.pathPrefix}/order/[id]?id=${orderDoc.id}`,
+          // as: `${process.env.pathPrefix}/order/${orderDoc.id}`,
         }}
       />
     </li>

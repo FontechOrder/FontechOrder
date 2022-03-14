@@ -45,7 +45,8 @@ const RestaurantItem = ({
           title="Detail"
           linkProps={{
             href: `/restaurant/[id]?id=${restaurantDoc.id}`,
-            as: `${process.env.pathPrefix}/restaurant/${restaurantDoc.id}`,
+            as: `${process.env.pathPrefix}/restaurant/[id]?id=${restaurantDoc.id}`,
+            // as: `${process.env.pathPrefix}/restaurant/${restaurantDoc.id}`,
           }}
         />
       </MenuImageRectangleView>

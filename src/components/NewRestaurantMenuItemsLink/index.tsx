@@ -33,7 +33,8 @@ const NewRestaurantMenuItemsLink = ({
       title="新增菜單項目"
       linkProps={{
         href: `/restaurant/[id]/create?id=${idText}`,
-        as: `${process.env.pathPrefix}/restaurant/${idText}/create`,
+        as: `${process.env.pathPrefix}/restaurant/[id]/create?id=${idText}`,
+        // as: `${process.env.pathPrefix}/restaurant/${idText}/create`,
       }}
     />
   )
