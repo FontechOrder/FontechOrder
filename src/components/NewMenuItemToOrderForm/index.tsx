@@ -146,11 +146,11 @@ const NewMenuItemToOrderForm = ({
   return (
     <div>
       <div className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md">
-        <div>
+        <div className="min-w-[10rem]">
           <Select
             options={menuItems.map(each => ({
               value: each,
-              label: each.data.name,
+              label: `${each.data.name} ${each.data.cost}`,
             }))}
             onChange={newValue => {
               if (!newValue) {

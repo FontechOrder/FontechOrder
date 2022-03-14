@@ -109,7 +109,7 @@ const OrderDetail = ({
                     {orderItem.user.data.name}
                   </div>
                   <div className="pl-2">
-                    {orderItem.menuItem.data.name}
+                    {`${orderItem.menuItem.data.name} ${orderItem.menuItem.data.cost}`}
                   </div>
                 </div>
               ))}

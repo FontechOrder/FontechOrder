@@ -4,7 +4,7 @@ import PageContentDefault from '@containers/PageContent/default'
 
 import OrderDetail from '@components/OrderDetail'
 
-const RestaurantId = () => {
+const OrderId = () => {
   const router = useRouter()
   const { id } = router.query
 
@@ -15,4 +15,4 @@ const RestaurantId = () => {
   )
 }
 
-export default RestaurantId
+export default OrderId
