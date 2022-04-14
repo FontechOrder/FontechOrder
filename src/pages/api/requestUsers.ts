@@ -6,7 +6,6 @@ const requestUsers = requestWithDatabaseCallBack(
       'SELECT * FROM Users'
     )
 
-    console.log(users.all())
     return { users: users.all() }
   }
 )

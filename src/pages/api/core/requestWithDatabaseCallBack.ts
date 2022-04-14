@@ -18,7 +18,6 @@ export const requestWithDatabaseCallBack =
     req: NextApiRequest,
     res: NextApiResponse
   ) => {
-    console.log('try ApiDB')
     try {
       const db = new Database(
         '../fontech-order.sqlite',
@@ -57,7 +56,6 @@ export const requestOnlyMessageWithDatabaseCallBack =
       req: NextApiRequest,
       res: NextApiResponse
     ) => {
-      console.log('try ApiDB')
       try {
         const db = new Database(
           '../fontech-order.sqlite',
