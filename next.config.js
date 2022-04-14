@@ -39,15 +39,6 @@ const nextConfig = {
       '/restaurant/[id]': { page: '/restaurant/[id]' },
       '/restaurant/[id]/create': { page: '/restaurant/[id]/create' },
       '/table': { page: '/table' },
-
-      /* api */
-      '/api/requestNewUser': { page: '/api/requestNewUser' },
-      '/api/requestUsers': { page: '/api/requestUsers' },
-
-      /* database api */
-      '/api/database/createUserTable': { page: '/api/database/createUserTable' },
-      '/api/database/dropUserTable': { page: '/api/database/dropUserTable' },
-
     }
   },
 

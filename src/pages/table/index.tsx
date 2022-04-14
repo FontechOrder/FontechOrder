@@ -16,7 +16,7 @@ const consoleLogThenShowAlert = (
   window.alert(message)
 }
 
-const Restaurant = () => {
+const Table = () => {
   return (
     <PageContentDefault>
       <div className="flex flex-col">
@@ -27,9 +27,11 @@ const Restaurant = () => {
               consoleLogThenShowAlert(
                 'createUserTable success'
               )
-            } catch {
+            } catch (error) {
               consoleLogThenShowAlert(
-                'asyncRequestUsers fail.'
+                error instanceof Error
+                  ? error.message
+                  : 'asyncRequestUsers fail.'
               )
             }
           }}
@@ -43,9 +45,11 @@ const Restaurant = () => {
               consoleLogThenShowAlert(
                 'dropUserTable success'
               )
-            } catch {
+            } catch (error) {
               consoleLogThenShowAlert(
-                'asyncRequestUsers fail.'
+                error instanceof Error
+                  ? error.message
+                  : 'dropUserTable fail.'
               )
             }
           }}
@@ -63,9 +67,11 @@ const Restaurant = () => {
               consoleLogThenShowAlert(
                 JSON.stringify(users)
               )
-            } catch {
+            } catch (error) {
               consoleLogThenShowAlert(
-                'asyncRequestUsers fail.'
+                error instanceof Error
+                  ? error.message
+                  : 'requestUsers fail.'
               )
             }
           }}
@@ -150,4 +156,4 @@ const Restaurant = () => {
   )
 }
 
-export default Restaurant
+export default Table
