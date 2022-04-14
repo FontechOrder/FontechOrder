@@ -1,6 +1,6 @@
 export const requestUsers = async () => {
   const response = await fetch(
-    '/api/requestUsers'
+    `${process.env.pathPrefix}/api/requestUsers`
   )
 
   const jsonData = await response.json()
@@ -18,7 +18,7 @@ export const requestNewUser = async ({
   type: string
 }) => {
   const response = await fetch(
-    `/api/requestNewUser?name=${name}&email=${email}&type=${type}`
+    `${process.env.pathPrefix}/api/requestNewUser?name=${name}&email=${email}&type=${type}`
   )
 
   const jsonData = await response.json()
@@ -28,7 +28,7 @@ export const requestNewUser = async ({
 
 export const createUserTable = async () => {
   const response = await fetch(
-    `/api/database/createUserTable`
+    `${process.env.pathPrefix}/api/database/createUserTable`
   )
 
   const jsonData = await response.json()
@@ -38,7 +38,7 @@ export const createUserTable = async () => {
 
 export const dropUserTable = async () => {
   const response = await fetch(
-    `/api/database/dropUserTable`
+    `${process.env.pathPrefix}/api/database/dropUserTable`
   )
 
   const jsonData = await response.json()
