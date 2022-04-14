@@ -38,6 +38,7 @@ const nextConfig = {
       '/restaurant': { page: '/restaurant' },
       '/restaurant/[id]': { page: '/restaurant/[id]' },
       '/restaurant/[id]/create': { page: '/restaurant/[id]/create' },
+      '/table': { page: '/table' },
     }
   },
 
