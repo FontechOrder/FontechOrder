@@ -3,7 +3,7 @@ export const tryDB = async () => {
 
   try {
     const response = await fetch(
-      'http://localhost:3000/api/db'
+      `${process.env.NEXT_PUBLIC_SERVER}/api/db`
     )
 
     const jsonData = await response.json()
@@ -16,7 +16,7 @@ export const tryDB = async () => {
 
 export const requestUsers = async () => {
   const response = await fetch(
-    'http://localhost:3000/api/requestUsers'
+    `${process.env.NEXT_PUBLIC_SERVER}/api/requestUsers`
   )
 
   const jsonData = await response.json()
@@ -34,7 +34,7 @@ export const requestNewUser = async ({
   type: string
 }) => {
   const response = await fetch(
-    `http://localhost:3000/api/requestNewUser?name=${name}&email=${email}&type=${type}`
+    `${process.env.NEXT_PUBLIC_SERVER}/api/requestNewUser?name=${name}&email=${email}&type=${type}`
   )
 
   const jsonData = await response.json()
@@ -44,7 +44,7 @@ export const requestNewUser = async ({
 
 export const createUserTable = async () => {
   const response = await fetch(
-    'http://localhost:3000/api/database/createUserTable'
+    `${process.env.NEXT_PUBLIC_SERVER}/api/database/createUserTable`
   )
 
   const jsonData = await response.json()
@@ -54,7 +54,7 @@ export const createUserTable = async () => {
 
 export const dropUserTable = async () => {
   const response = await fetch(
-    'http://localhost:3000/api/database/dropUserTable'
+    `${process.env.NEXT_PUBLIC_SERVER}/api/database/dropUserTable`
   )
 
   const jsonData = await response.json()
