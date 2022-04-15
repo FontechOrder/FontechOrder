@@ -1,37 +1,29 @@
-import type { DocumentDataSnapshot } from '@firebase-folder/types'
+import type { DatabaseUserType } from '@supabase-folder/types'
 
 export type UserManagerStateType = {
-  isInit: boolean
-  userDoc: DocumentDataSnapshot | undefined
+  user: DatabaseUserType | undefined
 }
 
 export enum USER_STRING {
-  UPDATE_USER = 'UPDATE_USER',
-  REMOVE_USER = 'REMOVE_USER',
-  INIT = 'INIT',
+  SAVE_USER = 'SAVE_USER',
+  CLEAR_USER = 'CLEAR_USER',
 }
 
 interface UserManagerBaseActionType {
   type: USER_STRING
 }
 
-interface UserManagerUpdateUserActionType
+interface UserManagerShowUserActionType
   extends UserManagerBaseActionType {
-  type: USER_STRING.UPDATE_USER
-  userDoc: DocumentDataSnapshot
+  type: USER_STRING.SAVE_USER
+  user: DatabaseUserType
 }
 
-interface UserManagerRemoveUserActionType
+interface UserManagerHideUserActionType
   extends UserManagerBaseActionType {
-  type: USER_STRING.REMOVE_USER
-}
-
-interface UserManagerInitUserActionType
-  extends UserManagerBaseActionType {
-  type: USER_STRING.INIT
+  type: USER_STRING.CLEAR_USER
 }
 
 export type UserManagerActionTypes =
-  | UserManagerUpdateUserActionType
-  | UserManagerRemoveUserActionType
-  | UserManagerInitUserActionType
+  | UserManagerShowUserActionType
+  | UserManagerHideUserActionType

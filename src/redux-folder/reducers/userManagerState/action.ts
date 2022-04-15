@@ -3,24 +3,18 @@ import {
   UserManagerActionTypes,
 } from '@redux-folder/reducers/userManagerState/type'
 
-import type { DocumentDataSnapshot } from '@firebase-folder/types'
+import type { DatabaseUserType } from '@supabase-folder/types'
 
-export const updateUser = (
-  userDoc: DocumentDataSnapshot
+export const saveUser = (
+  user: DatabaseUserType
 ): UserManagerActionTypes =>
   <UserManagerActionTypes>{
-    type: USER_STRING.UPDATE_USER,
-    userDoc,
+    type: USER_STRING.SAVE_USER,
+    user,
   }
 
-export const removeUser =
+export const clearUser =
   (): UserManagerActionTypes =>
     <UserManagerActionTypes>{
-      type: USER_STRING.REMOVE_USER,
-    }
-
-export const initUserManager =
-  (): UserManagerActionTypes =>
-    <UserManagerActionTypes>{
-      type: USER_STRING.INIT,
+      type: USER_STRING.CLEAR_USER,
     }

@@ -8,8 +8,7 @@ import { switchCaseTState } from '@other-support/Consts'
 
 const initUserManagerState: UserManagerStateType =
   {
-    isInit: true,
-    userDoc: undefined,
+    user: undefined,
   }
 
 const userManagerState = (
@@ -20,16 +19,10 @@ const userManagerState = (
     UserManagerActionTypes,
     UserManagerStateType
   >({
-    [USER_STRING.UPDATE_USER]:
-      updateUserAction => ({
-        isInit: false,
-        userDoc: updateUserAction.userDoc,
-      }),
-    [USER_STRING.REMOVE_USER]: () => ({
-      isInit: false,
-      userDoc: undefined,
+    [USER_STRING.SAVE_USER]: eachAction => ({
+      user: eachAction.user,
     }),
-    [USER_STRING.INIT]: () =>
+    [USER_STRING.CLEAR_USER]: () =>
       initUserManagerState,
   })(() => state)(action.type)
 

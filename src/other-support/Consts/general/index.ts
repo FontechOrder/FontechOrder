@@ -229,3 +229,15 @@ export const isNonEmptyArrayOfStrings = (
   value: any
 ): boolean =>
   isArrayOfStrings(value) && value.length > 0
+
+export const instanceError = (
+  error: unknown
+): Error | undefined => {
+  if (error instanceof Error) {
+    return error
+  }
+
+  return undefined
+}
+
+export const emptyCallback = () => undefined

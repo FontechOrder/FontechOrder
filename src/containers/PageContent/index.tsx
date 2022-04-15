@@ -16,9 +16,11 @@ const PageContent: React.FC<PageContentProps> = ({
       className="flex min-w-[20rem] flex-col "
     >
       {header}
+
       <div className="w-full self-center lg:w-[64rem] lg:max-w-[64rem]">
-        {children}
+        <main>{children}</main>
       </div>
+
       {footer}
     </div>
   )
