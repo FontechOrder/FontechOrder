@@ -31,17 +31,10 @@ const nextConfig = {
   ) {
     return {
       '/': { page: '/' },
-      // '/menus': { page: '/menus' },
       '/orders': { page: '/orders' },
       '/orders/detail': { page: '/orders/detail' },
-      // '/order/[id]': { page: '/order/[id]'},
-      // '/order/create': { page: '/order/create' },
-      // '/order/history/[id]': { page: '/order/history/[id]' },
       '/restaurants': { page: '/restaurants' },
       '/restaurants/detail': { page: '/restaurants/detail' },
-      // '/restaurant/[id]': { page: '/restaurant/[id]' },
-      // '/restaurant/[id]/create': { page: '/restaurant/[id]/create' },
-      // '/table': { page: '/table' },
     }
   },
 
