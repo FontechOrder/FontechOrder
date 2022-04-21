@@ -33,12 +33,12 @@ const EachRestaurantMenuList: React.FC<
     restaurantMenuWithItemOptions,
   } = useEachRestaurantMenuWithItemOptions(id)
 
-  console.log(`EachRestaurantMenuList id: ${id}`)
-  console.log(
-    `EachRestaurantMenuList restaurantMenuWithItemOptions: ${JSON.stringify(
-      restaurantMenuWithItemOptions
-    )}`
-  )
+  // console.log(`EachRestaurantMenuList id: ${id}`)
+  // console.log(
+  //   `EachRestaurantMenuList restaurantMenuWithItemOptions: ${JSON.stringify(
+  //     restaurantMenuWithItemOptions
+  //   )}`
+  // )
 
   if (menuInit) {
     return <div>is Init...</div>

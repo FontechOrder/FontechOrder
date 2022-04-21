@@ -31,10 +31,10 @@ const useEachRestaurantMenus = (id: number) => {
       await asyncCallback(),
   })
 
-  console.log(
-    'useEachRestaurantMenus result: ',
-    result
-  )
+  // console.log(
+  //   'useEachRestaurantMenus result: ',
+  //   result
+  // )
 
   const insertCallback: RealtimePayloadCallback<DatabaseMenuItemType> =
     React.useCallback(
@@ -126,9 +126,9 @@ const useEachRestaurantMenus = (id: number) => {
   })
 
   React.useEffect(() => {
-    console.log(
-      'setRestaurantMenus with result change'
-    )
+    // console.log(
+    //   'setRestaurantMenus with result change'
+    // )
 
     if (!result) {
       setRestaurantMenus([])

@@ -13,7 +13,7 @@ const useRouterQueryId = () => {
   const { id: queryId } = router.query
 
   const idText = React.useMemo(() => {
-    console.log('queryId: ', queryId)
+    // console.log('queryId: ', queryId)
 
     return forceStringForNextRouterQueryFirst(
       queryId

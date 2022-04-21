@@ -135,9 +135,9 @@ const useEachRestaurantMenuItemOptions = (
   })
 
   React.useEffect(() => {
-    console.log(
-      'setRestaurantMenuItemOptions with result change'
-    )
+    // console.log(
+    //   'setRestaurantMenuItemOptions with result change'
+    // )
 
     if (!result) {
       setRestaurantMenuItemOptions([])

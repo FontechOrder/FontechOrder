@@ -40,8 +40,8 @@ const useAuthStateChange = () => {
     //   type?: authUser.id,
     // }
     console.log(
-      'doSaveUserWithAuthUser authUser: ',
-      authUser
+      'doSaveUserWithAuthUser authUser email: ',
+      authUser.email
     )
   }
 
@@ -54,16 +54,16 @@ const useAuthStateChange = () => {
         })
 
       if (error) {
-        console.log(error)
+        // console.log(error)
         return
       }
 
       if (!user) {
-        console.log(error)
+        // console.log(error)
         return
       }
 
-      console.log('asyncSignIn user: ', user)
+      // console.log('asyncSignIn user: ', user)
       setAuthUser(user)
       doSaveUserWithAuthUser(user)
     }
@@ -126,15 +126,15 @@ const useAuthStateChange = () => {
   React.useEffect(() => {
     const { data: authListener } =
       supabase.auth.onAuthStateChange(
-        async (event, session) => {
-          console.log(
-            'onAuthStateChange event: ',
-            event
-          )
-          console.log(
-            'onAuthStateChange session: ',
-            session
-          )
+        async (_, session) => {
+          // console.log(
+          //   'onAuthStateChange event: ',
+          //   event
+          // )
+          // console.log(
+          //   'onAuthStateChange session: ',
+          //   session
+          // )
 
           // if (session) {
           //   console.log(

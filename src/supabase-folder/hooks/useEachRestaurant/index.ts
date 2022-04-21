@@ -77,9 +77,9 @@ const useEachRestaurant = (id: number) => {
   })
 
   React.useEffect(() => {
-    console.log(
-      'setRestaurant with result change'
-    )
+    // console.log(
+    //   'setRestaurant with result change'
+    // )
 
     setRestaurant(result)
   }, [result])

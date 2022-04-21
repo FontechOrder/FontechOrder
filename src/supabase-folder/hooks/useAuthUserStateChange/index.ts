@@ -22,12 +22,12 @@ const useAuthUserStateChange = () => {
         })
 
       if (error) {
-        console.log(error)
+        // console.log(error)
         return
       }
 
       if (!user) {
-        console.log(error)
+        // console.log(error)
         return
       }
 
@@ -43,11 +43,11 @@ const useAuthUserStateChange = () => {
         await supabase.auth.signOut()
 
       if (error) {
-        console.log(error)
+        // console.log(error)
         return
       }
 
-      console.log('asyncSignOut')
+      // console.log('asyncSignOut')
       setAuthUser(undefined)
     }
 
