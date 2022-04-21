@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-// const pathPrefix = process.env.NODE_ENV === 'production'
-// ? '/FontechOrder'
-// : '';
-
 const nextConfig = {
   experimental: {
     eslint: true,
@@ -17,12 +13,8 @@ const nextConfig = {
     loader: "imgix",
     path: "",
   },
-  // assetPrefix: "./",
 
-  // assetPrefix: pathPrefix,
-  // env: {
-  //     pathPrefix,
-  // },
+  assetPrefix: process.env.NEXT_PUBLIC_NODE_ENV,
 
   // trailingSlash: true,
   exportPathMap: async function (

@@ -25,11 +25,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # - name: Remove packages
-      - name: Remove packages
-        run: |
-          rm -rf node_modules
-      
       # - name: Install packages
       #   run: npm ci
 
