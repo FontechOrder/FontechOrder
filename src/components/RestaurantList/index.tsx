@@ -67,7 +67,7 @@ const RestaurantList = () => {
                 title={restaurant.name}
                 linkProps={{
                   href: `/restaurants/detail?id=${restaurant.id}`,
-                  as: `${process.env.NEXT_PUBLIC_NODE_ENV}/restaurants/detail?id=${restaurant.id}`,
+                  as: `${process.env.pathPrefix}/restaurants/detail?id=${restaurant.id}`,
                 }}
               />
             </Card>

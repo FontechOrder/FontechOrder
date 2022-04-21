@@ -39,7 +39,7 @@ const Header = () => {
             <Box className="p-1">
               <NextLink
                 href="/orders"
-                as={`${process.env.NEXT_PUBLIC_NODE_ENV}/orders`}
+                as={`${process.env.pathPrefix}/orders`}
                 passHref
               >
                 <Link>
@@ -53,7 +53,7 @@ const Header = () => {
             <Box className="p-1">
               <NextLink
                 href="/restaurants"
-                as={`${process.env.NEXT_PUBLIC_NODE_ENV}/restaurants`}
+                as={`${process.env.pathPrefix}/restaurants`}
                 passHref
               >
                 <Link>
