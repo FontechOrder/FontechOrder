@@ -31,8 +31,8 @@ export type NoIdDatabaseMenuItemOptionType = {
   menu_item: number
   restaurant: number
 }
-export type DatabaseMenuItemOptionType =
-  NumberIdType & NoIdDatabaseMenuItemOptionType
+// export type DatabaseMenuItemOptionType =
+//   NumberIdType & NoIdDatabaseMenuItemOptionType
 
 export type NoIdDatabaseMenuItemType = {
   name: string
@@ -42,8 +42,8 @@ export type NoIdDatabaseMenuItemType = {
 
   restaurant: number
 }
-export type DatabaseMenuItemType = NumberIdType &
-  NoIdDatabaseMenuItemType
+// export type DatabaseMenuItemType = NumberIdType &
+//   NoIdDatabaseMenuItemType
 
 export type NoIdDatabaseOrderItemType = {
   note?: string
@@ -52,8 +52,8 @@ export type NoIdDatabaseOrderItemType = {
   user: number
   order: number
 }
-export type DatabaseOrderItemType = NumberIdType &
-  NoIdDatabaseOrderItemType
+// export type DatabaseOrderItemType = NumberIdType &
+//   NoIdDatabaseOrderItemType
 
 export type NoIdDatabaseOrderType = {
   date_text: string
@@ -61,25 +61,42 @@ export type NoIdDatabaseOrderType = {
 
   restaurant: number
 }
-export type DatabaseOrderType = NumberIdType &
-  NoIdDatabaseOrderType
+// export type DatabaseOrderType = NumberIdType &
+//   NoIdDatabaseOrderType
 
 export type NoIdDatabaseRestaurantType = {
   hidden: boolean
   image_url?: string
   name: string
 }
-export type DatabaseRestaurantType =
-  NumberIdType & NoIdDatabaseRestaurantType
+// export type DatabaseRestaurantType =
+//   NumberIdType & NoIdDatabaseRestaurantType
 
 export type NoIdDatabaseUserType = {
   name: string
   email?: string
   type?: string
 }
-export type DatabaseUserType = NumberIdType &
-  NoIdDatabaseUserType
+// export type DatabaseUserType = NumberIdType &
+//   NoIdDatabaseUserType
 
+// WithNumber
+type WithNumberIdType<T> = NumberIdType & T
+
+export type DatabaseMenuItemOptionType =
+  WithNumberIdType<NoIdDatabaseMenuItemOptionType>
+export type DatabaseMenuItemType =
+  WithNumberIdType<NoIdDatabaseMenuItemType>
+export type DatabaseOrderItemType =
+  WithNumberIdType<NoIdDatabaseOrderItemType>
+export type DatabaseOrderType =
+  WithNumberIdType<NoIdDatabaseOrderType>
+export type DatabaseRestaurantType =
+  WithNumberIdType<NoIdDatabaseRestaurantType>
+export type DatabaseUserType =
+  WithNumberIdType<NoIdDatabaseUserType>
+
+// List
 export type DatabaseMenuItemOptionListType =
   Array<DatabaseMenuItemOptionType>
 export type DatabaseMenuItemListType =

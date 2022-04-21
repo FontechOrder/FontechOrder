@@ -1,10 +1,13 @@
 import { supabase } from '@supabase-folder/client'
-import type { DatabaseRestaurantListType } from '@supabase-folder/types'
+import type {
+  DatabaseRestaurantListType,
+  DatabaseRestaurantType,
+} from '@supabase-folder/types'
 
 const fetchRestaurantList =
   async (): Promise<DatabaseRestaurantListType> => {
     const { data, error } = await supabase
-      .from('restaurants')
+      .from<DatabaseRestaurantType>('restaurants')
       .select()
 
     if (error) {

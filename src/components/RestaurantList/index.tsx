@@ -1,9 +1,12 @@
 import React from 'react'
 
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import Button from '@mui/material/Button'
+import {
+  Box,
+  Grid,
+  Card,
+  Button,
+} from '@mui/material'
+
 import CustomLink from '@components/CustomLink'
 
 import ZoomImageWithRelativeParent from '@components/ZoomImageWithRelativeParent'
@@ -17,6 +20,11 @@ const RestaurantList = () => {
     recall,
     restaurants,
   } = useRestaurantList()
+
+  // console.log(
+  //   'RestaurantList restaurants:',
+  //   restaurants
+  // )
 
   if (isInit) {
     return <div>init...</div>
@@ -64,7 +72,7 @@ const RestaurantList = () => {
 
               <CustomLink
                 className="w-full text-center"
-                title={restaurant.name}
+                title={`${restaurant.id}.${restaurant.name}`}
                 linkProps={{
                   href: `/restaurants/detail?id=${restaurant.id}`,
                   as: `${process.env.pathPrefix}/restaurants/detail?id=${restaurant.id}`,

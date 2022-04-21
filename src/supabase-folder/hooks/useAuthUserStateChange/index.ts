@@ -1,59 +1,57 @@
 import React from 'react'
-import { supabase } from '@supabase-folder/client'
+
 import type { User } from '@supabase/supabase-js'
+
+import { supabase } from '@supabase-folder/client'
+import authUserSignIn from '@supabase-folder/functions/authUserSignIn'
+
+import type { EmailPasswordObject } from '@other-support/types'
 
 const useAuthUserStateChange = () => {
   const [authUser, setAuthUser] = React.useState<
     User | undefined
   >(undefined)
 
-  const doSignIn = ({
-    email,
-    password,
-  }: {
-    email: string
-    password: string
-  }) => {
-    const asyncSignIn = async () => {
-      const { user, error } =
-        await supabase.auth.signIn({
-          email,
-          password,
-        })
-
-      if (error) {
-        // console.log(error)
-        return
+  const doAuthUserSignIn = React.useCallback(
+    ({
+      email,
+      password,
+    }: EmailPasswordObject) => {
+      const asyncSignIn = async ({
+        email,
+        password,
+      }: EmailPasswordObject) => {
+        try {
+          const user = await authUserSignIn({
+            email,
+            password,
+          })
+          setAuthUser(user)
+        } catch {}
       }
+      asyncSignIn({ email, password })
+    },
+    []
+  )
 
-      if (!user) {
-        // console.log(error)
-        return
+  const doAuthUserSignOut =
+    React.useCallback(() => {
+      const asyncSignOut = async () => {
+        const { error } =
+          await supabase.auth.signOut()
+
+        if (error) {
+          // console.log(error)
+          return false
+        }
+
+        // console.log('asyncSignOut')
+        setAuthUser(undefined)
+
+        return true
       }
-
-      setAuthUser(user)
-    }
-
-    asyncSignIn()
-  }
-
-  const doSignOut = () => {
-    const asyncSignOut = async () => {
-      const { error } =
-        await supabase.auth.signOut()
-
-      if (error) {
-        // console.log(error)
-        return
-      }
-
-      // console.log('asyncSignOut')
-      setAuthUser(undefined)
-    }
-
-    asyncSignOut()
-  }
-
+      asyncSignOut()
+    }, [])
   React.useEffect(() => {
     const user = supabase.auth.user()
 
@@ -76,8 +74,9 @@ const useAuthUserStateChange = () => {
   }, [])
 
   return {
-    doSignIn,
-    doSignOut,
+    doAuthUserSignIn,
+    doAuthUserSignOut,
+
     authUser,
   }
 }

@@ -34,6 +34,7 @@ const nextConfig = {
       '/orders/detail': { page: '/orders/detail' },
       '/restaurants': { page: '/restaurants' },
       '/restaurants/detail': { page: '/restaurants/detail' },
+      '/new-menu': { page: '/new-menu' },
     }
   },
 

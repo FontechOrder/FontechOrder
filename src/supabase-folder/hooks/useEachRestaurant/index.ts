@@ -1,7 +1,7 @@
 import React from 'react'
 
 import fetchEachRestaurant from '@supabase-folder/functions/fetchEachRestaurant'
-import useInitLoadingResultError from '@other-support/Hooks/useInitLoadingResultError'
+import useInitLoadingResultError from '@other-support/hooks/useInitLoadingResultError'
 
 import useSubscription from '@supabase-folder/hooks/useSubscription'
 

@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   useSelector,
   shallowEqual,
@@ -21,13 +22,16 @@ export const useUserManager = () => {
     shallowEqual
   )
 
-  const doSaveUser = (user: DatabaseUserType) => {
-    dispatch(saveUser(user))
-  }
+  const doSaveUser = React.useCallback(
+    (user: DatabaseUserType) => {
+      dispatch(saveUser(user))
+    },
+    [dispatch]
+  )
 
-  const doClearUser = () => {
+  const doClearUser = React.useCallback(() => {
     dispatch(clearUser())
-  }
+  }, [dispatch])
 
   return {
     doSaveUser,

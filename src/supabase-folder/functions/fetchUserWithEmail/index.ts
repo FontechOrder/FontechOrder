@@ -2,7 +2,7 @@ import { supabase } from '@supabase-folder/client'
 import type { DatabaseUserType } from '@supabase-folder/types'
 
 const fetchUserWithEmail = async (
-  email: string
+  email?: string
 ): Promise<DatabaseUserType> => {
   if (!email) {
     throw new Error('Invalid restaurant id')

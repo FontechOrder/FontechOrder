@@ -1,10 +1,11 @@
 import { ReactNode } from 'react'
 
+export type EmptyCallback = () => void
+
 export type BooleanString = 'true' | 'false'
 export type BooleanResult = 'success' | 'failed'
 
 export type Nullable<T> = T | null
-
 export type Int = number & { __int__: void }
 
 export type ExtractChildrenType<
@@ -41,3 +42,48 @@ export type FixedSizeArray<
 > = {
   readonly [k in M]: any
 } & { length: N } & ReadonlyArray<T>
+
+export type EmailPasswordObject = {
+  email: string
+  password: string
+}
+
+export type OptionalWithout<T, K> = Pick<
+  T,
+  Exclude<keyof T, K>
+>
+export type OptionalTupleUnion<
+  U extends string,
+  R extends string[] = []
+> = {
+  [S in U]: Exclude<U, S> extends never
+    ? [...R, S]
+    : OptionalTupleUnion<Exclude<U, S>, [...R, S]>
+}[U] &
+  string[]
+
+type CreateRestaurantMenuObject = {
+  hidden: boolean
+  name: string
+  cost: number
+  type?: string
+}
+
+type CreateRestaurantMenuOptionObject = {
+  name: string
+  cost: number
+  type: string
+}
+
+export type CreateRestaurantMenuSchemaType = {
+  menuItems: Array<
+    CreateRestaurantMenuObject & {
+      menuItemOptions: Array<
+        OptionalWithout<
+          CreateRestaurantMenuOptionObject,
+          'type'
+        >
+      >
+    }
+  >
+}

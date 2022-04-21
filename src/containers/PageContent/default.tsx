@@ -6,7 +6,7 @@ const PageContentDefault: React.FC = ({
   children,
 }) => {
   return (
-    <PageContent header={Header()}>
+    <PageContent header={<Header />}>
       {children}
     </PageContent>
   )

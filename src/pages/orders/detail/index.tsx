@@ -1,17 +1,12 @@
 import React from 'react'
 
-import PageContent from '@containers/PageContent'
-// import useRouterQueryId from '@other-support/Hooks/useRouterQueryId'
+import PageContentWithId from '@containers/PageContent/withId'
 
 const OrderDetail = () => {
-  // const { idText } = useRouterQueryId()
-
-  // console.log('OrderDetail  idText: ', idText)
-
   return (
-    <PageContent>
-      <div>OrderDetail</div>
-    </PageContent>
+    <PageContentWithId>
+      {id => <div>OrderDetail with id:{id}</div>}
+    </PageContentWithId>
   )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface PageContentProps {
-  header?: JSX.Element | React.ReactNode
+  header?: React.ReactNode
   footer?: React.ReactNode
 }
 

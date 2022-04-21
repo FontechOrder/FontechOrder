@@ -1,166 +1,162 @@
 import React from 'react'
-import { supabase } from '@supabase-folder/client'
-import type { User } from '@supabase/supabase-js'
 
-// import useUserManager from '@redux-folder/hooks/useUserManager'
-// import fetchUserWithEmail from '@supabase-folder/functions/fetchUserWithEmail'
+import fetchUserWithEmail from '@supabase-folder/functions/fetchUserWithEmail'
 
-// import createUsers from '@supabase-folder/functions/createUsers'
+import createUsers from '@supabase-folder/functions/createUsers'
+
+import type { DatabaseUserType } from '@supabase-folder/types'
+
+import useAuthUserStateChange from '@supabase-folder/hooks/useAuthUserStateChange'
+import useUserManager from '@redux-folder/hooks/useUserManager'
+import useLoadingResultErrorWithoutEffect from '@other-support/hooks/useLoadingResultError/withoutEffect'
+import useLoadingResultError from '@other-support/hooks/useLoadingResultError'
+
+import { convertAuthUserToDatabaseUser } from '@other-support/consts'
+
+import type { EmailPasswordObject } from '@other-support/types'
 
 const useAuthStateChange = () => {
-  const [authUser, setAuthUser] = React.useState<
-    User | undefined
-  >(undefined)
+  const { doSaveUser, doClearUser, user } =
+    useUserManager()
 
-  // React.useEffect(() => {
-  //   const asyncSignIn = async () => {
-  //     const { user, session, error } =
-  //       await supabase.auth.signIn({
-  //         email: 'jason@fontech.com.tw',
-  //         password: 'Fontech123',
-  //       })
+  const {
+    doAuthUserSignIn,
+    doAuthUserSignOut,
+    authUser,
+  } = useAuthUserStateChange()
 
-  //     if (error) {
-  //       console.log(error)
-  //     }
+  const [needUpdate, setNeedUpdate] =
+    React.useState(false)
 
-  //     console.log('asyncSignIn user: ', user)
-  //   }
+  const createdAsyncFetchUserWithEmail =
+    React.useCallback(() => {
+      return async (): Promise<DatabaseUserType> => {
+        const user = await fetchUserWithEmail(
+          authUser?.email
+        )
 
-  //   asyncSignIn()
-  // }, [])
+        return user
+      }
+    }, [authUser])
 
-  const doSaveUserWithAuthUser = (
-    authUser: User
-  ) => {
-    // const newUser = {
-    //   id: authUser.id,
-    //   name: authUser.id,
-    //   email?: authUser.id,
-    //   type?: authUser.id,
-    // }
-    console.log(
-      'doSaveUserWithAuthUser authUser email: ',
-      authUser.email
-    )
-  }
+  const {
+    isLoading,
+    error,
+    result,
+    recall,
+    fetchData,
+  } = useLoadingResultErrorWithoutEffect({
+    asyncCallback:
+      createdAsyncFetchUserWithEmail(),
+  })
 
-  const doSignIn = () => {
-    const asyncSignIn = async () => {
-      const { user, error } =
-        await supabase.auth.signIn({
-          email: 'jason@fontech.com.tw',
-          password: 'Fontech123',
-        })
+  const createdAsyncCreateUser =
+    React.useCallback(() => {
+      return async (): Promise<DatabaseUserType> => {
+        const convertedUser =
+          convertAuthUserToDatabaseUser(authUser)
+        if (!convertedUser) {
+          throw new Error('Invalid User')
+        }
 
-      if (error) {
-        // console.log(error)
+        const users = await createUsers([
+          convertedUser,
+        ])
+
+        const updatedUser = users[0]
+
+        if (!updatedUser) {
+          throw new Error('Invalid User')
+        }
+
+        return updatedUser
+      }
+    }, [authUser])
+
+  const {
+    // isLoading: createdUserIsLoading,
+    // error: createdUserError,
+    // result: createdUserResult,
+    recall: createdUserRecall,
+    // fetchData: createdUserFetchData,
+  } = useLoadingResultError({
+    asyncCallback: createdAsyncCreateUser(),
+  })
+
+  const doSignIn = React.useCallback(
+    ({
+      email,
+      password,
+    }: EmailPasswordObject) => {
+      if (isLoading) {
         return
       }
 
-      if (!user) {
-        // console.log(error)
-        return
-      }
+      doAuthUserSignIn({
+        email,
+        password,
+      })
+    },
+    [isLoading, doAuthUserSignIn]
+  )
 
-      // console.log('asyncSignIn user: ', user)
-      setAuthUser(user)
-      doSaveUserWithAuthUser(user)
+  const doSignOut = React.useCallback(() => {
+    if (isLoading) {
+      return
     }
-
-    asyncSignIn()
-  }
-
-  // React.useEffect(() => {
-  //   const asyncsignUp = async () => {
-  //     const { user, session, error } =
-  //       await supabase.auth.signUp({
-  //         email: 'test@fontech.com.tw',
-  //         password: 'Fontech123',
-  //       })
-
-  //     if (error) {
-  //       console.log(error)
-  //     }
-
-  //     console.log('signUp user: ', user)
-  //   }
-
-  //   asyncsignUp()
-  // }, [])
-
-  // React.useEffect(() => {
-  //   const asyncSignOut = async () => {
-  //     const { error } =
-  //       await supabase.auth.signOut()
-  //     if (error) {
-  //       console.log(error)
-  //     }
-
-  //     console.log('asyncSignOut')
-  //   }
-
-  //   asyncSignOut()
-  // }, [])
-
-  const doSignOut = () => {
-    const asyncSignOut = async () => {
-      const { error } =
-        await supabase.auth.signOut()
-
-      if (error) {
-        console.log(error)
-      }
-
-      console.log('asyncSignOut')
-    }
-
-    asyncSignOut()
-  }
-
-  // React.useEffect(() => {
-  //   const user = supabase.auth.user()
-  //   console.log('user: ', user)
-  // }, [])
+    doAuthUserSignOut()
+  }, [isLoading, doAuthUserSignOut])
 
   React.useEffect(() => {
-    const { data: authListener } =
-      supabase.auth.onAuthStateChange(
-        async (_, session) => {
-          // console.log(
-          //   'onAuthStateChange event: ',
-          //   event
-          // )
-          // console.log(
-          //   'onAuthStateChange session: ',
-          //   session
-          // )
-
-          // if (session) {
-          //   console.log(
-          //     'onAuthStateChange user: ',
-          //     session.user
-          //   )
-          // }
-          if (session?.user) {
-            setAuthUser(session.user)
-          }
-        }
-      )
-
-    return () => {
-      if (authListener) authListener.unsubscribe()
+    if (isLoading) {
+      return
     }
-  }, [])
 
-  const user = React.useMemo(() => {
-    return authUser
+    fetchData({
+      stopByLoadingCallBack: () =>
+        setNeedUpdate(false),
+    })
+  }, [isLoading, fetchData])
+
+  React.useEffect(() => {
+    if (!needUpdate) {
+      return
+    }
+
+    const result = recall()
+    if (result) {
+      setNeedUpdate(false)
+    }
+  }, [needUpdate, recall])
+
+  React.useEffect(() => {
+    if (error) {
+      doClearUser()
+      return
+    }
+
+    if (!result) {
+      doClearUser()
+      return
+    }
+
+    doSaveUser(result)
+  }, [error, result, doClearUser, doSaveUser])
+
+  React.useEffect(() => {
+    setNeedUpdate(true)
   }, [authUser])
 
   return {
+    isLoading,
+
     doSignIn,
     doSignOut,
+    authUser,
+
     user,
+
+    createUser: createdUserRecall,
   }
 }
 

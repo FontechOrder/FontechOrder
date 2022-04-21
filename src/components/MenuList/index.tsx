@@ -1,9 +1,11 @@
 import React from 'react'
 
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
+import {
+  Button,
+  Box,
+  Grid,
+  Card,
+} from '@mui/material'
 
 import ZoomImageWithRelativeParent from '@components/ZoomImageWithRelativeParent'
 

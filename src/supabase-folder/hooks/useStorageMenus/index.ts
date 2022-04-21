@@ -1,6 +1,6 @@
 import React from 'react'
 import fetchStorageMenus from '@supabase-folder/functions/fetchStorageMenus'
-import useInitLoadingResultError from '@other-support/Hooks/useInitLoadingResultError'
+import useInitLoadingResultError from '@other-support/hooks/useInitLoadingResultError'
 
 interface CustomError extends Error {}
 

@@ -1,7 +1,11 @@
 import type {
   StringKeyObject,
   Int,
-} from '@other-support/Types'
+  EmptyCallback,
+} from '@other-support/types'
+
+export const emptyCallback: EmptyCallback = () =>
+  undefined
 
 export const emptyStringKeyObject: StringKeyObject =
   {}
@@ -53,10 +57,10 @@ export const localeCompareSort = (
 
 export const sleep: (
   ms?: number,
-  func?: () => void
+  func?: EmptyCallback
 ) => Promise<void> = async (
   ms = 0,
-  func = () => undefined
+  func = () => emptyCallback
 ) => {
   return new Promise<void>(resolve =>
     setTimeout(() => {
@@ -239,5 +243,3 @@ export const instanceError = (
 
   return undefined
 }
-
-export const emptyCallback = () => undefined

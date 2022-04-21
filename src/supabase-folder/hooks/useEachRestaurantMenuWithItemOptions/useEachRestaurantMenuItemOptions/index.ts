@@ -1,6 +1,6 @@
 import React from 'react'
 
-import useInitLoadingResultError from '@other-support/Hooks/useInitLoadingResultError'
+import useInitLoadingResultError from '@other-support/hooks/useInitLoadingResultError'
 
 import fetchEachRestaurantMenuItemOptions from '@supabase-folder/functions/fetchEachRestaurantMenuItemOptions'
 

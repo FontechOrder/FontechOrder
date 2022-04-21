@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import {
   sleep,
   forceStringForNextRouterQueryFirst,
-} from '@other-support/Consts'
+} from '@other-support/consts'
 
 const useRouterQueryId = () => {
   const [isInit, setIsInit] = React.useState(true)

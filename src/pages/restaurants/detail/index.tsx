@@ -1,17 +1,13 @@
 import React from 'react'
 
-import Box from '@mui/material/Box'
-
-import PageContentDefault from '@containers/PageContent/default'
+import PageContentWithId from '@containers/PageContent/withId'
 import EachRestaurant from '@components/EachRestaurant'
 
 const RestaurantDetail = () => {
   return (
-    <PageContentDefault>
-      <Box m={2}>
-        <EachRestaurant />
-      </Box>
-    </PageContentDefault>
+    <PageContentWithId>
+      {id => <EachRestaurant id={id} />}
+    </PageContentWithId>
   )
 }
 

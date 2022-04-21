@@ -1,7 +1,7 @@
 import React from 'react'
 import { supabase } from '@supabase-folder/client'
 import type { RealtimePayloadCallback } from '@supabase-folder/types'
-import { emptyCallback } from '@other-support/Consts'
+import { emptyCallback } from '@other-support/consts'
 
 const useSubscription = <T>({
   path,

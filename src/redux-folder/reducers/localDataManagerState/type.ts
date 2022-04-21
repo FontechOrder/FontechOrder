@@ -1,4 +1,4 @@
-import type { StringKeyObject } from '@other-support/Types'
+import type { StringKeyObject } from '@other-support/types'
 
 export type LocalDataManagerStateType = {
   data: StringKeyObject | undefined

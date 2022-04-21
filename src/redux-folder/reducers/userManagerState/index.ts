@@ -4,7 +4,7 @@ import {
   UserManagerActionTypes,
 } from '@redux-folder/reducers/userManagerState/type'
 
-import { switchCaseTState } from '@other-support/Consts'
+import { switchCaseTState } from '@other-support/consts'
 
 const initUserManagerState: UserManagerStateType =
   {

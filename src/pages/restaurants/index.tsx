@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Box from '@mui/material/Box'
+import { Box } from '@mui/material'
 
 import PageContentDefault from '@containers/PageContent/default'
 import RestaurantList from '@components/RestaurantList'

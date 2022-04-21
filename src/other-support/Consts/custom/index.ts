@@ -1,7 +1,7 @@
 import type { User } from '@supabase/supabase-js'
 import type { NoIdDatabaseUserType } from '@supabase-folder/types'
 
-import type { BooleanString } from '@other-support/Types'
+import type { BooleanString } from '@other-support/types'
 
 export const initStringArray = Array<string>()
 
@@ -66,3 +66,38 @@ export const convertBooleanString = (
 
   return 'true'
 }
+
+export const testImage = (
+  url: string,
+  timeout?: number
+) =>
+  new Promise(resolve => {
+    timeout = timeout || 5000
+    let timedOut = false
+    let timer: NodeJS.Timeout | null = null
+    const img = new Image()
+
+    img.onerror = img.onabort = function () {
+      if (!timedOut) {
+        timer && clearTimeout(timer)
+        resolve('error')
+      }
+    }
+
+    img.onload = function () {
+      if (!timedOut) {
+        timer && clearTimeout(timer)
+        resolve('success')
+      }
+    }
+
+    img.src = url
+
+    timer = setTimeout(function () {
+      timedOut = true
+      // reset .src to invalid URL so it stops previous
+      // loading, but doesn't trigger new load
+      img.src = '//!!!!/test.jpg'
+      resolve('timeout')
+    }, timeout)
+  })
