@@ -15,6 +15,9 @@ const nextConfig = {
   },
 
   assetPrefix: process.env.NEXT_PUBLIC_NODE_ENV,
+  env: {
+    pathPrefix: process.env.NEXT_PUBLIC_NODE_ENV,
+  },
 
   // trailingSlash: true,
   exportPathMap: async function (
