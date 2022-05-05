@@ -8,6 +8,14 @@ export type RestaurantRealtimePayloadCallback = (
   payload: SupabaseRealtimePayload<DatabaseRestaurantType>
 ) => void
 
+export type DATABASETABLENAME =
+  | 'menu_item_options'
+  | 'menu_items'
+  | 'order_items'
+  | 'orders'
+  | 'restaurants'
+  | 'users'
+
 // Storage
 export type StorageMenuType = {
   id: string
@@ -19,66 +27,93 @@ export type StorageMenuListType =
   Array<StorageMenuType>
 
 // Database
-type NumberIdType = {
+export interface NumberIdInterface {
   id: number
 }
 
-export type NoIdDatabaseMenuItemOptionType = {
+export type NumberIdType = NumberIdInterface
+
+export interface NoIdDatabaseMenuItemOptionInterface {
   cost: number
   type?: string
   name: string
-
-  menu_item: number
-  restaurant: number
 }
-// export type DatabaseMenuItemOptionType =
-//   NumberIdType & NoIdDatabaseMenuItemOptionType
 
-export type NoIdDatabaseMenuItemType = {
+export interface DatabaseMenuItemOptionInterface
+  extends NoIdDatabaseMenuItemOptionInterface,
+    NumberIdInterface {}
+
+export type NoIdDatabaseMenuItemOptionType =
+  NoIdDatabaseMenuItemOptionInterface & {
+    menu_item: number
+    restaurant: number
+  }
+
+export interface NoIdDatabaseMenuItemInterface {
   name: string
   hidden: boolean
   cost: number
   type?: string
-
-  restaurant: number
 }
-// export type DatabaseMenuItemType = NumberIdType &
-//   NoIdDatabaseMenuItemType
+export interface DatabaseMenuItemInterface
+  extends NoIdDatabaseMenuItemInterface,
+    NumberIdInterface {}
 
-export type NoIdDatabaseOrderItemType = {
+export type NoIdDatabaseMenuItemType =
+  NoIdDatabaseMenuItemInterface & {
+    restaurant: number
+  }
+
+export interface NoIdDatabaseOrderItemInterface {
   note?: string
   quantity: number
-
-  user: number
-  order: number
+  cost: number
+  item_name: string
+  item_type?: string
 }
-// export type DatabaseOrderItemType = NumberIdType &
-//   NoIdDatabaseOrderItemType
 
-export type NoIdDatabaseOrderType = {
+export interface DatabaseOrderItemInterface
+  extends NoIdDatabaseOrderItemInterface,
+    NumberIdInterface {}
+
+export type NoIdDatabaseOrderItemType =
+  NoIdDatabaseOrderItemInterface & {
+    user: number
+    order: number
+    restaurant: number
+  }
+
+export interface NoIdDatabaseOrderInterface {
   date_text: string
-  finished: boolean
-
-  restaurant: number
+  finish: boolean
 }
-// export type DatabaseOrderType = NumberIdType &
-//   NoIdDatabaseOrderType
+export interface DatabaseOrderInterface
+  extends NoIdDatabaseOrderInterface,
+    NumberIdInterface {}
 
-export type NoIdDatabaseRestaurantType = {
+export interface NoIdDatabaseRestaurantInterface {
   hidden: boolean
   image_url?: string
   name: string
 }
-// export type DatabaseRestaurantType =
-//   NumberIdType & NoIdDatabaseRestaurantType
+export interface DatabaseRestaurantInterface
+  extends NoIdDatabaseRestaurantInterface,
+    NumberIdInterface {}
 
-export type NoIdDatabaseUserType = {
+export type NoIdDatabaseRestaurantType =
+  NoIdDatabaseRestaurantInterface
+
+export interface NoIdDatabaseUserInterface {
   name: string
   email?: string
   type?: string
 }
-// export type DatabaseUserType = NumberIdType &
-//   NoIdDatabaseUserType
+export interface DatabaseUserInterface
+  extends NoIdDatabaseUserInterface,
+    NumberIdInterface {}
+
+export type NoIdDatabaseUserType =
+  NoIdDatabaseUserInterface
 
 // WithNumber
 type WithNumberIdType<T> = NumberIdType & T
@@ -89,8 +124,7 @@ export type DatabaseMenuItemType =
   WithNumberIdType<NoIdDatabaseMenuItemType>
 export type DatabaseOrderItemType =
   WithNumberIdType<NoIdDatabaseOrderItemType>
-export type DatabaseOrderType =
-  WithNumberIdType<NoIdDatabaseOrderType>
+
 export type DatabaseRestaurantType =
   WithNumberIdType<NoIdDatabaseRestaurantType>
 export type DatabaseUserType =
@@ -101,7 +135,8 @@ export type DatabaseMenuItemOptionListType =
   Array<DatabaseMenuItemOptionType>
 export type DatabaseMenuItemListType =
   Array<DatabaseMenuItemType>
-
+export type DatabaseOrderItemListType =
+  Array<DatabaseOrderItemType>
 export type DatabaseRestaurantListType =
   Array<DatabaseRestaurantType>
 
@@ -113,3 +148,59 @@ export interface RestaurantMenuWithItemOptionType
 
 export type RestaurantMenuWithItemOptionListType =
   Array<RestaurantMenuWithItemOptionType>
+
+export interface EachOrderInterface
+  extends DatabaseOrderInterface {
+  restaurant: DatabaseRestaurantInterface
+}
+
+export interface EachOrderItemDataInterface
+  extends DatabaseOrderItemInterface {
+  order: EachOrderInterface
+  user: DatabaseUserInterface
+}
+
+export interface MenuItemOptionInterface
+  extends NoIdDatabaseMenuItemOptionInterface {
+  menu_item: NoIdDatabaseMenuItemInterface &
+    NumberIdInterface
+  restaurant: NoIdDatabaseRestaurantInterface &
+    NumberIdInterface
+}
+
+export interface MenuItemWithItemOptionInterface
+  extends DatabaseMenuItemInterface {
+  itemOptions: Array<NoIdDatabaseMenuItemOptionInterface>
+}
+
+// OptionType
+interface OptionMenuWithItemOptionInterface
+  extends RestaurantMenuWithItemOptionType {
+  sectionTitle: string
+  title: string
+}
+
+interface OptionMenuItemOptionInterface
+  extends DatabaseMenuItemOptionType {
+  sectionTitle: string
+  title: string
+}
+
+type OptionType =
+  | OptionMenuWithItemOptionInterface
+  | OptionMenuItemOptionInterface
+
+export type OptionListType = Array<OptionType>
+
+export type OrderItemQuantityType = 1 | 2 | 3
+
+export interface OrderItemInterface {
+  note?: string
+  quantity: OrderItemQuantityType
+  option: OptionType
+}
+
+export interface NewOrderItemInterface
+  extends Omit<OrderItemInterface, 'option'> {
+  option: OptionType | null
+}

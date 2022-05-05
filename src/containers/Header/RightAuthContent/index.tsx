@@ -14,7 +14,6 @@ import UserLoginForm from '@components/UserLoginForm'
 const HeaderRightAuthContent = () => {
   const {
     isLoading,
-    doSignIn,
     doSignOut,
     authUser,
     user,
@@ -141,7 +140,7 @@ const HeaderRightAuthContent = () => {
     )
   }
 
-  return <UserLoginForm doSignIn={doSignIn} />
+  return <UserLoginForm />
 }
 
 export default HeaderRightAuthContent

@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 
+const withTM = require('next-transpile-modules')([
+  "@fullcalendar/list",
+  "@fullcalendar/common",
+  "@fullcalendar/daygrid",
+  "@fullcalendar/timegrid",
+  "@fullcalendar/interaction",
+  "@fullcalendar/react",
+]);
+
 const pathPrefix = process.env.NODE_ENV === 'production'
 ? '/FontechOrder'
 : '';
@@ -35,10 +44,11 @@ const nextConfig = {
       '/restaurants': { page: '/restaurants' },
       '/restaurants/detail': { page: '/restaurants/detail' },
       '/new-menu': { page: '/new-menu' },
+      '/new-order': { page: '/new-order' },
     }
   },
 
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
+module.exports = withTM(nextConfig);

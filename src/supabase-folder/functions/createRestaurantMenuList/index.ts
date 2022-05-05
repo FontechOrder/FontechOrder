@@ -54,27 +54,27 @@ const createRestaurantMenuList = async ({
 
   // console.log('insert menuItems: ', menuItems)
 
-  const restaurantMenuOptionList =
-    menuItems.flatMap((menuItem, index) => {
-      const menuItemOptions =
-        restaurantMenuList.menuItems[index]
-          .menuItemOptions
+  // const restaurantMenuOptionList =
+  //   menuItems.flatMap((menuItem, index) => {
+  //     const menuItemOptions =
+  //       restaurantMenuList.menuItems[index]
+  //         .menuItemOptions
 
-      return menuItemOptions.map(
-        menuItemOption => ({
-          name: menuItemOption.name,
-          type: `${menuItem.type}.${menuItem.name}`,
-          cost: menuItemOption.cost,
-          restaurant: restaurantId,
-          menu_item: menuItem.id,
-        })
-      )
-    })
+  //     return menuItemOptions.map(
+  //       menuItemOption => ({
+  //         name: menuItemOption.name,
+  //         type: `${menuItem.type}.${menuItem.name}`,
+  //         cost: menuItemOption.cost,
+  //         restaurant: restaurantId,
+  //         menu_item: menuItem.id,
+  //       })
+  //     )
+  //   })
 
-  console.log(
-    'insert restaurantMenuOptionList: ',
-    restaurantMenuOptionList
-  )
+  // console.log(
+  //   'insert restaurantMenuOptionList: ',
+  //   restaurantMenuOptionList
+  // )
 
   const {
     data: menuItemOptionData,

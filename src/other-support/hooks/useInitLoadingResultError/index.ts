@@ -32,7 +32,7 @@ const useInitLoadingResultError = <T, U>({
   })
 
   const fetchData = React.useCallback(() => {
-    console.log('fetchData')
+    // console.log('fetchData')
     defaultFetchData({
       finishCallBack: () => {
         setIsInit(false)
@@ -41,9 +41,9 @@ const useInitLoadingResultError = <T, U>({
   }, [defaultFetchData])
 
   const recall = React.useCallback(() => {
-    console.log(
-      `useInitLoadingResultError recall ${isInit}`
-    )
+    // console.log(
+    //   `useInitLoadingResultError recall ${isInit}`
+    // )
     if (isInit) {
       return false
     }

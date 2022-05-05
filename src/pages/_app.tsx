@@ -5,8 +5,11 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider } from '@mui/material/styles'
 
 import 'tailwindcss/tailwind.css'
-import 'react-datepicker/dist/react-datepicker.css'
 import 'react-medium-image-zoom/dist/styles.css'
+
+import '@fullcalendar/common/main.css'
+import '@fullcalendar/daygrid/main.css'
+import '@fullcalendar/timegrid/main.css'
 
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'

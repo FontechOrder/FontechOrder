@@ -2,10 +2,12 @@ import React from 'react'
 
 import PageContentWithId from '@containers/PageContent/withId'
 
+import EachOrder from '@components/EachOrder'
+
 const OrderDetail = () => {
   return (
     <PageContentWithId>
-      {id => <div>OrderDetail with id:{id}</div>}
+      {id => <EachOrder id={id} />}
     </PageContentWithId>
   )
 }

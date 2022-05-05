@@ -26,13 +26,7 @@ const CreateUserSchema = Yup.object().shape({
     .max(20, '太多20吧~'),
 })
 
-interface UserLoginFormProps {
-  doSignIn: (props: EmailPasswordObject) => void
-}
-
-const UserLoginForm: React.FC<
-  UserLoginFormProps
-> = ({ doSignIn }) => {
+const UserLoginForm: React.FC = () => {
   const [isLoading, setIsLoading] =
     React.useState(false)
 
@@ -114,18 +108,27 @@ const UserLoginForm: React.FC<
               {errors.password?.message}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <Box className="flex flex-row justify-end space-y-0 space-x-1 sm:flex-col sm:justify-center sm:space-y-1 sm:space-x-0 sm:space-y-1 sm:space-x-0">
-              {/* <GoogleAuthButton /> */}
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={loginButtonClick}
-              >
-                LOGIN
-              </Button>
-            </Box>
+          <Grid
+            item
+            xs={12}
+            sm={2}
+            className="flex justify-end sm:!flex-col sm:items-center sm:justify-center"
+          >
+            <Button
+              className="self-end"
+              variant="contained"
+              color="primary"
+              onClick={loginButtonClick}
+            >
+              LOGIN
+            </Button>
           </Grid>
+
+          {/* <Grid item xs={12}>
+            <Button variant="contained">
+              GOOGLE LOGIN
+            </Button>
+          </Grid> */}
         </Grid>
       </Box>
     </Paper>

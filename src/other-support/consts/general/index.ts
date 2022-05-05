@@ -243,3 +243,22 @@ export const instanceError = (
 
   return undefined
 }
+
+export const arrayRemoveElementByIndex = <T>(
+  array: Array<T>,
+  index: number
+): Array<T> =>
+  array
+    .slice(0, index)
+    .concat(array.slice(index + 1, array.length))
+
+export const groupBy = <T, K extends keyof any>(
+  list: T[],
+  getKey: (item: T) => K
+) =>
+  list.reduce((previous, currentItem) => {
+    const group = getKey(currentItem)
+    if (!previous[group]) previous[group] = []
+    previous[group].push(currentItem)
+    return previous
+  }, {} as Record<K, T[]>)

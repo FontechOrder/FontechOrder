@@ -5,7 +5,7 @@ import type {
 } from '@supabase-folder/types'
 
 const createRestaurants = async (
-  restaurants: [NoIdDatabaseRestaurantType]
+  restaurants: Array<NoIdDatabaseRestaurantType>
 ): Promise<Array<DatabaseRestaurantType>> => {
   const { data, error } = await supabase
     .from<DatabaseRestaurantType>('restaurants')

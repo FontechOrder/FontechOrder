@@ -26,6 +26,13 @@ const EachRestaurantMenuListRow = ({
 }) => {
   const [open, setOpen] = React.useState(false)
 
+  const disabledOpen = React.useMemo(() => {
+    return (
+      restaurantMenuWithItemOption.itemOptions
+        .length === 0
+    )
+  }, [restaurantMenuWithItemOption])
+
   return (
     <React.Fragment>
       <TableRow
@@ -37,6 +44,7 @@ const EachRestaurantMenuListRow = ({
       >
         <TableCell>
           <IconButton
+            disabled={disabledOpen}
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
@@ -115,12 +123,6 @@ const EachRestaurantMenuListRow = ({
                       </TableRow>
                     )
                   )}
-
-                  {/*                  <EachRestaurantMenuListRowNewItemOption
-                    restaurantMenuWithItemOption={
-                      restaurantMenuWithItemOption
-                    }
-                  /> */}
                 </TableBody>
               </Table>
             </Box>

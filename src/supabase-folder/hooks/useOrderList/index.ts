@@ -1,0 +1,109 @@
+import React from 'react'
+
+import useSubscription from '@supabase-folder/hooks/useSubscription'
+
+import useOrderListManager from '@redux-folder/hooks/useOrderListManager'
+
+import type {
+  RealtimePayloadCallback,
+  DatabaseOrderInterface,
+} from '@supabase-folder/types'
+
+const useOrderList = () => {
+  const {
+    doFetchOrderListWithCallback,
+    doSaveOrderList,
+    doClearOrderList,
+    orders,
+  } = useOrderListManager()
+
+  const insertCallback: RealtimePayloadCallback<DatabaseOrderInterface> =
+    React.useCallback(
+      payload => {
+        if (payload.errors) {
+          return
+        }
+
+        const newOrder: DatabaseOrderInterface =
+          payload.new
+        if (!newOrder) {
+          return
+        }
+
+        doSaveOrderList([...orders, newOrder])
+      },
+      [doSaveOrderList, orders]
+    )
+  const updateCallback: RealtimePayloadCallback<DatabaseOrderInterface> =
+    React.useCallback(
+      payload => {
+        if (payload.errors) {
+          return
+        }
+
+        const updatedOrderId = payload.old?.id
+
+        if (!updatedOrderId) {
+          return
+        }
+
+        if (updatedOrderId <= 0) {
+          return
+        }
+
+        const newOrder: DatabaseOrderInterface =
+          payload.new
+        if (!newOrder) {
+          return
+        }
+
+        const newOrders = orders.map(order =>
+          order.id === updatedOrderId
+            ? newOrder
+            : order
+        )
+
+        doSaveOrderList(newOrders)
+      },
+      [doSaveOrderList, orders]
+    )
+  const deleteCallback: RealtimePayloadCallback<DatabaseOrderInterface> =
+    React.useCallback(
+      payload => {
+        if (payload.errors) {
+          return
+        }
+
+        const deletedOrderId = payload.old?.id
+        if (!deletedOrderId) {
+          return
+        }
+
+        if (deletedOrderId <= 0) {
+          return
+        }
+
+        doSaveOrderList(
+          orders.filter(
+            order => order.id !== deletedOrderId
+          )
+        )
+      },
+      [doSaveOrderList, orders]
+    )
+
+  useSubscription({
+    path: 'orders',
+    insertCallback,
+    updateCallback,
+    deleteCallback,
+  })
+
+  return {
+    doFetchOrderListWithCallback,
+    doClearOrderList,
+    orders,
+  }
+}
+
+export default useOrderList

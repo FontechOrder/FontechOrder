@@ -1,5 +1,9 @@
 import type { User } from '@supabase/supabase-js'
-import type { NoIdDatabaseUserType } from '@supabase-folder/types'
+import type {
+  NoIdDatabaseUserType,
+  MenuItemOptionInterface,
+  MenuItemWithItemOptionInterface,
+} from '@supabase-folder/types'
 
 import type { BooleanString } from '@other-support/types'
 
@@ -101,3 +105,34 @@ export const testImage = (
       resolve('timeout')
     }, timeout)
   })
+
+export const menuItemOptionListGroupBy = (
+  menuItemOptionList: Array<MenuItemOptionInterface>
+): Array<MenuItemWithItemOptionInterface> => {
+  return menuItemOptionList.reduce(
+    (result, current) => {
+      const index = result.findIndex(
+        menuItem =>
+          menuItem.id === current.menu_item.id
+      )
+      if (index > -1) {
+        const findMenuItem = result[index]
+
+        findMenuItem.itemOptions.push(current)
+
+        result[index] = findMenuItem
+
+        return result
+      }
+
+      return [
+        ...result,
+        {
+          ...current.menu_item,
+          itemOptions: [current],
+        },
+      ].sort((a, b) => a.id - b.id)
+    },
+    Array<MenuItemWithItemOptionInterface>()
+  )
+}

@@ -8,7 +8,7 @@ const authUserSignIn = async ({
   email,
   password,
 }: EmailPasswordObject): Promise<User> => {
-  console.log('authUserSignIn')
+  // console.log('authUserSignIn')
 
   const { user, error } =
     await supabase.auth.signIn({
@@ -16,8 +16,8 @@ const authUserSignIn = async ({
       password,
     })
 
-  console.log('error: ', error)
-  console.log('user: ', user)
+  // console.log('error: ', error)
+  // console.log('user: ', user)
 
   if (error) {
     throw error

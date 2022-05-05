@@ -5,7 +5,7 @@ import type {
 } from '@supabase-folder/types'
 
 const createUsers = async (
-  users: [NoIdDatabaseUserType]
+  users: Array<NoIdDatabaseUserType>
 ): Promise<Array<DatabaseUserType>> => {
   const { data, error } = await supabase
     .from<DatabaseUserType>('users')

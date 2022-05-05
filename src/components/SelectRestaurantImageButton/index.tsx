@@ -104,26 +104,6 @@ const SelectRestaurantImageButton: React.FC<
                   accept="image/jpeg, image/png, image/jpg"
                   id="contained-button-file"
                   type="file"
-                  // onChange={async e => {
-                  //   if (uploadLoading) {
-                  //     return
-                  //   }
-
-                  //   setUploadLoading(true)
-                  //   try {
-                  //     const publicURL =
-                  //       await uploadStorageMenu(
-                  //         e.target.files?.[0]
-                  //       )
-
-                  //     handleClose()
-                  //     imageUrlCallback(publicURL)
-                  //   } catch {
-                  //     handleClose()
-                  //   }
-
-                  //   setUploadLoading(false)
-                  // }}
                   onChange={inputOnChange}
                 />
                 <LoadingButton
