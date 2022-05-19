@@ -5,7 +5,7 @@ import {
   useDispatch,
 } from 'react-redux'
 
-import type { DatabaseUserType } from '@supabase-folder/types'
+import type { DatabaseUserInterface } from '@supabase-folder/types'
 
 import {
   saveUser,
@@ -23,7 +23,7 @@ export const useUserManager = () => {
   )
 
   const doSaveUser = React.useCallback(
-    (user: DatabaseUserType) => {
+    (user: DatabaseUserInterface) => {
       dispatch(saveUser(user))
     },
     [dispatch]

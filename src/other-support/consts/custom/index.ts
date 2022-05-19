@@ -1,6 +1,6 @@
 import type { User } from '@supabase/supabase-js'
 import type {
-  NoIdDatabaseUserType,
+  NoIdDatabaseUserInterface,
   MenuItemOptionInterface,
   MenuItemWithItemOptionInterface,
 } from '@supabase-folder/types'
@@ -24,7 +24,7 @@ const testEmailList = [
 
 export const convertAuthUserToDatabaseUser = (
   user: User | undefined
-): NoIdDatabaseUserType | undefined => {
+): NoIdDatabaseUserInterface | undefined => {
   const findTestEmail = testEmailList.find(
     testEmail =>
       testEmail.email.toLowerCase() ===

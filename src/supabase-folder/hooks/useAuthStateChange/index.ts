@@ -4,7 +4,7 @@ import fetchUserWithEmail from '@supabase-folder/functions/fetchUserWithEmail'
 
 import createUsers from '@supabase-folder/functions/createUsers'
 
-import type { DatabaseUserType } from '@supabase-folder/types'
+import type { DatabaseUserInterface } from '@supabase-folder/types'
 
 import useAuthUserStateChange from '@supabase-folder/hooks/useAuthUserStateChange'
 import useUserManager from '@redux-folder/hooks/useUserManager'
@@ -30,7 +30,7 @@ const useAuthStateChange = () => {
 
   const createdAsyncFetchUserWithEmail =
     React.useCallback(() => {
-      return async (): Promise<DatabaseUserType> => {
+      return async (): Promise<DatabaseUserInterface> => {
         const user = await fetchUserWithEmail(
           authUser?.email
         )
@@ -52,7 +52,7 @@ const useAuthStateChange = () => {
 
   const createdAsyncCreateUser =
     React.useCallback(() => {
-      return async (): Promise<DatabaseUserType> => {
+      return async (): Promise<DatabaseUserInterface> => {
         const convertedUser =
           convertAuthUserToDatabaseUser(authUser)
 

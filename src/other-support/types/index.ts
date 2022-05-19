@@ -88,6 +88,10 @@ export type CreateRestaurantMenuSchemaType = {
   >
 }
 
+type GeneralObject = {
+  [k: string | number | symbol]: any
+}
+
 export type Flatten<T extends object> =
   object extends T
     ? object
@@ -115,7 +119,7 @@ export type Flatten<T extends object> =
         keyof T,
         (y: infer O) => void
       >
-    ? O extends infer _
+    ? O extends GeneralObject
       ? { [K in keyof O]: O[K] }
       : never
     : never

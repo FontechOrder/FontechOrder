@@ -108,12 +108,10 @@ export interface NoIdDatabaseUserInterface {
   email?: string
   type?: string
 }
+
 export interface DatabaseUserInterface
   extends NoIdDatabaseUserInterface,
     NumberIdInterface {}
-
-export type NoIdDatabaseUserType =
-  NoIdDatabaseUserInterface
 
 // WithNumber
 type WithNumberIdType<T> = NumberIdType & T
@@ -127,8 +125,6 @@ export type DatabaseOrderItemType =
 
 export type DatabaseRestaurantType =
   WithNumberIdType<NoIdDatabaseRestaurantType>
-export type DatabaseUserType =
-  WithNumberIdType<NoIdDatabaseUserType>
 
 // List
 export type DatabaseMenuItemOptionListType =

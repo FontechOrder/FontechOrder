@@ -1,15 +1,15 @@
 import { supabase } from '@supabase-folder/client'
-import type { DatabaseUserType } from '@supabase-folder/types'
+import type { DatabaseUserInterface } from '@supabase-folder/types'
 
 const fetchUserWithEmail = async (
   email?: string
-): Promise<DatabaseUserType> => {
+): Promise<DatabaseUserInterface> => {
   if (!email) {
     throw new Error('Invalid restaurant id')
   }
 
   const { data, error } = await supabase
-    .from<DatabaseUserType>('users')
+    .from<DatabaseUserInterface>('users')
     .select()
     .eq('email', email)
     .limit(1)

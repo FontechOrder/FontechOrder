@@ -3,10 +3,10 @@ import {
   UserManagerActionTypes,
 } from '@redux-folder/reducers/userManagerState/type'
 
-import type { DatabaseUserType } from '@supabase-folder/types'
+import type { DatabaseUserInterface } from '@supabase-folder/types'
 
 export const saveUser = (
-  user: DatabaseUserType
+  user: DatabaseUserInterface
 ): UserManagerActionTypes =>
   <UserManagerActionTypes>{
     type: USER_STRING.SAVE_USER,

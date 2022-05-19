@@ -1,14 +1,14 @@
 import { supabase } from '@supabase-folder/client'
 import type {
-  DatabaseUserType,
-  NoIdDatabaseUserType,
+  DatabaseUserInterface,
+  NoIdDatabaseUserInterface,
 } from '@supabase-folder/types'
 
 const createUsers = async (
-  users: Array<NoIdDatabaseUserType>
-): Promise<Array<DatabaseUserType>> => {
+  users: Array<NoIdDatabaseUserInterface>
+): Promise<Array<DatabaseUserInterface>> => {
   const { data, error } = await supabase
-    .from<DatabaseUserType>('users')
+    .from<DatabaseUserInterface>('users')
     .insert(users)
 
   if (error) {

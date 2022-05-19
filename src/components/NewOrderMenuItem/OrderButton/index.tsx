@@ -5,7 +5,7 @@ import { LoadingButton } from '@mui/lab'
 import type { EmptyCallback } from '@other-support/types'
 
 import type {
-  DatabaseUserType,
+  DatabaseUserInterface,
   OrderItemInterface,
   NoIdDatabaseOrderItemType,
 } from '@supabase-folder/types'
@@ -13,7 +13,7 @@ import type {
 import createOrderItems from '@supabase-folder/functions/createOrderItems'
 
 interface OrderButtonProps {
-  user: DatabaseUserType
+  user: DatabaseUserInterface
   doClear: EmptyCallback
   newOrderItemList: Array<OrderItemInterface>
   orderId: number
