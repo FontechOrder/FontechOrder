@@ -55,6 +55,7 @@ const useAuthStateChange = () => {
       return async (): Promise<DatabaseUserType> => {
         const convertedUser =
           convertAuthUserToDatabaseUser(authUser)
+
         if (!convertedUser) {
           throw new Error('Invalid User')
         }
@@ -69,9 +70,11 @@ const useAuthStateChange = () => {
           throw new Error('Invalid User')
         }
 
+        doSaveUser(updatedUser)
+
         return updatedUser
       }
-    }, [authUser])
+    }, [authUser, doSaveUser])
 
   const {
     // isLoading: createdUserIsLoading,

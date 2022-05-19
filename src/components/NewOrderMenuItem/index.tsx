@@ -44,11 +44,16 @@ const initNewOrderItem: NewOrderItemInterface = {
 interface NewOrderMenuItemProps {
   orderId: number
   restaurantId: number
+  recallEachOrder: () => boolean
 }
 
 const NewOrderMenuItem: React.FC<
   NewOrderMenuItemProps
-> = ({ orderId, restaurantId }) => {
+> = ({
+  orderId,
+  restaurantId,
+  recallEachOrder,
+}) => {
   const [newOrderItem, setNewOrderItem] =
     React.useState(initNewOrderItem)
 
@@ -296,9 +301,10 @@ const NewOrderMenuItem: React.FC<
                 user={user}
                 orderId={orderId}
                 restaurantId={restaurantId}
-                doClear={() =>
+                doClear={() => {
                   setNewOrderItemList([])
-                }
+                  recallEachOrder()
+                }}
                 newOrderItemList={
                   newOrderItemList
                 }

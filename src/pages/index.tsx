@@ -1,9 +1,13 @@
 import React from 'react'
-import PageContent from '@containers/PageContent'
+import PageContentDefault from '@containers/PageContent/default'
+
+import OrderCalendar from '@components/OrderCalendar'
 
 const Home = () => {
   return (
-    <PageContent>Fontech Order Home</PageContent>
+    <PageContentDefault>
+      <OrderCalendar />
+    </PageContentDefault>
   )
 }
 

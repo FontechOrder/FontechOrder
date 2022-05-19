@@ -12,7 +12,6 @@ const useEachRestaurantMenuWithItemOptions = (
     isInit: itemIsInit,
     isLoading: itemIsLoading,
     error: itemError,
-    // recall,
     restaurantMenus,
   } = useEachRestaurantMenus(id)
 
@@ -20,7 +19,6 @@ const useEachRestaurantMenuWithItemOptions = (
     isInit: itemOptionIsInit,
     isLoading: itemOptionIsLoading,
     error: itemOptionError,
-    // recall,
     restaurantMenuItemOptions,
   } = useEachRestaurantMenuItemOptions(id)
 
@@ -53,7 +51,6 @@ const useEachRestaurantMenuWithItemOptions = (
       restaurantMenus,
       restaurantMenuItemOptions,
     ])
-
   return {
     menuInit,
     menuIsLoading,

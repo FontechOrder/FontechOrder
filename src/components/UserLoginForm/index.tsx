@@ -14,6 +14,8 @@ import {
 
 import authUserSignIn from '@supabase-folder/functions/authUserSignIn'
 
+import UserLoginFormGoogleLoginButton from '@components/UserLoginForm/GoogleLoginButton'
+
 import type { EmailPasswordObject } from '@other-support/types'
 
 const CreateUserSchema = Yup.object().shape({
@@ -124,11 +126,14 @@ const UserLoginForm: React.FC = () => {
             </Button>
           </Grid>
 
-          {/* <Grid item xs={12}>
-            <Button variant="contained">
-              GOOGLE LOGIN
-            </Button>
-          </Grid> */}
+          <Grid
+            className="flex"
+            item
+            xs={12}
+            justifyContent="flex-end"
+          >
+            <UserLoginFormGoogleLoginButton />
+          </Grid>
         </Grid>
       </Box>
     </Paper>

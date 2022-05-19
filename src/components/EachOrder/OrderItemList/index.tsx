@@ -166,12 +166,12 @@ const OrderItemList: React.FC<
         </Box>
       </Stack>
 
-      {accordionOrderItemList.map(each => (
+      {accordionOrderItemList.map((each, idx) => (
         <Accordion
           key={
             sortByUser
-              ? `by-user-accordion-order-item-${each.id}`
-              : `accordion-order-item-${each.id}`
+              ? `by-user-accordion-order-item-${each.id}-${idx}`
+              : `accordion-order-item-${each.id}-${idx}`
           }
         >
           <AccordionSummary
@@ -207,9 +207,9 @@ const OrderItemList: React.FC<
             </Grid>
           </AccordionSummary>
           <AccordionDetails>
-            {each.items.map(item => (
+            {each.items.map((item, index) => (
               <Grid
-                key={`accordion-order-item-items-${item.title}`}
+                key={`accordion-order-item-items-${item.title}-${index}`}
                 className="mr-10"
                 container
                 spacing={1}

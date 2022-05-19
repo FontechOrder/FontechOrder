@@ -11,9 +11,32 @@ export const initStringArray = Array<string>()
 
 const FONTECH_EMAIL_TAIL = '@fontech.com.tw'
 
+const testEmailList = [
+  {
+    name: 'fontechorder',
+    email: 'fontechorder@gmail.com',
+  },
+  {
+    name: 'jasonfontech',
+    email: 'jasonfontech@gmail.com',
+  },
+]
+
 export const convertAuthUserToDatabaseUser = (
   user: User | undefined
 ): NoIdDatabaseUserType | undefined => {
+  const findTestEmail = testEmailList.find(
+    testEmail =>
+      testEmail.email.toLowerCase() ===
+      user?.email?.toLowerCase()
+  )
+  if (findTestEmail) {
+    return {
+      ...findTestEmail,
+      type: 'testEmail',
+    }
+  }
+
   const email = getFontechEmail(user?.email)
 
   if (!email) {

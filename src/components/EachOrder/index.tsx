@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Button } from '@mui/material'
 
 import ZoomImageWithRelativeParent from '@components/ZoomImageWithRelativeParent'
 import EachOrderOrderItemList from '@components/EachOrder/OrderItemList'
@@ -19,8 +19,13 @@ interface EachOrderProps {
 const EachOrder: React.FC<EachOrderProps> = ({
   id,
 }) => {
-  const { isInit, isLoading, error, eachOrder } =
-    useEachOrder(id)
+  const {
+    isInit,
+    isLoading,
+    error,
+    eachOrder,
+    recall,
+  } = useEachOrder(id)
 
   // console.log(
   //   'EachOrder useOrderDetail eachOrder: ',
@@ -61,6 +66,13 @@ const EachOrder: React.FC<EachOrderProps> = ({
       justifyContent="space-around"
     >
       <Grid item xs={5}>
+        <Button
+          variant="contained"
+          onClick={recall}
+        >
+          {' '}
+          D.C.{' '}
+        </Button>
         <Box>order id: {eachOrder.id}</Box>
         <Box>{eachOrder.restaurant.name}</Box>
       </Grid>
@@ -86,6 +98,7 @@ const EachOrder: React.FC<EachOrderProps> = ({
         <NewOrderMenuItem
           orderId={id}
           restaurantId={eachOrder.restaurant.id}
+          recallEachOrder={recall}
         />
       </Grid>
       <Grid item xs={10}>
