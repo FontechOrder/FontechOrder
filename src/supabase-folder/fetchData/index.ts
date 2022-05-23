@@ -1,121 +1,165 @@
-import { supabase } from '@supabase-folder/client'
+// import { supabase } from '@supabase-folder/client'
 
-import fetchDataDefault from '@supabase-folder/fetchData/default'
+// import type { PostgrestFilterBuilderEqualType } from '@supabase-folder/types'
 
-import fetchDataEach from '@supabase-folder/fetchData/each'
-import fetchDataId from '@supabase-folder/fetchData/id'
+// import fetchDataDefault from '@supabase-folder/fetchData/default'
 
-import {
-  DatabaseOrderInterface,
-  MenuItemWithItemOptionInterface,
-  EachOrderInterface,
-  EachOrderItemDataInterface,
-  MenuItemOptionInterface,
-} from '@supabase-folder/types'
+// import fetchDataEach from '@supabase-folder/fetchData/each'
+// import fetchDataId from '@supabase-folder/fetchData/id'
 
-import { menuItemOptionListGroupBy } from '@other-support/consts'
+// import {
+//   DatabaseOrderInterface,
+//   MenuItemWithItemOptionInterface,
+//   EachOrderInterface,
+//   EachOrderItemDataInterface,
+//   MenuItemOptionInterface,
+// } from '@supabase-folder/types'
 
-const fetchOrderList = async (): Promise<
-  Array<DatabaseOrderInterface>
-> => {
-  const data =
-    await fetchDataDefault<DatabaseOrderInterface>(
-      {
-        databaseString: 'orders',
-      }
-    )
+// import { menuItemOptionListGroupBy } from '@other-support/consts'
 
-  return data
-}
+// const fetchOrderList = async (): Promise<
+//   Array<DatabaseOrderInterface>
+// > => {
+//   const data =
+//     await fetchDataDefault<DatabaseOrderInterface>(
+//       {
+//         databaseString: 'orders',
+//       }
+//     )
 
-const fetchEachOrder = async (
-  orderId: number
-): Promise<EachOrderInterface> => {
-  const order =
-    await fetchDataId<EachOrderInterface>({
-      databaseString: 'orders',
-      selectString:
-        '*,restaurant(id,hidden,image_url,name)',
-      eq: {
-        id: orderId,
-        eqString: 'id',
-      },
-    })
+//   return data
+// }
 
-  // console.log('fetchEachOrder order: ', order)
+// const fetchEachOrder = async (
+//   orderId: number
+// ): Promise<EachOrderInterface> => {
+//   const order =
+//     await fetchDataId<EachOrderInterface>({
+//       databaseString: 'orders',
+//       selectString:
+//         '*,restaurant(id,hidden,image_url,name)',
+//       eqs: [
+//         {
+//           id: orderId,
+//           eqString: 'id',
+//         },
+//       ],
+//     })
 
-  return order
-}
+//   // console.log('fetchEachOrder order: ', order)
 
-const fetchEachOrderItemList = async (
-  orderId: number,
-  restaurantId: number
-): Promise<Array<EachOrderItemDataInterface>> => {
-  // console.log(
-  //   'fetchEachOrderItemList orderId: ',
-  //   orderId
-  // )
-  // console.log(
-  //   'fetchEachOrderItemList restaurantId: ',
-  //   restaurantId
-  // )
+//   return order
+// }
 
-  const { data: orderItems, error } =
-    await supabase
-      .from('order_items')
-      .select(
-        '*,user(id,name,email),order!inner(id,restaurant!inner(id))'
-      )
-      .eq('order.id', orderId)
-      .eq('restaurant', restaurantId)
+// const fetchEachOrderItemList = async (
+//   orderId: number,
+//   restaurantId: number
+// ): Promise<Array<EachOrderItemDataInterface>> => {
+//   // console.log(
+//   //   'fetchEachOrderItemList orderId: ',
+//   //   orderId
+//   // )
+//   // console.log(
+//   //   'fetchEachOrderItemList restaurantId: ',
+//   //   restaurantId
+//   // )
 
-  if (error) {
-    throw error
-  }
+//   // const { data: orderItems, error } =
+//   //   await supabase
+//   //     .from('order_items')
+//   //     .select(
+//   //       '*,user(id,name,email),order!inner(id,restaurant!inner(id))'
+//   //     )
+//   //     .eq('order.id', orderId)
+//   //     .eq('restaurant', restaurantId)
 
-  if (!orderItems) {
-    throw new Error('no orderItems')
-  }
+//   return await fetchOrderItemList({
+//     eqs: [
+//       {
+//         id: orderId,
+//         eqString: 'order.id',
+//       },
+//       {
+//         id: restaurantId,
+//         eqString: 'restaurant',
+//       },
+//     ],
+//   })
 
-  // console.log(
-  //   'fetchEachOrder orderItems: ',
-  //   orderItems
-  // )
+//   // if (error) {
+//   //   throw error
+//   // }
 
-  return orderItems
-}
+//   // if (!orderItems) {
+//   //   throw new Error('no orderItems')
+//   // }
 
-const fetchMenuItemWithItemOptions = async (
-  restaurantId: number
-): Promise<
-  Array<MenuItemWithItemOptionInterface>
-> => {
-  const menuItemOptionList =
-    await fetchDataEach<MenuItemOptionInterface>({
-      databaseString: 'menu_item_options',
-      selectString:
-        '*,restaurant(id),menu_item(id,hidden,name,cost,type)',
-      eq: {
-        id: restaurantId,
-        eqString: 'restaurant.id',
-      },
-    })
+//   // // console.log(
+//   // //   'fetchEachOrder orderItems: ',
+//   // //   orderItems
+//   // // )
 
-  // console.log(
-  //   'fetchEachOrder menuItemOptionList: ',
-  //   menuItemOptionList
-  // )
+//   // return orderItems
+// }
 
-  const menuItemWithItemOptions =
-    menuItemOptionListGroupBy(menuItemOptionList)
+// const fetchOrderItemList = async ({
+//   selectString = '*,user(id,name,email),order!inner(id,restaurant!inner(id))',
+//   eqs = [],
+// }: {
+//   selectString?: string
+//   eqs?: Array<
+//     PostgrestFilterBuilderEqualType<EachOrderItemDataInterface>
+//   >
+// }): Promise<
+//   Array<EachOrderItemDataInterface>
+// > => {
+//   const orderItems =
+//     await fetchDataEach<EachOrderItemDataInterface>(
+//       {
+//         databaseString: 'order_items',
+//         selectString,
+//         eqs,
+//       }
+//     )
 
-  // console.log(
-  //   'fetchEachOrder menuItemWithItemOptions: ',
-  //   menuItemWithItemOptions
-  // )
+//   // console.log('fetchEachOrder order: ', order)
 
-  return menuItemWithItemOptions
-}
+//   return orderItems
+// }
+
+// const fetchMenuItemWithItemOptions = async (
+//   restaurantId: number
+// ): Promise<
+//   Array<MenuItemWithItemOptionInterface>
+// > => {
+//   const menuItemOptionList =
+//     await fetchDataEach<MenuItemOptionInterface>({
+//       databaseString: 'menu_item_options',
+//       selectString:
+//         '*,restaurant(id),menu_item(id,hidden,name,cost,type)',
+//       eqs: [
+//         {
+//           id: restaurantId,
+//           eqString: 'restaurant.id',
+//         },
+//       ],
+//     })
+
+//   // console.log(
+//   //   'fetchEachOrder menuItemOptionList: ',
+//   //   menuItemOptionList
+//   // )
+
+//   const menuItemWithItemOptions =
+//     menuItemOptionListGroupBy(menuItemOptionList)
+
+//   // console.log(
+//   //   'fetchEachOrder menuItemWithItemOptions: ',
+//   //   menuItemWithItemOptions
+//   // )
+
+//   return menuItemWithItemOptions
+// }
 
 // interface OrderDetailInterface {
 //   order: EachOrderInterface
@@ -123,9 +167,20 @@ const fetchMenuItemWithItemOptions = async (
 //   menuItemWithItemOptions: Array<MenuItemWithItemOptionInterface>
 // }
 
-export {
-  fetchOrderList,
-  fetchEachOrder,
-  fetchEachOrderItemList,
-  fetchMenuItemWithItemOptions,
-}
+// export {
+//   // fetchOrderList,
+//   // fetchEachOrder,
+//   // fetchEachOrderItemList,
+//   // fetchOrderItemList,
+//   fetchMenuItemWithItemOptions,
+// }
+
+export * from '@supabase-folder/fetchData/fetchOrderList'
+
+export * from '@supabase-folder/fetchData/fetchEachOrder'
+
+export * from '@supabase-folder/fetchData/fetchEachOrderItemList'
+
+export * from '@supabase-folder/fetchData/fetchOrderItemList'
+
+export * from '@supabase-folder/fetchData/fetchMenuItemWithItemOptions'

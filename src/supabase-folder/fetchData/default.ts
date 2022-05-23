@@ -1,5 +1,6 @@
-import { supabase } from '@supabase-folder/client'
 import type { DATABASETABLENAME } from '@supabase-folder/types'
+
+import postgrestFilterWithSelect from '@supabase-folder/postgrestFilter/withSelect'
 
 const fetchDataDefault = async <U>({
   databaseString,
@@ -8,9 +9,11 @@ const fetchDataDefault = async <U>({
   databaseString: DATABASETABLENAME
   selectString?: string
 }): Promise<Array<U>> => {
-  const { data, error } = await supabase
-    .from<U>(databaseString)
-    .select(selectString)
+  const { data, error } =
+    await postgrestFilterWithSelect<U>({
+      databaseString,
+      selectString,
+    })
 
   if (error) {
     throw error

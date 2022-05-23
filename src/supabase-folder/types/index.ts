@@ -1,5 +1,23 @@
 import type { SupabaseRealtimePayload } from '@supabase/supabase-js'
 
+import type { Flatten } from '@other-support/types'
+
+export type PostgrestFilterBuilderEqualDefaultType<
+  U
+> = {
+  id: U[keyof U]
+  eqString: keyof U
+}
+
+export type PostgrestFilterBuilderEqualType<
+  U extends object
+> =
+  | PostgrestFilterBuilderEqualDefaultType<U>
+  | {
+      id: any
+      eqString: keyof Flatten<U>
+    }
+
 export type RealtimePayloadCallback<T> = (
   payload: SupabaseRealtimePayload<T>
 ) => void
@@ -154,6 +172,7 @@ export interface EachOrderItemDataInterface
   extends DatabaseOrderItemInterface {
   order: EachOrderInterface
   user: DatabaseUserInterface
+  restaurant: number
 }
 
 export interface MenuItemOptionInterface

@@ -1,11 +1,11 @@
 // general
-export * from './general/'
+export * from '@other-support/consts/general/'
 
 // reduxSupport
-export * from './reduxSupport'
+export * from '@other-support/consts/reduxSupport'
 
 // custom
-export * from './custom'
+export * from '@other-support/consts/custom'
 
 // muiSupport
-export * from './muiSupport'
+export * from '@other-support/consts/muiSupport'

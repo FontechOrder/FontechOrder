@@ -253,7 +253,7 @@ const NewOrderMenuItem: React.FC<
               {newOrderItemList.map(
                 (newOrderItem, index) => (
                   <Card
-                    key={`new-order-item-card-${newOrderItem.option.id}`}
+                    key={`new-order-item-card-${newOrderItem.option.id}-${index}`}
                     className="flex flex-row justify-between p-2"
                   >
                     <Stack>

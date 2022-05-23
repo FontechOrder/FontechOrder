@@ -7,6 +7,7 @@ import ZoomImageWithRelativeParent from '@components/ZoomImageWithRelativeParent
 import EachOrderOrderItemList from '@components/EachOrder/OrderItemList'
 
 import NewOrderMenuItem from '@components/NewOrderMenuItem'
+import EachOrderDeleteOrderItemButton from '@components/EachOrder/DeleteOrderItemButton'
 
 import useEachOrder from '@supabase-folder/hooks/useEachOrder'
 
@@ -70,8 +71,7 @@ const EachOrder: React.FC<EachOrderProps> = ({
           variant="contained"
           onClick={recall}
         >
-          {' '}
-          D.C.{' '}
+          D.C.
         </Button>
         <Box>order id: {eachOrder.id}</Box>
         <Box>{eachOrder.restaurant.name}</Box>
@@ -98,6 +98,10 @@ const EachOrder: React.FC<EachOrderProps> = ({
         <NewOrderMenuItem
           orderId={id}
           restaurantId={eachOrder.restaurant.id}
+          recallEachOrder={recall}
+        />
+        <EachOrderDeleteOrderItemButton
+          orderId={id}
           recallEachOrder={recall}
         />
       </Grid>
