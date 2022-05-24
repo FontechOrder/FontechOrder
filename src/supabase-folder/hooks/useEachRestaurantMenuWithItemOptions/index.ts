@@ -42,7 +42,7 @@ const useEachRestaurantMenuWithItemOptions = (
           itemOptions:
             restaurantMenuItemOptions.filter(
               itemOption =>
-                itemOption.menu_item ===
+                itemOption.menu_item_id ===
                 restaurantMenu.id
             ),
         })

@@ -3,10 +3,10 @@ import {
   RestaurantListManagerActionTypes,
 } from '@redux-folder/reducers/restaurantListManagerState/type'
 
-import type { DatabaseRestaurantListType } from '@supabase-folder/types'
+import type { DatabaseRestaurantInterface } from '@supabase-folder/types'
 
 export const saveRestaurantList = (
-  restaurantList: DatabaseRestaurantListType
+  restaurantList: Array<DatabaseRestaurantInterface>
 ): RestaurantListManagerActionTypes =>
   <RestaurantListManagerActionTypes>{
     type: RESTAURANT_LIST_STRING.SAVE_RESTAURANT_LIST,

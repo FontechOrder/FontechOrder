@@ -82,7 +82,7 @@ const useRestaurantMenuList = (
         }
 
         if (
-          newRestaurantMenu.restaurant !==
+          newRestaurantMenu.restaurant_id !==
           restaurantId
         ) {
           return

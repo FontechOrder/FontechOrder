@@ -5,7 +5,7 @@ import fetchDataEach from '@supabase-folder/fetchData/each'
 import { EachOrderItemDataInterface } from '@supabase-folder/types'
 
 export const fetchOrderItemList = async ({
-  selectString = '*,user(id,name,email),order!inner(id,restaurant!inner(id))',
+  selectString,
   eqs = [],
 }: {
   selectString?: string

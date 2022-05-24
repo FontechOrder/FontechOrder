@@ -7,6 +7,8 @@ import ZoomImageWithRelativeParent from '@components/ZoomImageWithRelativeParent
 import EachOrderOrderItemList from '@components/EachOrder/OrderItemList'
 
 import NewOrderMenuItem from '@components/NewOrderMenuItem'
+
+import EachOrderFinishExportButton from '@components/EachOrder/FinishExportButton'
 import EachOrderDeleteOrderItemButton from '@components/EachOrder/DeleteOrderItemButton'
 
 import useEachOrder from '@supabase-folder/hooks/useEachOrder'
@@ -62,10 +64,18 @@ const EachOrder: React.FC<EachOrderProps> = ({
 
   return (
     <Grid
+      id="each-order"
       container
       spacing={2}
       justifyContent="space-around"
     >
+      <Grid
+        id="finish-export-button-container"
+        item
+        xs={10}
+      >
+        <EachOrderFinishExportButton />
+      </Grid>
       <Grid item xs={5}>
         <Button
           variant="contained"

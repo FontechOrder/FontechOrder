@@ -14,7 +14,7 @@ const useOrderList = () => {
     doFetchOrderListWithCallback,
     doSaveOrderList,
     doClearOrderList,
-    orders,
+    orderList,
   } = useOrderListManager()
 
   const insertCallback: RealtimePayloadCallback<DatabaseOrderInterface> =
@@ -30,9 +30,9 @@ const useOrderList = () => {
           return
         }
 
-        doSaveOrderList([...orders, newOrder])
+        doSaveOrderList([...orderList, newOrder])
       },
-      [doSaveOrderList, orders]
+      [doSaveOrderList, orderList]
     )
   const updateCallback: RealtimePayloadCallback<DatabaseOrderInterface> =
     React.useCallback(
@@ -57,7 +57,7 @@ const useOrderList = () => {
           return
         }
 
-        const newOrders = orders.map(order =>
+        const newOrders = orderList.map(order =>
           order.id === updatedOrderId
             ? newOrder
             : order
@@ -65,7 +65,7 @@ const useOrderList = () => {
 
         doSaveOrderList(newOrders)
       },
-      [doSaveOrderList, orders]
+      [doSaveOrderList, orderList]
     )
   const deleteCallback: RealtimePayloadCallback<DatabaseOrderInterface> =
     React.useCallback(
@@ -84,12 +84,12 @@ const useOrderList = () => {
         }
 
         doSaveOrderList(
-          orders.filter(
+          orderList.filter(
             order => order.id !== deletedOrderId
           )
         )
       },
-      [doSaveOrderList, orders]
+      [doSaveOrderList, orderList]
     )
 
   useSubscription({
@@ -102,7 +102,7 @@ const useOrderList = () => {
   return {
     doFetchOrderListWithCallback,
     doClearOrderList,
-    orders,
+    orderList,
   }
 }
 

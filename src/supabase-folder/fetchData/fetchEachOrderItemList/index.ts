@@ -7,6 +7,8 @@ export const fetchEachOrderItemList = async (
   restaurantId: number
 ): Promise<Array<EachOrderItemDataInterface>> => {
   return await fetchOrderItemList({
+    selectString:
+      '*,user:user_id(id,name,email),order:order_id(id,restaurant:restaurant_id(id))',
     eqs: [
       {
         id: orderId,
@@ -14,7 +16,7 @@ export const fetchEachOrderItemList = async (
       },
       {
         id: restaurantId,
-        eqString: 'restaurant',
+        eqString: 'order.restaurant.id',
       },
     ],
   })

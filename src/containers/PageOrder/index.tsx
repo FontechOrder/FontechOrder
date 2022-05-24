@@ -1,14 +1,13 @@
 import React from 'react'
-import { Box, Paper } from '@mui/material'
+import { Box } from '@mui/material'
 
 import Calendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import listPlugin from '@fullcalendar/list'
 
 import useOrderList from '@supabase-folder/hooks/useOrderList'
-// import useLoadingResultError from '@other-support/hooks/useLoadingResultError'
 
-const OrderCalendar = () => {
+const PageOrder = () => {
   const [init, setInit] = React.useState(true)
   const [loading, setLoading] =
     React.useState(false)
@@ -16,12 +15,11 @@ const OrderCalendar = () => {
   const {
     doClearOrderList,
     doFetchOrderListWithCallback,
-    orders,
+    orderList,
   } = useOrderList()
-  // console.log('OrderCalendar orders: ', orders)
 
   const events = React.useMemo(() => {
-    return orders.map(order => ({
+    return orderList.map(order => ({
       title: order.date_text,
       start: order.date_text + 'T00:00:00+08:00',
 
@@ -34,7 +32,7 @@ const OrderCalendar = () => {
         ? ''
         : `${process.env.pathPrefix}/orders/detail?id=${order.id}`,
     }))
-  }, [orders])
+  }, [orderList])
 
   const reloadButtonClick =
     React.useCallback(() => {
@@ -79,34 +77,31 @@ const OrderCalendar = () => {
 
   return (
     <Box m={2}>
-      <Paper>
-        <Box>OrderCalendar</Box>
-        <Calendar
-          locale="zh-tw"
-          defaultAllDay
-          allDayText="menu"
-          contentHeight="auto"
-          customButtons={{
-            reloadButton,
-          }}
-          plugins={[dayGridPlugin, listPlugin]}
-          initialView="dayGridMonth"
-          headerToolbar={{
-            left: 'prev,next today reloadButton',
-            center: 'title',
-            right: 'dayGridMonth,listMonth',
-          }}
-          views={{
-            dayGridMonth: {},
-            listMonth: {
-              buttonText: 'list month',
-            },
-          }}
-          events={events}
-        />
-      </Paper>
+      <Calendar
+        locale="zh-tw"
+        defaultAllDay
+        allDayText="menu"
+        contentHeight="auto"
+        customButtons={{
+          reloadButton,
+        }}
+        plugins={[dayGridPlugin, listPlugin]}
+        initialView="dayGridMonth"
+        headerToolbar={{
+          left: 'prev,next today reloadButton',
+          center: 'title',
+          right: 'dayGridMonth,listMonth',
+        }}
+        views={{
+          dayGridMonth: {},
+          listMonth: {
+            buttonText: 'list month',
+          },
+        }}
+        events={events}
+      />
     </Box>
   )
 }
 
-export default OrderCalendar
+export default PageOrder

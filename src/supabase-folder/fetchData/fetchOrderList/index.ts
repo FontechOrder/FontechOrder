@@ -4,15 +4,9 @@ import { DatabaseOrderInterface } from '@supabase-folder/types'
 
 export const fetchOrderList = async (): Promise<
   Array<DatabaseOrderInterface>
-> => {
-  const data =
-    await fetchDataDefault<DatabaseOrderInterface>(
-      {
-        databaseString: 'orders',
-      }
-    )
-
-  return data
-}
+> =>
+  await fetchDataDefault<DatabaseOrderInterface>({
+    databaseString: 'orders',
+  })
 
 export default fetchOrderList

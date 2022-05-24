@@ -1,7 +1,7 @@
-import type { DatabaseRestaurantListType } from '@supabase-folder/types'
+import type { DatabaseRestaurantInterface } from '@supabase-folder/types'
 
 export type RestaurantListManagerStateType = {
-  restaurantList: DatabaseRestaurantListType
+  restaurantList: Array<DatabaseRestaurantInterface>
 }
 
 export enum RESTAURANT_LIST_STRING {
@@ -16,7 +16,7 @@ interface RestaurantListManagerBaseActionType {
 interface RestaurantListManagerShowRestaurantListActionType
   extends RestaurantListManagerBaseActionType {
   type: RESTAURANT_LIST_STRING.SAVE_RESTAURANT_LIST
-  restaurantList: DatabaseRestaurantListType
+  restaurantList: Array<DatabaseRestaurantInterface>
 }
 
 interface RestaurantListManagerHideRestaurantListActionType

@@ -20,24 +20,21 @@ import useOrderListManagerDefault from '@redux-folder/hooks/useOrderListManager/
 export const useOrderListManager = () => {
   const dispatch = useDispatch()
 
-  const { orders } = useOrderListManagerDefault()
+  const { orderList } =
+    useOrderListManagerDefault()
 
   const doFetchOrderListWithCallback =
     React.useCallback(
-      (callback: (error?: Error) => void) => {
+      (callback?: (error?: Error) => void) => {
         const doAsyncFetchOrderList =
           async () => {
             try {
               const orders =
                 await fetchOrderList()
-              // console.log(
-              //   'doFetchOrderListWithCallback orders: ',
-              //   orders
-              // )
               dispatch(saveOrderList(orders))
-              callback()
+              callback?.()
             } catch (error) {
-              callback(
+              callback?.(
                 instanceError(error) ||
                   UnexpectedError
               )
@@ -65,7 +62,7 @@ export const useOrderListManager = () => {
     doFetchOrderListWithCallback,
     doSaveOrderList,
     doClearOrderList,
-    orders,
+    orderList,
   }
 }
 

@@ -12,7 +12,7 @@ import CustomLink from '@components/CustomLink'
 import ZoomImageWithRelativeParent from '@components/ZoomImageWithRelativeParent'
 
 import useRestaurantList from '@supabase-folder/hooks/useRestaurantList'
-const RestaurantList = () => {
+const PageRestaurant = () => {
   const {
     isInit,
     isLoading,
@@ -20,11 +20,6 @@ const RestaurantList = () => {
     recall,
     restaurants,
   } = useRestaurantList()
-
-  // console.log(
-  //   'RestaurantList restaurants:',
-  //   restaurants
-  // )
 
   if (isInit) {
     return <div>init...</div>
@@ -39,7 +34,7 @@ const RestaurantList = () => {
   }
 
   return (
-    <Box>
+    <Box m={2}>
       <Button
         variant="contained"
         onClick={recall}
@@ -86,4 +81,4 @@ const RestaurantList = () => {
   )
 }
 
-export default RestaurantList
+export default PageRestaurant

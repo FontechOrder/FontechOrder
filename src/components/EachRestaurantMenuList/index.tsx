@@ -13,7 +13,6 @@ import {
 import useEachRestaurantMenuWithItemOptions from '@supabase-folder/hooks/useEachRestaurantMenuWithItemOptions'
 
 import EachRestaurantMenuListRow from '@components/EachRestaurantMenuList/Row'
-// import EachRestaurantMenuListNewMenuItemRow from '@components/EachRestaurantMenuList/NewMenuItemRow'
 
 interface EachRestaurantMenuListProps {
   id: number
@@ -70,13 +69,6 @@ const EachRestaurantMenuList: React.FC<
                 />
               )
             )}
-
-            {/* <EachRestaurantMenuListNewMenuItemRow
-              restaurantId={id}
-              restaurantMenuWithItemOptions={
-                restaurantMenuWithItemOptions
-              }
-            /> */}
           </TableBody>
         }
       </Table>

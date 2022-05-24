@@ -61,10 +61,16 @@ export interface DatabaseMenuItemOptionInterface
   extends NoIdDatabaseMenuItemOptionInterface,
     NumberIdInterface {}
 
+export interface BaseDatabaseMenuItemOptionInterface
+  extends DatabaseMenuItemOptionInterface {
+  menu_item_id: number
+  restaurant_id: number
+}
+
 export type NoIdDatabaseMenuItemOptionType =
   NoIdDatabaseMenuItemOptionInterface & {
-    menu_item: number
-    restaurant: number
+    menu_item_id: number
+    restaurant_id: number
   }
 
 export interface NoIdDatabaseMenuItemInterface {
@@ -76,10 +82,14 @@ export interface NoIdDatabaseMenuItemInterface {
 export interface DatabaseMenuItemInterface
   extends NoIdDatabaseMenuItemInterface,
     NumberIdInterface {}
+export interface BaseDatabaseMenuItemInterface
+  extends DatabaseMenuItemInterface {
+  restaurant_id: number
+}
 
 export type NoIdDatabaseMenuItemType =
   NoIdDatabaseMenuItemInterface & {
-    restaurant: number
+    restaurant_id: number
   }
 
 export interface NoIdDatabaseOrderItemInterface {
@@ -94,11 +104,18 @@ export interface DatabaseOrderItemInterface
   extends NoIdDatabaseOrderItemInterface,
     NumberIdInterface {}
 
+export interface BaseDatabaseOrderItemInterface
+  extends DatabaseOrderItemInterface {
+  user_id: number
+  order_id: number
+  restaurant_id: number
+}
+
 export type NoIdDatabaseOrderItemType =
   NoIdDatabaseOrderItemInterface & {
-    user: number
-    order: number
-    restaurant: number
+    user_id: number
+    order_id: number
+    restaurant_id: number
   }
 
 export interface NoIdDatabaseOrderInterface {
@@ -109,11 +126,17 @@ export interface DatabaseOrderInterface
   extends NoIdDatabaseOrderInterface,
     NumberIdInterface {}
 
+export interface BaseDatabaseOrderInterface
+  extends DatabaseOrderInterface {
+  restaurant_id?: number
+}
+
 export interface NoIdDatabaseRestaurantInterface {
   hidden: boolean
   image_url?: string
   name: string
 }
+
 export interface DatabaseRestaurantInterface
   extends NoIdDatabaseRestaurantInterface,
     NumberIdInterface {}
@@ -172,7 +195,7 @@ export interface EachOrderItemDataInterface
   extends DatabaseOrderItemInterface {
   order: EachOrderInterface
   user: DatabaseUserInterface
-  restaurant: number
+  restaurant_id: number
 }
 
 export interface MenuItemOptionInterface

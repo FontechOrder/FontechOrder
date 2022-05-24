@@ -18,7 +18,7 @@ export const allKeysOfDatabaseMenuItemSchema: OptionalTupleUnion<
   keyof OptionalWithout<
     OptionalWithout<
       DatabaseMenuItemType,
-      'restaurant'
+      'restaurant_id'
     >,
     'hidden'
   >
@@ -38,7 +38,7 @@ type keyOfNoIdDatabaseMenuItemType =
   keyof OptionalWithout<
     OptionalWithout<
       NoIdDatabaseMenuItemType,
-      'restaurant'
+      'restaurant_id'
     >,
     'hidden'
   >
@@ -98,9 +98,9 @@ type keyOfNoIdDatabaseMenuItemOptionType =
     OptionalWithout<
       OptionalWithout<
         NoIdDatabaseMenuItemOptionType,
-        'menu_item'
+        'menu_item_id'
       >,
-      'restaurant'
+      'restaurant_id'
     >,
     'type'
   >

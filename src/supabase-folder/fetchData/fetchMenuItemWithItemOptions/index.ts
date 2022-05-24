@@ -18,7 +18,7 @@ export const fetchMenuItemWithItemOptions =
         {
           databaseString: 'menu_item_options',
           selectString:
-            '*,restaurant(id),menu_item(id,hidden,name,cost,type)',
+            '*,restaurant:restaurant_id(id),menu_item:menu_item_id(id,hidden,name,cost,type)',
           eqs: [
             {
               id: restaurantId,

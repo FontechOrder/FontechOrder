@@ -121,7 +121,7 @@ const NewOrderMenuItem: React.FC<
   return (
     <>
       <Button onClick={handleOpen}>
-        NewOrderMenuItem {restaurantId}
+        NEWORDERMENUITEM {restaurantId}
       </Button>
       <Modal
         open={open}

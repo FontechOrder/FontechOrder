@@ -1,4 +1,3 @@
-// import React from 'react'
 import {
   useSelector,
   shallowEqual,
@@ -14,7 +13,7 @@ const useOrderListManagerDefault = () => {
   )
 
   return {
-    orders: orderList,
+    orderList,
   }
 }
 

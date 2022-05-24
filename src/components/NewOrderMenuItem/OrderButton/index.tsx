@@ -45,9 +45,10 @@ const OrderButton: React.FC<OrderButtonProps> = ({
 
   return (
     <LoadingButton
+      disabled={newOrderItemList.length === 0}
       loading={isLoading}
       onClick={() => {
-        const asyncCreateRestaurants =
+        const asyncCreateOrderItems =
           async () => {
             if (isLoading) {
               return
@@ -74,9 +75,9 @@ const OrderButton: React.FC<OrderButtonProps> = ({
                     item_type:
                       orderItem.option.type,
 
-                    user: user.id,
-                    order: orderId,
-                    restaurant: restaurantId,
+                    user_id: user.id,
+                    order_id: orderId,
+                    restaurant_id: restaurantId,
                   })
                 )
 
@@ -90,12 +91,12 @@ const OrderButton: React.FC<OrderButtonProps> = ({
               doClear()
             } catch {
               console.log(
-                'asyncCreateRestaurants error'
+                'asyncCreateOrderItems error'
               )
             }
             setIsLoading(false)
           }
-        asyncCreateRestaurants()
+        asyncCreateOrderItems()
       }}
     >
       {doOrderButtonTitle}

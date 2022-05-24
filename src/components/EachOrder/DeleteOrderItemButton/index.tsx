@@ -33,18 +33,6 @@ const EachOrderDeleteOrderItemButton: React.FC<
             }
             setIsLoading(true)
             try {
-              // await deleteOrderItems({
-              //   eqs: [
-              //     {
-              //       id: orderId,
-              //       eqString: 'order',
-              //     },
-              //     // {
-              //     //   id: user.id,
-              //     //   eqString: 'user',
-              //     // },
-              //   ],
-              // })
               await deleteOrderItems({
                 orderId,
                 userId: user.id,

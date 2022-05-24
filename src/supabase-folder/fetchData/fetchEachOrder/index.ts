@@ -9,7 +9,7 @@ export const fetchEachOrder = async (
     await fetchDataId<EachOrderInterface>({
       databaseString: 'orders',
       selectString:
-        '*,restaurant(id,hidden,image_url,name)',
+        '*,restaurant:restaurant_id(id,hidden,image_url,name)',
       eqs: [
         {
           id: orderId,

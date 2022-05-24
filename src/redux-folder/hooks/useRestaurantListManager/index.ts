@@ -1,34 +1,26 @@
 import React from 'react'
-import {
-  useSelector,
-  shallowEqual,
-  useDispatch,
-} from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-import type { DatabaseRestaurantListType } from '@supabase-folder/types'
+import type { DatabaseRestaurantInterface } from '@supabase-folder/types'
 
 import {
   saveRestaurantList,
   clearRestaurantList,
 } from '@redux-folder/reducers/restaurantListManagerState/action'
 
+import useRestaurantListManagerDefault from '@redux-folder/hooks/useRestaurantListManager/default'
+
 export const useRestaurantListManager = () => {
   const dispatch = useDispatch()
 
-  const { restaurantList } = useSelector(
-    state => ({
-      restaurantList:
-        state.restaurantListManagerState
-          .restaurantList,
-    }),
-    shallowEqual
-  )
+  const { restaurantList } =
+    useRestaurantListManagerDefault()
 
   const doSaveRestaurantList = React.useCallback(
     (
-      restaurantList: DatabaseRestaurantListType
+      restaurants: Array<DatabaseRestaurantInterface>
     ) => {
-      dispatch(saveRestaurantList(restaurantList))
+      dispatch(saveRestaurantList(restaurants))
     },
     [dispatch]
   )

@@ -71,7 +71,10 @@ const Header = () => {
   }, [adminUser])
 
   return (
-    <div className="flex w-full justify-center bg-blue-400">
+    <div
+      id="header"
+      className="flex w-full justify-center bg-blue-400"
+    >
       <div className="flex w-full flex-row bg-green-500 p-4 lg:w-[64rem] lg:max-w-[64rem]">
         <Grid container spacing={1}>
           <Grid

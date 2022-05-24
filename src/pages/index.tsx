@@ -1,12 +1,12 @@
 import React from 'react'
-import PageContentDefault from '@containers/PageContent/default'
 
-import OrderCalendar from '@components/OrderCalendar'
+import PageContentDefault from '@containers/PageContent/default'
+import PageOrder from '@containers/PageOrder'
 
 const Home = () => {
   return (
     <PageContentDefault>
-      <OrderCalendar />
+      <PageOrder />
     </PageContentDefault>
   )
 }

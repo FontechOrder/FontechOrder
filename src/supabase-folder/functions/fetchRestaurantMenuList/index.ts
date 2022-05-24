@@ -10,7 +10,7 @@ const fetchRestaurantMenuList = async (
   const { data, error } = await supabase
     .from<DatabaseMenuItemType>('menu_items')
     .select()
-    .eq('restaurant', restaurantId)
+    .eq('restaurant_id', restaurantId)
 
   if (error) {
     throw error

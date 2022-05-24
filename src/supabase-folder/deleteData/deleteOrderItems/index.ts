@@ -1,8 +1,6 @@
-import type { EachOrderItemDataInterface } from '@supabase-folder/types'
+import type { BaseDatabaseOrderItemInterface } from '@supabase-folder/types'
 
 import postgrestFilterDelete from '@supabase-folder/postgrestFilter/delete'
-
-import { fetchOrderItemList } from '@supabase-folder/fetchData'
 
 export const deleteOrderItems = async ({
   orderId,
@@ -11,33 +9,14 @@ export const deleteOrderItems = async ({
   orderId: number
   userId: number
 }): Promise<boolean> => {
-  const filteredOrderItemList =
-    await fetchOrderItemList({
-      selectString:
-        '*,user!inner(id,name,email),order!inner(id,restaurant!inner(id))',
-      eqs: [
-        {
-          id: orderId,
-          eqString: 'order.id',
-        },
-        {
-          id: userId,
-          eqString: 'user.id',
-        },
-      ],
-    })
-
-  const ids = filteredOrderItemList.reduce(
-    (result, each) => [...result, each.id],
-    Array<number>()
-  )
-
   const { error } =
-    await postgrestFilterDelete<EachOrderItemDataInterface>(
+    await postgrestFilterDelete<BaseDatabaseOrderItemInterface>(
       {
         databaseString: 'order_items',
       }
-    ).filter('id', 'in', `(${ids})`)
+    )
+      .eq('order_id', orderId)
+      .eq('user_id', userId)
 
   if (error) {
     console.log('error: ', error?.message)
