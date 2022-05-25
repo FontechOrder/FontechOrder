@@ -12,6 +12,7 @@ import {
   Checkbox,
   IconButton,
   FormHelperText,
+  Stack,
 } from '@mui/material'
 
 import { LoadingButton } from '@mui/lab'
@@ -27,7 +28,16 @@ type CreateRestaurantObject = {
   hidden: boolean
   name: string
   image_url: string
+  telephone: string
+  address: string
 }
+
+const textFieldKeys: Array<
+  keyof CreateRestaurantObject
+> = ['name', 'telephone', 'address']
+
+const phoneRegExp =
+  /^(\d{2,3}-?|\(\d{2,3}\))?\d{3,4}-?\d{4}|09\d{2}(\d{6}|-\d{3}-\d{3})$/
 
 const CreateRestaurantSchema = Yup.object().shape(
   {
@@ -39,6 +49,15 @@ const CreateRestaurantSchema = Yup.object().shape(
       .min(2, '太少2~'),
     image_url:
       Yup.string().required('需要餐廳圖片'),
+    telephone: Yup.lazy(value =>
+      !value
+        ? Yup.string()
+        : Yup.string().matches(
+            phoneRegExp,
+            'Phone number is not valid'
+          )
+    ),
+    address: Yup.string(),
   }
 )
 
@@ -124,17 +143,23 @@ const CreateRestaurantForm: React.FC = () => {
             {...register('hidden')}
           />
 
-          <TextField
-            required
-            id="name"
-            fullWidth
-            variant="standard"
-            {...register('name')}
-            error={!!errors.name}
-            helperText={
-              errors.name?.message ?? ' '
-            }
-          />
+          <Stack>
+            {textFieldKeys.map(key => (
+              <TextField
+                key={`create-restaurant-form-${key}`}
+                required={key === 'name'}
+                id={key}
+                label={key}
+                fullWidth
+                variant="standard"
+                {...register(key)}
+                error={!!errors[key]}
+                helperText={
+                  errors[key]?.message ?? ' '
+                }
+              />
+            ))}
+          </Stack>
         </Grid>
         <Grid
           className="!my-auto flex flex-row"
@@ -160,9 +185,6 @@ const CreateRestaurantForm: React.FC = () => {
             className="xs:w-auto w-full"
             variant="contained"
             onClick={handleSubmit(data => {
-              // console.log(
-              //   `data: ${JSON.stringify(data)}`
-              // )
               const asyncCreateRestaurants =
                 async () => {
                   if (isLoading) {
@@ -171,24 +193,16 @@ const CreateRestaurantForm: React.FC = () => {
                   setIsLoading(true)
 
                   try {
-                    const restaurants =
-                      await createRestaurants([
-                        data,
-                      ])
-
-                    const updatedRestaurant =
-                      restaurants[0]
-
-                    if (!updatedRestaurant) {
-                      throw new Error(
-                        'Invalid Restaurant'
-                      )
-                    }
+                    await createRestaurants([
+                      data,
+                    ])
 
                     reset({
                       hidden: false,
                       name: '',
                       image_url: '',
+                      telephone: '',
+                      address: '',
                     })
                   } catch {
                     console.log(

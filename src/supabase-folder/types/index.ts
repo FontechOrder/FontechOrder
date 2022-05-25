@@ -135,6 +135,8 @@ export interface NoIdDatabaseRestaurantInterface {
   hidden: boolean
   image_url?: string
   name: string
+  telephone?: string
+  address?: string
 }
 
 export interface DatabaseRestaurantInterface

@@ -30,7 +30,7 @@ const createRestaurantMenuList = async ({
         name: menuItem.name,
         type: menuItem.type,
         cost: menuItem.cost,
-        restaurant: restaurantId,
+        restaurant_id: restaurantId,
       })
     )
   )
@@ -77,7 +77,7 @@ const createRestaurantMenuList = async ({
   // )
 
   const {
-    data: menuItemOptionData,
+    // data: menuItemOptionData,
     error: menuItemOptionError,
   } = await supabase
     .from('menu_item_options')
@@ -92,8 +92,8 @@ const createRestaurantMenuList = async ({
             name: menuItemOption.name,
             type: `${menuItem.type}.${menuItem.name}`,
             cost: menuItemOption.cost,
-            restaurant: restaurantId,
-            menu_item: menuItem.id,
+            restaurant_id: restaurantId,
+            menu_item_id: menuItem.id,
           })
         )
       })
@@ -105,12 +105,12 @@ const createRestaurantMenuList = async ({
     )
   }
 
-  const menuItemOptions: DatabaseMenuItemListType =
-    menuItemOptionData ?? []
+  // const menuItemOptions: DatabaseMenuItemListType =
+  //   menuItemOptionData ?? []
 
-  if (!menuItemOptions) {
-    throw new Error('invalid menuItemOptions')
-  }
+  // if (!menuItemOptions) {
+  //   throw new Error('invalid menuItemOptions')
+  // }
 
   // console.log(
   //   'insert menuItemOptions: ',

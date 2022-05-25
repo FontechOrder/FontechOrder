@@ -150,7 +150,7 @@ const CreateRestaurantMenuForm: React.FC<
             await sleep(2000)
           } catch {
             console.log(
-              'asyncCreateRestaurants error'
+              'asyncCreateRestaurantMenus error'
             )
           }
 

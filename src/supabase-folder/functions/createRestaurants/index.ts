@@ -7,6 +7,11 @@ import type {
 const createRestaurants = async (
   restaurants: Array<NoIdDatabaseRestaurantType>
 ): Promise<Array<DatabaseRestaurantType>> => {
+  console.log(
+    'createRestaurants restaurants: ',
+    restaurants
+  )
+
   const { data, error } = await supabase
     .from<DatabaseRestaurantType>('restaurants')
     .insert(restaurants)
