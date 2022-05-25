@@ -6,19 +6,24 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import listPlugin from '@fullcalendar/list'
 
 import useOrderList from '@supabase-folder/hooks/useOrderList'
+import useAlertListManager from '@redux-folder/hooks/useAlertListManager'
 
 const PageOrder = () => {
-  const [init, setInit] = React.useState(true)
-  const [loading, setLoading] =
-    React.useState(false)
-
   const {
-    doClearOrderList,
+    isInit,
+    isLoading,
     doFetchOrderListWithCallback,
     orderList,
   } = useOrderList()
 
+  const { doAddToAlertList } =
+    useAlertListManager()
+
   const events = React.useMemo(() => {
+    if (isLoading) {
+      return []
+    }
+
     return orderList.map(order => ({
       title: order.date_text,
       start: order.date_text + 'T00:00:00+08:00',
@@ -32,48 +37,43 @@ const PageOrder = () => {
         ? ''
         : `${process.env.pathPrefix}/orders/detail?id=${order.id}`,
     }))
-  }, [orderList])
-
-  const reloadButtonClick =
-    React.useCallback(() => {
-      // console.log('reloadButtonClick')
-
-      if (loading) {
-        return
-      }
-
-      setLoading(true)
-
-      doFetchOrderListWithCallback(err => {
-        if (err) {
-          console.log(
-            'doFetchOrderListWithCallback err:',
-            err.message
-          )
-        }
-        console.log(
-          'doFetchOrderListWithCallback'
-        )
-
-        setLoading(false)
-      })
-    }, [loading, doFetchOrderListWithCallback])
+  }, [isLoading, orderList])
 
   const reloadButton = React.useMemo(() => {
     return {
-      text: loading ? 'Loading' : 'D.C.',
-      click: reloadButtonClick,
-    }
-  }, [loading, reloadButtonClick])
+      text: isLoading ? 'Loading' : 'D.C.',
+      click: () =>
+        doFetchOrderListWithCallback(
+          ({ pauseByLoading, error }) => {
+            if (pauseByLoading) {
+              return
+            }
 
-  React.useEffect(() => {
-    if (!init) {
-      return
+            if (error) {
+              // console.log(
+              //   'doFetchOrderListWithCallback error:',
+              //   error.message
+              // )
+
+              doAddToAlertList({
+                severity: 'error',
+                alertTitle:
+                  'fetch orderList error: ' +
+                  error.message,
+              })
+            }
+          }
+        ),
     }
-    setInit(false)
-    doClearOrderList()
-    reloadButtonClick()
-  }, [init, reloadButtonClick, doClearOrderList])
+  }, [
+    isLoading,
+    doFetchOrderListWithCallback,
+    doAddToAlertList,
+  ])
+
+  if (isInit) {
+    return <Box m={2}> isInit </Box>
+  }
 
   return (
     <Box m={2}>
@@ -93,9 +93,11 @@ const PageOrder = () => {
           right: 'dayGridMonth,listMonth',
         }}
         views={{
-          dayGridMonth: {},
+          dayGridMonth: {
+            buttonText: '月',
+          },
           listMonth: {
-            buttonText: 'list month',
+            buttonText: '列表',
           },
         }}
         events={events}

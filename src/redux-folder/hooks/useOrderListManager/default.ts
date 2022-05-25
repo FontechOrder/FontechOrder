@@ -4,15 +4,15 @@ import {
 } from 'react-redux'
 
 const useOrderListManagerDefault = () => {
-  const { orderList } = useSelector(
-    state => ({
-      orderList:
-        state.orderListManagerState.orderList,
-    }),
-    shallowEqual
-  )
+  const { isInit, isLoading, orderList } =
+    useSelector(
+      state => state.orderListManagerState,
+      shallowEqual
+    )
 
   return {
+    isInit,
+    isLoading,
     orderList,
   }
 }

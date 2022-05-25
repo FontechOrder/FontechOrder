@@ -1,14 +1,16 @@
 import { supabase } from '@supabase-folder/client'
 import type {
   NoIdDatabaseOrderInterface,
-  DatabaseOrderInterface,
+  BaseDatabaseOrderInterface,
 } from '@supabase-folder/types'
 
 const createOrders = async (
   orders: Array<NoIdDatabaseOrderInterface>
-): Promise<Array<DatabaseOrderInterface>> => {
+): Promise<Array<BaseDatabaseOrderInterface>> => {
+  console.log('createOrders orders: ', orders)
+
   const { data, error } = await supabase
-    .from<DatabaseOrderInterface>('orders')
+    .from<BaseDatabaseOrderInterface>('orders')
     .insert(orders)
 
   if (error) {

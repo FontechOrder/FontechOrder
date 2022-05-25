@@ -19,12 +19,14 @@ import localDataManagerState from '@redux-folder/reducers/localDataManagerState'
 import userManagerState from '@redux-folder/reducers/userManagerState'
 import restaurantListManagerState from '@redux-folder/reducers/restaurantListManagerState'
 import orderListManagerState from '@redux-folder/reducers/orderListManagerState'
+import alertListManagerState from '@redux-folder/reducers/alertListManagerState'
 
 const rootReducer = combineReducers({
   localDataManagerState,
   userManagerState,
   restaurantListManagerState,
   orderListManagerState,
+  alertListManagerState,
 })
 
 const configureStore = (): StringKeyObject => {

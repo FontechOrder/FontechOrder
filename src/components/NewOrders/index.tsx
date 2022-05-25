@@ -26,6 +26,11 @@ import {
 
 import { formatInTimeZone } from 'date-fns-tz'
 
+import {
+  forceInstanceError,
+  shuffledWithArrayAndLength,
+} from '@other-support/consts'
+
 import type {
   DatabaseRestaurantType,
   DatabaseRestaurantListType,
@@ -36,8 +41,6 @@ import fetchRestaurantList from '@supabase-folder/functions/fetchRestaurantList'
 import fetchOrderList from '@supabase-folder/functions/fetchOrderList'
 
 import createOrders from '@supabase-folder/functions/createOrders'
-
-import { shuffledWithArrayAndLength } from '@other-support/consts'
 
 type CreateOrderType = {
   dateText: string
@@ -147,14 +150,19 @@ const NewOrders = () => {
               createOrder => ({
                 finish: false,
                 date_text: createOrder.dateText,
-                restaurant:
+                restaurant_id:
                   createOrder.restaurant.id,
               })
             )
           )
 
           setCreateOrderList([])
-        } catch {}
+        } catch (error) {
+          console.log(
+            'createOrders error: ',
+            forceInstanceError(error).message
+          )
+        }
 
         setIsLoading(false)
       }

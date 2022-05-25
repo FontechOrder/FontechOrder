@@ -13,8 +13,16 @@ export const saveOrderList = (
     orderList,
   }
 
-export const clearOrderList =
+export const setIsLoading = (
+  isLoading: boolean
+): OrderListManagerActionTypes =>
+  <OrderListManagerActionTypes>{
+    type: ORDER_LIST_STRING.SET_IS_LOADING,
+    isLoading,
+  }
+
+export const clearOrderListManager =
   (): OrderListManagerActionTypes =>
     <OrderListManagerActionTypes>{
-      type: ORDER_LIST_STRING.CLEAR_ORDER_LIST,
+      type: ORDER_LIST_STRING.CLEAR,
     }

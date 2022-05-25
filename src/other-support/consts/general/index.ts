@@ -244,6 +244,12 @@ export const instanceError = (
   return undefined
 }
 
+export const forceInstanceError = (
+  error: unknown
+): Error => {
+  return instanceError(error) || UnexpectedError
+}
+
 export const arrayRemoveElementByIndex = <T>(
   array: Array<T>,
   index: number
@@ -262,3 +268,27 @@ export const groupBy = <T, K extends keyof any>(
     previous[group].push(currentItem)
     return previous
   }, {} as Record<K, T[]>)
+
+export const removeElementInArrayByIndex = <T>({
+  array,
+  index,
+  returnOrigin = false,
+}: {
+  array: Array<T>
+  index: number
+  returnOrigin?: boolean
+}): Array<T> => {
+  if (index >= 0 && index < array.length) {
+    return array
+      .slice(0, index)
+      .concat(
+        array.slice(index + 1, array.length)
+      )
+  }
+
+  if (returnOrigin) {
+    return array
+  }
+
+  return []
+}

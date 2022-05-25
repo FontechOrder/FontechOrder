@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import type { AlertColor } from '@mui/material'
 
 export type EmptyCallback = () => void
 
@@ -123,3 +124,8 @@ export type Flatten<T extends object> =
       ? { [K in keyof O]: O[K] }
       : never
     : never
+
+export type AlertViewType = {
+  severity: AlertColor
+  alertTitle: string
+}

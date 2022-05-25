@@ -2,7 +2,7 @@ import {
   TStateCasses,
   ReactNodeCasses,
   ExtractChildrenType,
-} from '../../types'
+} from '@other-support/types'
 
 import { ReactNode } from 'react'
 

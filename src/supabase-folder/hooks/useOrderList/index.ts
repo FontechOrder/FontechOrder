@@ -11,6 +11,8 @@ import type {
 
 const useOrderList = () => {
   const {
+    isInit,
+    isLoading,
     doFetchOrderListWithCallback,
     doSaveOrderList,
     doClearOrderList,
@@ -67,6 +69,7 @@ const useOrderList = () => {
       },
       [doSaveOrderList, orderList]
     )
+
   const deleteCallback: RealtimePayloadCallback<DatabaseOrderInterface> =
     React.useCallback(
       payload => {
@@ -99,7 +102,20 @@ const useOrderList = () => {
     deleteCallback,
   })
 
+  React.useEffect(() => {
+    // console.log('useOrderList React.useEffect ')
+    if (!isInit) {
+      return
+    }
+
+    // console.log('useOrderList React.useEffect ')
+
+    doFetchOrderListWithCallback()
+  }, [isInit, doFetchOrderListWithCallback])
+
   return {
+    isInit,
+    isLoading,
     doFetchOrderListWithCallback,
     doClearOrderList,
     orderList,
